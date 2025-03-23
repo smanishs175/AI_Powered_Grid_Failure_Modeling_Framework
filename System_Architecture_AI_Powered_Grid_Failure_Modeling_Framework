@@ -1,0 +1,31 @@
+flowchart TD
+    subgraph "Data Layer"
+        A1[Grid Infrastructure Data] --> B1
+        A2[Environmental Data] --> B1
+        A3[Historical Outage Data] --> B1
+        A4[Operational Data] --> B1
+        B1[Data Preprocessing Module]
+    end
+    
+    subgraph "Analysis Layer"
+        B1 --> C1[Component Vulnerability Profiling]
+        B1 --> C2[Failure Correlation Modeling]
+        B1 --> C3[Environmental Threat Analysis]
+        C1 --> D1
+        C2 --> D1
+        C3 --> D1
+        D1[Scenario Generation Module]
+    end
+    
+    subgraph "Learning Layer"
+        D1 --> E1[Reinforcement Learning Module]
+        E1 --> E2[Policy Optimization]
+        E2 --> E3[Performance Evaluation]
+    end
+    
+    subgraph "Application Layer"
+        E3 --> F1[Visualization & Reporting]
+        E3 --> F2[Decision Support Interface]
+        F1 --> G[Grid Operator/Planner]
+        F2 --> G
+    end
