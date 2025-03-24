@@ -357,7 +357,6 @@ rl:
     gail:
       learning_rate: 0.0003
       expert_episodes: 100
-
 visualization:
   grid:
     node_size: 300
@@ -365,6 +364,11 @@ visualization:
   performance:
     figure_size: [10, 6]
     dpi: 100
+```
+
+
+
+
 
 #### 5.2 Implementation Approach
 
