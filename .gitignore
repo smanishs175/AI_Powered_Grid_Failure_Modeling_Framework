@@ -1,0 +1,61 @@
+# Ignore PDF module documents
+module*.pdf
+model*.pdf
+Model*.pdf
+Module*.pdf
+*module*.pdf
+*Module*.pdf
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+ENV/
+env/
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Project specific files
+run_status.md
+processed_data/
+*.log
+
+# Large data files
+*.hdf5
+*.h5
+*.parquet
+*.feather
