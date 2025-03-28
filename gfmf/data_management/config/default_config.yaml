@@ -1,0 +1,63 @@
+# Default configuration for the Data Management Module
+
+# Data paths
+data_paths:
+  base_path: ""  # Base path for all data (if empty, uses relative paths)
+  grid_path: "data/grid"  # Path to grid topology data
+  weather_path: "data/weather"  # Path to weather data
+  outage_path: "data/outage"  # Path to outage data
+  processed_path: "data/processed"  # Path to save processed data
+  synthetic_path: "data/synthetic"  # Path to save synthetic data
+  cache_path: "data/cache"  # Path to cache data
+
+# Data loading settings
+data_loading:
+  weather_sample_limit: 10000  # Limit number of weather data points to load (for performance)
+  validate_data: true  # Validate data after loading
+
+# Data preprocessing settings
+data_preprocessing:
+  remove_outliers: true  # Remove outliers from data
+  standardize_weather: true  # Standardize weather data
+  impute_missing_values: true  # Impute missing values in data
+  temporal_aggregation: "D"  # Temporal aggregation frequency (D=daily, H=hourly)
+
+# Synthetic data generation settings
+synthetic_data:
+  num_nodes: 50  # Number of nodes in synthetic grid
+  num_lines: 75  # Number of lines in synthetic grid
+  num_weather_stations: 5  # Number of weather stations
+  sim_start_date: "2023-01-01"  # Start date of simulation
+  sim_end_date: "2023-12-31"  # End date of simulation
+  frequency: "D"  # Frequency of data (D=daily, H=hourly)
+  num_outages: 100  # Number of synthetic outages to generate
+  
+  # Grid generation parameters
+  grid_params:
+    voltage_levels: [13.8, 69, 138, 345]  # Voltage levels (kV)
+    node_types: ["generation", "load", "substation"]  # Types of nodes
+    line_types: ["overhead", "underground"]  # Types of lines
+    failure_rates:  # Base failure rates per year
+      overhead: 0.02
+      underground: 0.005
+  
+  # Weather generation parameters  
+  weather_params:
+    temp_mean: 15.0  # Mean temperature (°C)
+    temp_std: 10.0  # Standard deviation of temperature
+    wind_mean: 5.0  # Mean wind speed (m/s)
+    wind_std: 3.0  # Standard deviation of wind speed
+    precip_mean: 2.0  # Mean precipitation (mm)
+    precip_std: 5.0  # Standard deviation of precipitation
+    extreme_temp_threshold: 30.0  # Threshold for extreme temperature (°C)
+    extreme_wind_threshold: 15.0  # Threshold for extreme wind (m/s)
+    extreme_precip_threshold: 25.0  # Threshold for extreme precipitation (mm)
+    seasonal_variation: true  # Include seasonal variations in weather
+    
+  # Outage generation parameters
+  outage_params:
+    baseline_rate: 0.01  # Baseline probability of outage per component per day
+    weather_impact_factor: 5.0  # Factor to increase outage probability during extreme weather
+    cascading_probability: 0.3  # Probability of cascade failures
+    duration_mean: 6.0  # Mean outage duration (hours)
+    duration_std: 3.0  # Standard deviation of outage duration
