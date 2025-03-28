@@ -495,3 +495,41 @@ visualization:
     }
   }
 }
+```
+
+#### 9.3 Development Workflow
+
+##### 9.3.1 Git Branching Strategy
+This project follows a feature branch workflow for all development activities:
+
+1. **Main Branch**: The `main` branch contains the stable, production-ready code.
+2. **Feature Branches**: All new features and changes must be developed in dedicated feature branches.
+   - Branch naming convention: `feature/feature-name`, `bugfix/issue-description`, `data/update-description`
+   - Current active branches:
+     - `data-optimization`: Data collection optimization and reduction
+
+**Branch Workflow**:
+1. Create a new branch from `main` for each feature or change
+2. Develop and test changes in the feature branch
+3. Submit a pull request for code review
+4. Merge back to `main` after approval
+
+##### 9.3.2 Data Collection Structure
+The framework uses two primary data collection directories:
+
+1. **data_collection_by_hollis**: 175MB dataset containing:
+   - `correlated_outage`: Power outage data organized by year (2014-2023)
+   - Documentation and data links
+
+2. **data_collection_by_manish**: 926MB dataset containing:
+   - `NOAA_Daily_Summaries_Reduced`: 540MB optimized subset of weather data
+   - `Outage Data`: 199MB of power outage records
+   - `RTS_Data`: 166MB of grid system test case data
+   - Other smaller datasets including IEEE test cases and environmental data
+
+**Data Optimization**:
+- Original NOAA dataset of 134GB was reduced to 540MB using random sampling of US weather stations
+- Approximately 551 representative weather stations were selected from the original ~130,000 stations
+- The reduced dataset preserves geographical diversity while making processing feasible
+
+**Note**: When working with the data, use the reduced datasets to ensure processing remains manageable. For more extensive analysis requiring the full dataset, consider processing in smaller batches or utilizing high-performance computing resources at CHPC.
