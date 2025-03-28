@@ -308,9 +308,9 @@ The system follows a modular architecture with the following layers:
 ```yaml
 data:
   paths:
-    grid_topology: "./data/grid_topology.json"
-    weather_data: "./data/weather_data.csv"
-    outage_data: "./data/outage_data.csv"
+    grid_topology: "./data_collection_by_hollis/grid_topology.json"
+    weather_data: "./data_collection_by_hollis/weather_data.csv"
+    outage_data: "./data_collection_by_hollis/outage_data.csv"
   preprocessing:
     missing_strategy: "interpolate"
     feature_engineering: true
