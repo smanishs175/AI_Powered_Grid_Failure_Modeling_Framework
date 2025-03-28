@@ -49,8 +49,10 @@ env/
 ehthumbs.db
 Thumbs.db
 
-# Project specific files
+# Run status documentation
 run_status.md
+
+# Project specific files
 processed_data/
 *.log
 
