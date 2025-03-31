@@ -97,10 +97,10 @@ def run_data_management_module():
     weather_df = pd.read_csv(weather_data_path)
     outage_df = pd.read_csv(outage_data_path)
     
-    # Convert date strings to datetime objects
+    # Convert date strings to datetime objects with more flexible parsing
     weather_df['timestamp'] = pd.to_datetime(weather_df['date'])
-    outage_df['start_time'] = pd.to_datetime(outage_df['start_time'])
-    outage_df['end_time'] = pd.to_datetime(outage_df['end_time'])
+    outage_df['start_time'] = pd.to_datetime(outage_df['start_time'], format='ISO8601')
+    outage_df['end_time'] = pd.to_datetime(outage_df['end_time'], format='ISO8601')
     
     # Store the data in the module
     data_module.data['grid'] = grid_data
