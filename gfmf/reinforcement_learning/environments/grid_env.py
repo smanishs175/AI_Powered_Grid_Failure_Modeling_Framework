@@ -55,8 +55,6 @@ class GridEnv(gym.Env):
             
         if 'scenario_data' in self.config:
             self.scenarios = self.config.get('scenario_data', [])
-            if not isinstance(self.scenarios, list):
-                self.scenarios = [self.scenarios]
         
         # Set default values and ensure consistent data structures
         grid_size = self.config.get('grid_size', 10)
@@ -148,8 +146,23 @@ class GridEnv(gym.Env):
         }
         
         # Select a random scenario or use baseline
-        if self.scenarios:
-            self.current_scenario = np.random.choice(self.scenarios)
+        if self.scenarios is not None and len(self.scenarios) > 0:
+            # Handle different data types for scenarios
+            if isinstance(self.scenarios, pd.DataFrame):
+                # If scenarios is a DataFrame, select a random row
+                random_idx = np.random.randint(0, len(self.scenarios))
+                scenario_row = self.scenarios.iloc[random_idx]
+                self.current_scenario = {
+                    'type': scenario_row.get('scenario_type', 'unknown'),
+                    'intensity': float(scenario_row.get('cascading_impact', 0.0)) / 100.0,
+                    'id': scenario_row.get('scenario_id', f'scenario_{random_idx}')
+                }
+            elif isinstance(self.scenarios, list) and len(self.scenarios) > 0:
+                # If scenarios is a list, choose a random element
+                self.current_scenario = np.random.choice(self.scenarios)
+            else:
+                # Default scenario
+                self.current_scenario = {'type': 'baseline', 'intensity': 0.0}
         else:
             self.current_scenario = {'type': 'baseline', 'intensity': 0.0}
         
@@ -160,7 +173,8 @@ class GridEnv(gym.Env):
         # Get initial observation
         observation = self._get_observation()
         
-        return observation
+        # Return observation and empty info dict for compatibility with gymnasium
+        return observation, {}
     
     def step(self, action):
         """
@@ -170,7 +184,7 @@ class GridEnv(gym.Env):
             action: Integer representing the action to take
             
         Returns:
-            Tuple of (observation, reward, done, info)
+            Tuple of (observation, reward, terminated, truncated, info)
         """
         # Decode action (binary representation of which components to harden)
         hardening_actions = self._decode_action(action)
@@ -203,7 +217,10 @@ class GridEnv(gym.Env):
         self.current_step += 1
         
         # Check if episode is done
-        done = (self.current_step >= self.max_steps)
+        terminated = (self.current_step >= self.max_steps)
+        
+        # Truncated is False by default (not using time limit)
+        truncated = False
         
         # Get new observation
         observation = self._get_observation()
@@ -218,7 +235,7 @@ class GridEnv(gym.Env):
             'scenario': self.current_scenario['type']
         }
         
-        return observation, reward, done, info
+        return observation, reward, terminated, truncated, info
     
     def _decode_action(self, action):
         """

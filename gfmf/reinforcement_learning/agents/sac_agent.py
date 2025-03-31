@@ -18,6 +18,8 @@ from torch.distributions import Categorical
 import copy
 from collections import deque
 import random
+from gym import spaces
+import time
 
 
 class SACCritic(nn.Module):
@@ -223,17 +225,49 @@ class SACAgent:
     Implements SAC with automatic entropy adjustment for discrete action spaces.
     """
     
-    def __init__(self, state_dim, action_dim, config=None):
+    def __init__(self, state_dim_or_env, action_dim=None, config=None):
         """
         Initialize the SAC agent.
         
+        Can be initialized in two ways:
+        1. With state_dim and action_dim directly
+        2. With an environment object
+        
         Args:
-            state_dim (int): Dimension of the state space
-            action_dim (int): Dimension of the action space
+            state_dim_or_env: Either the dimension of the state space (int) or an environment object
+            action_dim (int, optional): Dimension of the action space, required if state_dim_or_env is an int
             config (dict, optional): Configuration parameters
         """
         self.logger = logging.getLogger(self.__class__.__name__)
         self.logger.info("Initializing SAC Agent")
+        
+        # Check if first argument is an environment
+        if hasattr(state_dim_or_env, 'observation_space') and hasattr(state_dim_or_env, 'action_space'):
+            # This is an environment
+            self.env = state_dim_or_env
+            self.config = config  # Store original config for later
+            
+            # Get state and action dimensions from environment
+            # Get state dimension
+            if isinstance(self.env.observation_space, spaces.Box):
+                state_dim = int(np.prod(self.env.observation_space.shape))
+            else:
+                state_dim = self.env.observation_space.n
+                
+            # Get action dimension
+            if isinstance(self.env.action_space, spaces.Discrete):
+                action_dim = self.env.action_space.n
+            elif isinstance(self.env.action_space, spaces.Box):
+                action_dim = int(np.prod(self.env.action_space.shape))
+            else:
+                raise ValueError(f"Unsupported action space type: {type(self.env.action_space)}")
+                
+        else:
+            # Direct initialization with dimensions
+            self.env = None
+            state_dim = state_dim_or_env
+            if action_dim is None:
+                raise ValueError("action_dim must be provided when state_dim is provided directly")
         
         # Store parameters
         self.state_dim = state_dim
@@ -601,70 +635,88 @@ class SACAgent:
         
         return self
     
-    def train(self, env, num_episodes=1000, max_steps=None, eval_freq=100):
+    def train(self, env=None, total_timesteps=1000, eval_freq=100, n_eval_episodes=5):
         """
         Train the agent on the given environment.
         
         Args:
-            env: OpenAI Gym environment
-            num_episodes (int): Number of episodes to train
-            max_steps (int): Maximum steps per episode
-            eval_freq (int): How often to evaluate the agent
+            env: OpenAI Gym environment (if not provided during initialization)
+            total_timesteps (int): Total timesteps to train for
+            eval_freq (int): How often to evaluate the agent (in timesteps)
+            n_eval_episodes (int): Number of episodes to evaluate the agent for
             
         Returns:
             dict: Training metrics
         """
-        if max_steps is None:
-            max_steps = env.max_steps if hasattr(env, 'max_steps') else 1000
+        # Ensure we have an environment - either from initialization or provided
+        if env is None:
+            if self.env is None:
+                raise ValueError("Environment must be provided either during initialization or to the train method")
+            env = self.env
             
-        self.logger.info(f"Training SAC agent for {num_episodes} episodes, max {max_steps} steps per episode")
+        self.logger.info(f"Training SAC agent for {total_timesteps} total timesteps")
         
         rewards = []
-        avg_rewards = []
+        episode_rewards = []
+        episode_lengths = []
+        current_episode_reward = 0
+        current_episode_length = 0
+        
         best_avg_reward = -float('inf')
         best_weights = None
         
-        for episode in range(1, num_episodes+1):
-            state = env.reset()
-            episode_reward = 0
+        # Initial reset
+        state, info = env.reset()
+        
+        start_time = time.time()
+        
+        for step in range(1, total_timesteps + 1):
+            # Select action
+            action = self.act(state)
             
-            for step in range(max_steps):
-                action = self.act(state)
-                next_state, reward, done, _ = env.step(action)
+            # Take step in environment
+            next_state, reward, terminated, truncated, info = env.step(action)
+            done = terminated or truncated
+            
+            # Store transition and update networks
+            self.step(state, action, reward, next_state, done)
+            
+            # Update state and metrics
+            state = next_state
+            current_episode_reward += reward
+            current_episode_length += 1
+            
+            # Handle episode termination
+            if done:
+                episode_rewards.append(current_episode_reward)
+                episode_lengths.append(current_episode_length)
+                rewards.append(current_episode_reward)
                 
-                self.step(state, action, reward, next_state, done)
-                
-                state = next_state
-                episode_reward += reward
-                
-                if done:
-                    break
-            
-            rewards.append(episode_reward)
-            avg_reward = np.mean(rewards[-100:])  # Moving average of last 100 episodes
-            avg_rewards.append(avg_reward)
-            
-            # Record metrics
-            self.metrics['rewards'].append(episode_reward)
-            
-            # Store best weights
-            if avg_reward > best_avg_reward:
-                best_avg_reward = avg_reward
-                best_weights = {
-                    'actor': copy.deepcopy(self.actor.state_dict()),
-                    'critic': copy.deepcopy(self.critic.state_dict()),
-                    'critic_target': copy.deepcopy(self.critic_target.state_dict())
-                }
-            
-            # Log progress
-            if episode % 10 == 0:
-                self.logger.info(f"Episode {episode}/{num_episodes} | Avg Reward: {avg_reward:.2f} | "
-                                f"Alpha: {self.alpha:.4f} | Updates: {self.updates}")
+                # Reset for next episode
+                state, info = env.reset()
+                current_episode_reward = 0
+                current_episode_length = 0
             
             # Evaluate agent
-            if episode % eval_freq == 0:
-                eval_reward = self.evaluate(env, num_episodes=5)
-                self.logger.info(f"Evaluation at episode {episode}: {eval_reward:.2f}")
+            if step % eval_freq == 0:
+                eval_results = self.evaluate(env, n_eval_episodes)
+                mean_reward = eval_results['mean_reward']
+                std_reward = eval_results['std_reward']
+                self.logger.info(f"Step {step}/{total_timesteps} | Eval reward: {mean_reward:.2f} ± {std_reward:.2f}")
+                
+                # Store best model weights
+                if mean_reward > best_avg_reward:
+                    best_avg_reward = mean_reward
+                    best_weights = {
+                        'actor': copy.deepcopy(self.actor.state_dict()),
+                        'critic': copy.deepcopy(self.critic.state_dict()),
+                        'critic_target': copy.deepcopy(self.critic_target.state_dict())
+                    }
+            
+            # Log progress
+            if step % 1000 == 0:
+                avg_reward = np.mean(rewards[-min(100, len(rewards)):]) if rewards else 0
+                self.logger.info(f"Step {step}/{total_timesteps} | Avg Episode Reward: {avg_reward:.2f} | Updates: {self.updates}")
         
         # Restore best weights
         if best_weights is not None:
@@ -672,45 +724,57 @@ class SACAgent:
             self.critic.load_state_dict(best_weights['critic'])
             self.critic_target.load_state_dict(best_weights['critic_target'])
             
-        self.logger.info(f"Training completed. Best average reward: {best_avg_reward:.2f}")
+        elapsed_time = time.time() - start_time
+        self.logger.info(f"Training completed in {elapsed_time:.2f}s. Best average reward: {best_avg_reward:.2f}")
         
         return {
             'rewards': rewards,
-            'avg_rewards': avg_rewards,
-            'best_avg_reward': best_avg_reward,
-            'actor_losses': self.metrics['actor_losses'],
-            'critic_losses': self.metrics['critic_losses'],
-            'alpha_values': self.metrics['alpha_values'] if self.config['auto_entropy_tuning'] else None
+            'episode_rewards': episode_rewards,
+            'episode_lengths': episode_lengths,
+            'best_reward': best_avg_reward,
+            'time_elapsed': elapsed_time
         }
     
-    def evaluate(self, env, num_episodes=10):
+    def evaluate(self, env=None, n_eval_episodes=10):
         """
         Evaluate the agent on the given environment.
         
         Args:
-            env: OpenAI Gym environment
-            num_episodes (int): Number of episodes to evaluate
+            env: OpenAI Gym environment (if not provided during initialization)
+            n_eval_episodes (int): Number of episodes to evaluate
             
         Returns:
-            float: Average reward over evaluation episodes
+            tuple: (mean_reward, std_reward) over evaluation episodes
         """
+        # Ensure we have an environment - either from initialization or provided
+        if env is None:
+            if self.env is None:
+                raise ValueError("Environment must be provided either during initialization or to the evaluate method")
+            env = self.env
+        
         rewards = []
         
-        for episode in range(num_episodes):
-            state = env.reset()
+        for episode in range(n_eval_episodes):
             episode_reward = 0
+            state, info = env.reset()
             done = False
             
             while not done:
                 action = self.act(state, eval_mode=True)
-                next_state, reward, done, _ = env.step(action)
+                next_state, reward, terminated, truncated, info = env.step(action)
                 
+                done = terminated or truncated
                 state = next_state
                 episode_reward += reward
             
             rewards.append(episode_reward)
         
-        avg_reward = np.mean(rewards)
-        self.logger.info(f"Evaluation over {num_episodes} episodes: {avg_reward:.2f}")
+        mean_reward = np.mean(rewards)
+        std_reward = np.std(rewards)
+        self.logger.info(f"Evaluation over {n_eval_episodes} episodes: {mean_reward:.2f} ± {std_reward:.2f}")
         
-        return avg_reward
+        return {
+            'mean_reward': mean_reward,
+            'std_reward': std_reward,
+            'rewards': rewards
+        }
