@@ -14,6 +14,19 @@ from datetime import datetime, timedelta
 import json
 import random
 
+# Custom JSON encoder to handle NumPy data types
+class NumpyEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, (np.integer, np.int64)):
+            return int(obj)
+        elif isinstance(obj, (np.floating, np.float64)):
+            return float(obj)
+        elif isinstance(obj, np.ndarray):
+            return obj.tolist()
+        elif isinstance(obj, datetime):
+            return obj.isoformat()
+        return super(NumpyEncoder, self).default(obj)
+
 # Set random seed for reproducibility
 np.random.seed(2025)
 random.seed(2025)
@@ -436,7 +449,7 @@ def save_test_data(output_dir='test_data/utah_grid'):
     # Save data to files
     print("Saving grid topology...")
     with open(os.path.join(output_dir, 'utah_grid_topology.json'), 'w') as f:
-        json.dump(grid_topo, f, indent=2)
+        json.dump(grid_topo, f, indent=2, cls=NumpyEncoder)
     
     print("Saving weather data...")
     weather_data.to_csv(os.path.join(output_dir, 'utah_weather_data.csv'), index=False)
