@@ -1,0 +1,57 @@
+{
+  "generation_timestamp": "2025-03-30T23:03:09.285989",
+  "validation_metrics": {
+    "realism_score": 0.6837837837837838,
+    "diversity_score": 0.7228918081761327,
+    "consistency_score": 1.0,
+    "severity_distribution": {
+      "low": 64,
+      "medium": 54,
+      "high": 40,
+      "extreme": 0
+    },
+    "type_metrics": {
+      "normal": {
+        "realism": 0.6863636363636364,
+        "diversity": 0.5950454573407604,
+        "consistency": 1.0
+      },
+      "high_temperature": {
+        "realism": 0.6625000000000001,
+        "diversity": 0.6738865011225801,
+        "consistency": 1.0
+      },
+      "low_temperature": {
+        "realism": 0.775,
+        "diversity": 0.7257462218724936,
+        "consistency": 1.0
+      },
+      "high_wind": {
+        "realism": 0.7319148936170212,
+        "diversity": 0.6480258631273788,
+        "consistency": 1.0
+      },
+      "precipitation": {
+        "realism": 0.6553191489361703,
+        "diversity": 0.7939938377020589,
+        "consistency": 1.0
+      },
+      "compound": {
+        "realism": 0.7046153846153846,
+        "diversity": 0.6984169121303734,
+        "consistency": 0.0
+      }
+    },
+    "overall_score": 0.7903810559663533
+  },
+  "scenario_counts": {
+    "normal": 50,
+    "extreme": {
+      "high_temperature": 20,
+      "low_temperature": 20,
+      "high_wind": 20,
+      "precipitation": 20,
+      "compound": 28
+    }
+  }
+}

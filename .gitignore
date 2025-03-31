@@ -52,8 +52,10 @@ Thumbs.db
 # Run status documentation
 run_status.md
 
+# Chat history files
+docs/failure_prediction/module3_chat.md
+
 # Project specific files
-processed_data/
 *.log
 
 # Large data files

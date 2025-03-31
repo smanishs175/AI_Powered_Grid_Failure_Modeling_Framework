@@ -1,0 +1,63 @@
+# Default Configuration for Failure Prediction Module
+
+# Path configurations
+paths:
+  module1_data: "data/processed/"
+  module2_data: "data/vulnerability_analysis/"
+  output_data: "data/failure_prediction/"
+  logs: "logs/failure_prediction/"
+
+# Neural network predictor configuration
+neural_predictor:
+  model_type: "deep_neural_network"  # Options: deep_neural_network, random_forest, xgboost
+  hidden_layers: [128, 64, 32]
+  learning_rate: 0.001
+  epochs: 200
+  batch_size: 32
+  test_size: 0.2
+  early_stopping_patience: 10
+  dropout_rate: 0.2
+
+# Time series forecaster configuration
+time_series:
+  model_type: "lstm"  # Options: lstm, prophet
+  sequence_length: 14
+  lstm_units: [64, 32]
+  learning_rate: 0.001
+  epochs: 100
+  batch_size: 32
+  forecast_horizon: 30
+
+# Extreme event modeler configuration
+extreme_events:
+  event_types: ["high_temperature", "low_temperature", "high_wind", "precipitation"]
+  threshold_percentiles:
+    high_temperature: 95
+    low_temperature: 5
+    high_wind: 95
+    precipitation: 95
+
+# Correlation modeler configuration
+correlation_models:
+  model_types: ["linear", "nonlinear"]
+  environmental_factors: ["temperature", "wind_speed", "precipitation"]
+
+# Visualization settings
+visualization:
+  dpi: 300
+  figsize:
+    default: [10, 6]
+    heatmap: [12, 10]
+    timeseries: [14, 8]
+  color_maps:
+    correlation: "RdBu_r"
+    risk: "YlOrRd"
+    temperature: "coolwarm"
+    precipitation: "Blues"
+    wind: "Greens"
+
+# Logging configuration
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "failure_prediction.log"

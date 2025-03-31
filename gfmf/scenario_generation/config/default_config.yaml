@@ -1,0 +1,90 @@
+# Default configuration for Scenario Generation Module
+
+# Output paths
+output_paths:
+  base_path: "data/scenario_generation/"
+
+# Data paths from Failure Prediction Module
+data_paths:
+  base_path: "data/failure_prediction/"
+  probabilities_path: "data/failure_prediction/failure_probabilities.pkl"
+  time_series_path: "data/failure_prediction/time_series_forecasts.pkl"
+  extreme_event_path: "data/failure_prediction/extreme_event_impacts.pkl"
+  correlation_path: "data/failure_prediction/correlation_models.pkl"
+  components_path: "data/synthetic/synthetic_20250328_144932/synthetic_grid.csv"
+  outages_path: "data/synthetic/synthetic_20250328_144932/synthetic_outages.csv"
+  weather_path: "data/synthetic/synthetic_20250328_144932/synthetic_weather.csv"
+
+# Normal scenario generation parameters
+normal_scenarios:
+  count: 50
+  normal_temp_range: [15, 30]
+  normal_wind_range: [0, 15]
+  normal_precip_range: [0, 5]
+  normal_humidity_range: [30, 70]
+  time_related_proportion: 0.7
+
+# Extreme scenario generation parameters
+extreme_scenarios:
+  count_per_type: 20
+  event_types: ["high_temperature", "low_temperature", "high_wind", "precipitation"]
+  failure_multipliers:
+    high_temperature: 3.0
+    low_temperature: 2.5
+    high_wind: 4.0
+    precipitation: 3.5
+  extreme_conditions:
+    high_temperature:
+      temperature: [35, 45]
+      humidity: [60, 95]
+      wind_speed: [0, 10]
+      precipitation: [0, 2]
+      pressure: [980, 1010]
+      is_extreme_temperature: true
+      heat_wave_day: true
+    low_temperature:
+      temperature: [-30, -5]
+      humidity: [40, 70]
+      wind_speed: [5, 15]
+      precipitation: [0, 5]
+      pressure: [990, 1030]
+      is_extreme_temperature: true
+      cold_snap_day: true
+    high_wind:
+      temperature: [5, 30]
+      humidity: [30, 80]
+      wind_speed: [35, 70]
+      precipitation: [0, 10]
+      pressure: [960, 990]
+      is_extreme_wind: true
+      storm_day: true
+    precipitation:
+      temperature: [5, 25]
+      humidity: [80, 100]
+      wind_speed: [10, 40]
+      precipitation: [30, 150]
+      pressure: [960, 990]
+      is_extreme_precipitation: true
+      storm_day: true
+
+# Compound scenario generation parameters
+compound_scenarios:
+  count: 30
+  compound_multiplier: 1.5
+  compound_types:
+    - ["high_temperature", "high_wind"]
+    - ["high_wind", "precipitation"]
+    - ["low_temperature", "high_wind"]
+    - ["high_temperature", "precipitation"]
+
+# Cascade model parameters
+cascade_model:
+  max_cascade_steps: 10
+  load_redistribution_factor: 0.6
+  capacity_threshold: 0.9
+
+# Validation parameters
+validation:
+  realism_threshold: 0.7
+  diversity_threshold: 0.6
+  consistency_threshold: 0.8
