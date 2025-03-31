@@ -204,8 +204,106 @@ def run_data_management_module():
     # Store the processed data in the data module
     data_module.data = processed_data
     
-    # Combine the data for feature engineering
-    aligned_data = align_datasets(processed_data['grid'], processed_data['weather'], processed_data['outage'])
+    # Custom implementation of align_datasets for Utah grid data format
+    def custom_align_datasets(grid_data, weather_df, outage_df):
+        """Custom align datasets function for Utah grid data."""
+        logger.info("Using custom align_datasets function for Utah grid data")
+        
+        # Step 1: Convert grid data to correct format
+        if 'nodes' in grid_data and isinstance(grid_data['nodes'], pd.DataFrame):
+            # Extract component information from the nodes DataFrame
+            components_df = grid_data['nodes'].copy()
+            
+            # Ensure component_id column exists
+            if 'id' in components_df.columns and 'component_id' not in components_df.columns:
+                components_df['component_id'] = components_df['id']
+                logger.info("Created 'component_id' column from 'id' column")
+            elif 'component_id' not in components_df.columns:
+                components_df['component_id'] = components_df.index.astype(str)
+                logger.warning("No ID column found, creating synthetic component_id column")
+        else:
+            # Create empty components DataFrame with required columns
+            components_df = pd.DataFrame(columns=['component_id', 'type', 'capacity', 'age', 'criticality'])
+            logger.warning("No grid nodes data found, creating empty components DataFrame")
+        
+        # Step 2: Get time range from weather and outage data
+        if not weather_df.empty and 'timestamp' in weather_df.columns:
+            start_time = weather_df['timestamp'].min()
+            end_time = weather_df['timestamp'].max()
+        elif not outage_df.empty and 'start_time' in outage_df.columns:
+            start_time = outage_df['start_time'].min()
+            end_time = outage_df['end_time'].max()
+        else:
+            # Default to a 7-day period if no time data is available
+            start_time = pd.Timestamp('2024-01-01')
+            end_time = pd.Timestamp('2024-01-07')
+            logger.warning(f"No time data found, using default period: {start_time} to {end_time}")
+        
+        # Step 3: Create daily timeline
+        timeline = pd.date_range(start=start_time, end=end_time, freq='D')
+        logger.info(f"Created timeline with {len(timeline)} days from {timeline[0]} to {timeline[-1]}")
+        
+        # Step 4: Create component-time combinations
+        component_ids = components_df['component_id'].unique()
+        logger.info(f"Processing {len(component_ids)} unique components")
+        
+        # Step 5: Initialize combined dataframe
+        combined_records = []
+        
+        # Step 6: For each component, create timeline with weather and outage data
+        for component_id in component_ids:
+            component_row = components_df[components_df['component_id'] == component_id]
+            if component_row.empty:
+                continue
+            
+            component_data = component_row.iloc[0].to_dict()
+            
+            for timestamp in timeline:
+                # Create base record with component data
+                record = {
+                    'component_id': component_id,
+                    'timestamp': timestamp,
+                    'date': timestamp.date(),
+                }
+                
+                # Add component properties
+                for key, value in component_data.items():
+                    if key != 'component_id':  # Skip duplicate
+                        record[f'component_{key}'] = value
+                
+                # Add weather data for this date
+                date_weather = weather_df[weather_df['timestamp'].dt.date == timestamp.date()]
+                if not date_weather.empty:
+                    # Use first weather record for the day (or average if needed)
+                    weather_record = date_weather.iloc[0]
+                    for col in ['temperature', 'precipitation', 'wind_speed', 'humidity', 'weather_severity']:
+                        if col in weather_record:
+                            record[f'weather_{col}'] = weather_record[col]
+                    
+                    if 'extreme_weather' in weather_record:
+                        record['extreme_weather_flag'] = int(weather_record['extreme_weather'])
+                
+                # Check if component has outage on this date
+                component_outages = outage_df[
+                    (outage_df['component_id'] == component_id) & 
+                    (outage_df['start_time'].dt.date <= timestamp.date()) & 
+                    (outage_df['end_time'].dt.date >= timestamp.date())
+                ]
+                
+                # Add outage flag
+                record['outage_flag'] = 1 if not component_outages.empty else 0
+                
+                # Add record to results
+                combined_records.append(record)
+        
+        # Create DataFrame from records
+        result_df = pd.DataFrame(combined_records)
+        logger.info(f"Created aligned dataset with {len(result_df)} records and {len(result_df.columns)} features")
+        
+        return result_df
+    
+    # Use our custom function instead of the standard one
+    aligned_data = custom_align_datasets(processed_data['grid'], processed_data['weather'], processed_data['outage'])
     
     # Create features based on the aligned data
     features_list = [
