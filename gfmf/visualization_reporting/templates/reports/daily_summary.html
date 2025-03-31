@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ title }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            line-height: 1.6;
+            color: #333;
+        }
+        .header {
+            border-bottom: 2px solid #0055a4;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .logo {
+            height: 60px;
+            float: right;
+        }
+        h1 {
+            color: #003366;
+            margin-top: 0;
+        }
+        h2 {
+            color: #0055a4;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+        }
+        h3 {
+            color: #0066cc;
+        }
+        .section {
+            margin-bottom: 30px;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .summary {
+            background-color: #f2f8ff;
+        }
+        .vulnerability {
+            background-color: #fff5f5;
+        }
+        .predictions {
+            background-color: #f5fff5;
+        }
+        .policies {
+            background-color: #f5f5ff;
+        }
+        .metrics-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        .metric-box {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            width: 45%;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .metric-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #0055a4;
+        }
+        .footer {
+            text-align: center;
+            font-size: 0.8em;
+            margin-top: 30px;
+            padding-top: 10px;
+            border-top: 1px solid #ddd;
+            color: #666;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 15px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            margin: 15px 0;
+            border: 1px solid #ddd;
+        }
+        .alert {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 10px 15px;
+            margin: 15px 0;
+        }
+        .alert-danger {
+            background-color: #f8d7da;
+            border-color: #dc3545;
+        }
+        .alert-success {
+            background-color: #d4edda;
+            border-color: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        {% if logo_path %}
+        <img src="{{ logo_path }}" alt="Company Logo" class="logo">
+        {% endif %}
+        <h1>{{ title }}</h1>
+        <p>Generated on: {{ timestamp }}</p>
+        <p>{{ company_name }}</p>
+    </div>
+    
+    {% if 'summary' in sections %}
+    <div class="section summary">
+        <h2>Executive Summary</h2>
+        <div class="metrics-container">
+            <div class="metric-box">
+                <h3>Grid Status</h3>
+                <p>Operational Capacity: <span class="metric-value">{{ operational_capacity }}%</span></p>
+                <p>Components at Risk: {{ at_risk_components }}</p>
+                <p>Failed Components: {{ failed_components }}</p>
+            </div>
+            <div class="metric-box">
+                <h3>Forecast</h3>
+                <p>24h Failure Risk: <span class="metric-value">{{ failure_risk }}%</span></p>
+                <p>Highest Risk Area: {{ highest_risk_area }}</p>
+                <p>Weather Impact: {{ weather_impact }}</p>
+            </div>
+        </div>
+        {{ summary_content|safe }}
+        
+        {% if alerts %}
+        <h3>Critical Alerts</h3>
+        {% for alert in alerts %}
+        <div class="alert {% if alert.severity == 'high' %}alert-danger{% elif alert.severity == 'low' %}alert-success{% endif %}">
+            <strong>{{ alert.title }}</strong>: {{ alert.message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+    {% endif %}
+    
+    {% if 'vulnerability' in sections %}
+    <div class="section vulnerability">
+        <h2>Vulnerability Assessment</h2>
+        {{ vulnerability_content|safe }}
+        {% if vulnerability_image %}
+        <img src="{{ vulnerability_image }}" alt="Vulnerability Map">
+        {% endif %}
+    </div>
+    {% endif %}
+    
+    {% if 'predictions' in sections %}
+    <div class="section predictions">
+        <h2>Failure Predictions</h2>
+        {{ predictions_content|safe }}
+        {% if predictions_image %}
+        <img src="{{ predictions_image }}" alt="Failure Predictions">
+        {% endif %}
+    </div>
+    {% endif %}
+    
+    {% if 'policies' in sections %}
+    <div class="section policies">
+        <h2>Policy Recommendations</h2>
+        {{ policies_content|safe }}
+        {% if policies_image %}
+        <img src="{{ policies_image }}" alt="Policy Performance">
+        {% endif %}
+    </div>
+    {% endif %}
+    
+    <div class="footer">
+        <p>Copyright © {{ current_year }} {{ company_name }}</p>
+        <p>Generated by Grid Failure Modeling Framework</p>
+    </div>
+</body>
+</html>
