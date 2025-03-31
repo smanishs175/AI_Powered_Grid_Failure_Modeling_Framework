@@ -1,0 +1,54 @@
+# Default configuration for Reinforcement Learning Module
+
+# Base path for RL outputs
+base_path: "outputs/reinforcement_learning/"
+
+# Training parameters
+training:
+  total_steps: 10000
+  learning_rate: 0.001
+  discount_factor: 0.99
+  batch_size: 64
+  target_update_frequency: 1000
+  replay_buffer_size: 10000
+  exploration_params:
+    initial_epsilon: 1.0
+    min_epsilon: 0.1
+    decay_rate: 0.995
+
+# Network architecture
+network:
+  hidden_layers: [128, 64, 32]
+  activation: "relu"
+  policy_type: "mlp"
+
+# Environment settings
+environment:
+  reward_scaling: 1.0
+  max_steps_per_episode: 100
+  observation_features:
+    - "component_vulnerability"
+    - "failure_probability"
+    - "environmental_risk"
+    - "component_age"
+    - "component_criticality"
+    - "grid_connectivity"
+  
+# Evaluation settings
+evaluation:
+  eval_frequency: 1000
+  num_eval_episodes: 10
+  
+# Agents
+agents:
+  default: "dqn"
+  available:
+    - "dqn"
+    - "ppo"
+    - "a2c"
+
+# Logging
+logging:
+  log_frequency: 100
+  save_model_frequency: 1000
+  tensorboard: true
