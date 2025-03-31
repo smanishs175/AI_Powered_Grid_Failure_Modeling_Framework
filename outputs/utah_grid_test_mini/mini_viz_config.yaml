@@ -1,0 +1,10 @@
+grid_visualization:
+  default_format: png
+  map_style: light
+output_dir: outputs/utah_grid_test_mini/module_6_visualization_reporting
+performance_visualization:
+  default_format: png
+report_generator:
+  default_format: txt
+  default_sections:
+  - overview
