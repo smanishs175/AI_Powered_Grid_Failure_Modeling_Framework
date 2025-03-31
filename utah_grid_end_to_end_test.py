@@ -156,7 +156,7 @@ def run_data_management_module():
         # Add derived features
         weather_df['month'] = weather_df['timestamp'].dt.month
         weather_df['day'] = weather_df['timestamp'].dt.day
-        weather_df['hour'] = weather_df['timestamp'].dt.hour if 'hour' in weather_df['timestamp'].dt.components else 0
+        weather_df['hour'] = weather_df['timestamp'].dt.hour  # Hour will be 0 for date-only timestamps
         
         # Calculate weather severity index
         weather_df['weather_severity'] = (
