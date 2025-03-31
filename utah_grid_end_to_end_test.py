@@ -366,16 +366,21 @@ def run_vulnerability_analysis_module(features_df):
             else:
                 features_df[col] = None
     
-    # Create component profiler
-    from gfmf.vulnerability_analysis.component_profiler import ComponentProfiler
-    component_profiler = ComponentProfiler()
+    # Load configuration for vulnerability analysis
+    from gfmf.vulnerability_analysis.config.config_loader import load_config
+    vuln_config = load_config()
+    logger.info(f"Loaded vulnerability analysis configuration with {len(vuln_config)} settings")
+    
+    # Use the VulnerabilityAnalysisModule instead of individual components
+    from gfmf.vulnerability_analysis.vulnerability_analysis_module import VulnerabilityAnalysisModule
+    vuln_module = VulnerabilityAnalysisModule()
+    
+    # For debug purposes, access the individual components from the module
+    component_profiler = vuln_module.component_profiler
+    environmental_modeler = vuln_module.environmental_modeler
     
     # Profile components for vulnerability factors
     component_profiles = component_profiler.profile_components(features_df)
-    
-    # Create environmental threat modeler
-    from gfmf.vulnerability_analysis.environmental_modeler import EnvironmentalThreatModeler
-    environmental_modeler = EnvironmentalThreatModeler()
     
     # Model environmental threats
     # Note: For this mock test, we'll create synthetic environmental data
