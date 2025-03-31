@@ -117,113 +117,92 @@ def run_data_management_module():
                 )
                 logger.info("Renamed 'source'/'target' columns to 'from'/'to' for compatibility")
     
-    # Handle weather data column naming issues and data structure
+    # Skip the default data preprocessing and do it ourselves to ensure compatibility with Utah grid data    
+    logger.info("Using direct preprocessing approach for Utah grid data")
+    
+    # Process grid data
+    if 'grid' in data_module.data and isinstance(data_module.data['grid'], dict):
+        grid_data = data_module.data['grid'].copy()
+        
+        # Rename columns if needed
+        if 'lines' in grid_data and isinstance(grid_data['lines'], pd.DataFrame):
+            if 'source' in grid_data['lines'].columns and 'target' in grid_data['lines'].columns:
+                grid_data['lines'] = grid_data['lines'].rename(columns={'source': 'from', 'target': 'to'})
+                logger.info("Renamed grid connection columns from 'source'/'target' to 'from'/'to'")
+    else:
+        grid_data = {'nodes': pd.DataFrame(), 'lines': pd.DataFrame()}
+        logger.warning("No grid data found, creating empty grid data structure")
+    
+    # Process weather data
     if 'weather' in data_module.data and isinstance(data_module.data['weather'], pd.DataFrame):
         weather_df = data_module.data['weather'].copy()
         
-        # First, check for and rename columns that need conversion
-        weather_rename_map = {}
-        if 'date' in weather_df.columns and 'DATE' not in weather_df.columns:
-            weather_rename_map['date'] = 'DATE'
-        
-        if 'station' in weather_df.columns and 'station_id' not in weather_df.columns:
-            weather_rename_map['station'] = 'station_id'
-        
-        if weather_rename_map:
-            weather_df = weather_df.rename(columns=weather_rename_map)
-            logger.info(f"Renamed weather data columns for compatibility: {list(weather_rename_map.items())}")
-        
-        # Second, verify the station_id column exists - create it from station if needed
-        if 'station_id' not in weather_df.columns:
-            # If we still don't have station_id after renaming, we need to create it
-            if 'station' in weather_df.columns:
-                weather_df['station_id'] = weather_df['station']
-                logger.info("Created 'station_id' column from 'station' column")
-            else:
-                # Last resort - create a synthetic station ID column
-                logger.warning("No 'station' or 'station_id' column found in weather data, creating synthetic station IDs")
-                weather_df['station_id'] = weather_df.apply(lambda row: f"station_{row.name % 10}", axis=1)
-        
-        # Third, ensure all the required columns for the transformer exist
-        essential_columns = ['station_id', 'timestamp', 'latitude', 'longitude', 'temperature', 'precipitation', 'wind_speed']
-        for col in essential_columns:
-            if col not in weather_df.columns:
-                # For missing columns, create them with default values
-                if col == 'timestamp' and 'DATE' in weather_df.columns:
-                    weather_df['timestamp'] = pd.to_datetime(weather_df['DATE'])
-                    logger.info("Created 'timestamp' column from 'DATE' column")
-                else:
-                    logger.warning(f"Creating missing essential column '{col}' with default values")
-                    if col in ['latitude', 'longitude', 'temperature', 'precipitation', 'wind_speed']:
-                        weather_df[col] = 0.0
-                    else:
-                        weather_df[col] = 'unknown'
-        
-        # Update the data module with our fixed weather dataframe
-        data_module.data['weather'] = weather_df
-        logger.info(f"Weather data columns after preprocessing: {list(weather_df.columns)}")
-    
-    # Override the transform_weather_data function for Utah weather data compatibility
-    original_transform_fn = None
-    from gfmf.data_management.utils.transformers import transform_weather_data as original_transform_weather_data
-    
-    def utah_transform_weather_data(weather_df, config):
-        """Custom weather data transformer for Utah grid data."""
-        # Create a copy to avoid modifying the original
-        weather = weather_df.copy()
+        # Ensure required columns exist
+        if 'station_id' not in weather_df.columns and 'station' in weather_df.columns:
+            weather_df['station_id'] = weather_df['station']
+            logger.info("Created 'station_id' from 'station' column")
+        elif 'station_id' not in weather_df.columns:
+            weather_df['station_id'] = weather_df.apply(lambda row: f"station_{row.name % 10}", axis=1)
+            logger.info("Created synthetic 'station_id' column")
         
         # Ensure timestamp column is datetime
-        if 'timestamp' not in weather.columns and 'DATE' in weather.columns:
-            weather['timestamp'] = pd.to_datetime(weather['DATE'])
+        if 'timestamp' not in weather_df.columns:
+            if 'DATE' in weather_df.columns:
+                weather_df['timestamp'] = pd.to_datetime(weather_df['DATE'])
+            elif 'date' in weather_df.columns:
+                weather_df['timestamp'] = pd.to_datetime(weather_df['date'])
+            logger.info("Created 'timestamp' column from date column")
         
-        # Add month and hour columns
-        weather['month'] = weather['timestamp'].dt.month
-        weather['hour'] = weather['timestamp'].dt.hour
-        
-        # Add/verify station_id column
-        if 'station_id' not in weather.columns and 'station' in weather.columns:
-            weather['station_id'] = weather['station']
-        
-        # Skip built-in sorting that was causing issues
-        # Handle missing values (using parameters from config)
-        missing_strategy = config.get('preprocessing', {}).get('missing_strategy', 'interpolate')
-        essential_columns = ['precipitation', 'temperature', 'wind_speed']
-        
-        # Make sure essential columns exist
-        for col in essential_columns:
-            if col not in weather.columns:
-                weather[col] = 0.0
+        # Add derived features
+        weather_df['month'] = weather_df['timestamp'].dt.month
+        weather_df['day'] = weather_df['timestamp'].dt.day
+        weather_df['hour'] = weather_df['timestamp'].dt.hour if 'hour' in weather_df['timestamp'].dt.components else 0
         
         # Calculate weather severity index
-        weather['weather_severity'] = (
-            weather['precipitation'] * 0.3 + 
-            abs(weather['temperature'] - 20) * 0.4 + 
-            weather['wind_speed'] * 0.3
+        weather_df['weather_severity'] = (
+            weather_df['precipitation'] * 0.3 + 
+            abs(weather_df['temperature'] - 20) * 0.4 + 
+            weather_df['wind_speed'] * 0.3
         )
         
-        # Normalize to 0-1 range
-        weather['weather_severity'] = (weather['weather_severity'] - weather['weather_severity'].min()) / \
-                                      (weather['weather_severity'].max() - weather['weather_severity'].min() + 1e-10)
-        
         # Add extreme weather flag
-        weather['extreme_weather'] = (weather['weather_severity'] > 0.7).astype(int)
+        threshold = weather_df['weather_severity'].quantile(0.8)
+        weather_df['extreme_weather'] = (weather_df['weather_severity'] > threshold).astype(int)
         
-        logger.info(f"Custom weather transformer processed {len(weather)} records with columns: {list(weather.columns)}")
-        return weather
+        logger.info(f"Processed {len(weather_df)} weather records with features: {list(weather_df.columns)}")
+    else:
+        weather_df = pd.DataFrame()
+        logger.warning("No weather data found, creating empty weather dataframe")
     
-    # Replace the transformer temporarily
-    import types
-    from gfmf.data_management.utils import transformers
-    original_transform_fn = transformers.transform_weather_data
-    transformers.transform_weather_data = utah_transform_weather_data
+    # Process outage data
+    if 'outage' in data_module.data and isinstance(data_module.data['outage'], pd.DataFrame):
+        outage_df = data_module.data['outage'].copy()
+        
+        # Ensure required datetime columns
+        for col in ['start_time', 'end_time']:
+            if col in outage_df.columns and not pd.api.types.is_datetime64_any_dtype(outage_df[col]):
+                outage_df[col] = pd.to_datetime(outage_df[col], format='ISO8601')
+                logger.info(f"Converted {col} to datetime format")
+        
+        # Calculate outage duration if not present
+        if 'duration_hours' not in outage_df.columns and all(col in outage_df.columns for col in ['start_time', 'end_time']):
+            outage_df['duration_hours'] = (outage_df['end_time'] - outage_df['start_time']).dt.total_seconds() / 3600
+            logger.info("Calculated outage duration in hours")
+        
+        logger.info(f"Processed {len(outage_df)} outage records with features: {list(outage_df.columns)}")
+    else:
+        outage_df = pd.DataFrame()
+        logger.warning("No outage data found, creating empty outage dataframe")
     
-    try:
-        # Preprocess the data with our custom transformer
-        processed_data = data_module.preprocess_data()
-    finally:
-        # Restore the original transformer
-        if original_transform_fn is not None:
-            transformers.transform_weather_data = original_transform_fn
+    # Create processed_data dictionary with our processed dataframes
+    processed_data = {
+        'grid': grid_data,
+        'weather': weather_df,
+        'outage': outage_df
+    }
+    
+    # Store the processed data in the data module
+    data_module.data = processed_data
     
     # Combine the data for feature engineering
     aligned_data = align_datasets(processed_data['grid'], processed_data['weather'], processed_data['outage'])
