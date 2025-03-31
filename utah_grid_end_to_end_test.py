@@ -350,12 +350,21 @@ def run_vulnerability_analysis_module(features_df):
     """Run the Vulnerability Analysis Module (Module 2)."""
     logger.info("Running Vulnerability Analysis Module")
     
-    # Import necessary modules for vulnerability analysis
-    from gfmf.vulnerability_analysis.vulnerability_analysis_module import VulnerabilityAnalysisModule
-    from gfmf.vulnerability_analysis.config.config_loader import load_config
+    # Import individual vulnerability analysis components directly
+    from gfmf.vulnerability_analysis.component_profiler import ComponentProfiler
+    from gfmf.vulnerability_analysis.environmental_modeler import EnvironmentalThreatModeler
+    from gfmf.vulnerability_analysis.correlation_analyzer import CorrelationAnalyzer
     
-    # Initialize the module
-    vulnerability_module = VulnerabilityAnalysisModule()
+    # Initialize individual components
+    logger.info("Initializing vulnerability analysis components")
+    try:
+        component_profiler = ComponentProfiler()
+        environmental_modeler = EnvironmentalThreatModeler()
+        correlation_analyzer = CorrelationAnalyzer()
+        logger.info("Successfully initialized vulnerability analysis components")
+    except Exception as e:
+        logger.error(f"Error initializing vulnerability components: {str(e)}")
+        # Continue with fallback methods
     
     # Ensure we have all required columns for vulnerability analysis
     required_columns = ['id', 'type', 'capacity', 'age', 'failure_status']
@@ -401,10 +410,10 @@ def run_vulnerability_analysis_module(features_df):
     if 'longitude' not in component_features.columns:
         component_features['longitude'] = np.random.uniform(-114.0, -109.0, size=len(component_features))
     
-    # Profile components using the vulnerability module directly
+    # Profile components using the component profiler directly
     logger.info("Running component profiling...")
     try:
-        component_profiles = vulnerability_module.component_profiler.profile_components(component_features)
+        component_profiles = component_profiler.profile_components(component_features)
         logger.info(f"Component profiling completed with {len(component_profiles)} profiles")
     except Exception as e:
         logger.error(f"Error in component profiling: {str(e)}")
@@ -421,8 +430,8 @@ def run_vulnerability_analysis_module(features_df):
     # Note: For this mock test, we'll create synthetic environmental data
     logger.info("Generating environmental threat data...")
     try:
-        # Try to use the environmental modeler from the module
-        environmental_modeler = vulnerability_module.environmental_modeler
+        # Use the environmental modeler directly
+        # Already initialized above
         
         # Create environmental data with component IDs
         env_data = pd.DataFrame({
@@ -447,10 +456,10 @@ def run_vulnerability_analysis_module(features_df):
         })
         logger.info("Created synthetic environmental threats as fallback")
     
-    # Use the correlation analyzer from the vulnerability module
+    # Use the correlation analyzer directly
     logger.info("Running correlation analysis...")
     try:
-        correlation_analyzer = vulnerability_module.correlation_analyzer
+        # Correlation analyzer already initialized above
         
         # Match component IDs between profiles and threats
         # Make sure we're using consistent column names for merging
