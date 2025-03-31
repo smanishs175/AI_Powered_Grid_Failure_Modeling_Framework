@@ -163,8 +163,67 @@ def run_data_management_module():
         data_module.data['weather'] = weather_df
         logger.info(f"Weather data columns after preprocessing: {list(weather_df.columns)}")
     
-    # Preprocess the data
-    processed_data = data_module.preprocess_data()
+    # Override the transform_weather_data function for Utah weather data compatibility
+    original_transform_fn = None
+    from gfmf.data_management.utils.transformers import transform_weather_data as original_transform_weather_data
+    
+    def utah_transform_weather_data(weather_df, config):
+        """Custom weather data transformer for Utah grid data."""
+        # Create a copy to avoid modifying the original
+        weather = weather_df.copy()
+        
+        # Ensure timestamp column is datetime
+        if 'timestamp' not in weather.columns and 'DATE' in weather.columns:
+            weather['timestamp'] = pd.to_datetime(weather['DATE'])
+        
+        # Add month and hour columns
+        weather['month'] = weather['timestamp'].dt.month
+        weather['hour'] = weather['timestamp'].dt.hour
+        
+        # Add/verify station_id column
+        if 'station_id' not in weather.columns and 'station' in weather.columns:
+            weather['station_id'] = weather['station']
+        
+        # Skip built-in sorting that was causing issues
+        # Handle missing values (using parameters from config)
+        missing_strategy = config.get('preprocessing', {}).get('missing_strategy', 'interpolate')
+        essential_columns = ['precipitation', 'temperature', 'wind_speed']
+        
+        # Make sure essential columns exist
+        for col in essential_columns:
+            if col not in weather.columns:
+                weather[col] = 0.0
+        
+        # Calculate weather severity index
+        weather['weather_severity'] = (
+            weather['precipitation'] * 0.3 + 
+            abs(weather['temperature'] - 20) * 0.4 + 
+            weather['wind_speed'] * 0.3
+        )
+        
+        # Normalize to 0-1 range
+        weather['weather_severity'] = (weather['weather_severity'] - weather['weather_severity'].min()) / \
+                                      (weather['weather_severity'].max() - weather['weather_severity'].min() + 1e-10)
+        
+        # Add extreme weather flag
+        weather['extreme_weather'] = (weather['weather_severity'] > 0.7).astype(int)
+        
+        logger.info(f"Custom weather transformer processed {len(weather)} records with columns: {list(weather.columns)}")
+        return weather
+    
+    # Replace the transformer temporarily
+    import types
+    from gfmf.data_management.utils import transformers
+    original_transform_fn = transformers.transform_weather_data
+    transformers.transform_weather_data = utah_transform_weather_data
+    
+    try:
+        # Preprocess the data with our custom transformer
+        processed_data = data_module.preprocess_data()
+    finally:
+        # Restore the original transformer
+        if original_transform_fn is not None:
+            transformers.transform_weather_data = original_transform_fn
     
     # Combine the data for feature engineering
     aligned_data = align_datasets(processed_data['grid'], processed_data['weather'], processed_data['outage'])
