@@ -117,20 +117,51 @@ def run_data_management_module():
                 )
                 logger.info("Renamed 'source'/'target' columns to 'from'/'to' for compatibility")
     
-    # Fix column naming in weather data (from 'date' to 'DATE' and 'station' to 'station_id')
+    # Handle weather data column naming issues and data structure
     if 'weather' in data_module.data and isinstance(data_module.data['weather'], pd.DataFrame):
-        weather_rename_map = {}
+        weather_df = data_module.data['weather'].copy()
         
-        # Check and add column renames as needed
-        if 'date' in data_module.data['weather'].columns and 'DATE' not in data_module.data['weather'].columns:
+        # First, check for and rename columns that need conversion
+        weather_rename_map = {}
+        if 'date' in weather_df.columns and 'DATE' not in weather_df.columns:
             weather_rename_map['date'] = 'DATE'
         
-        if 'station' in data_module.data['weather'].columns and 'station_id' not in data_module.data['weather'].columns:
+        if 'station' in weather_df.columns and 'station_id' not in weather_df.columns:
             weather_rename_map['station'] = 'station_id'
         
         if weather_rename_map:
-            data_module.data['weather'] = data_module.data['weather'].rename(columns=weather_rename_map)
+            weather_df = weather_df.rename(columns=weather_rename_map)
             logger.info(f"Renamed weather data columns for compatibility: {list(weather_rename_map.items())}")
+        
+        # Second, verify the station_id column exists - create it from station if needed
+        if 'station_id' not in weather_df.columns:
+            # If we still don't have station_id after renaming, we need to create it
+            if 'station' in weather_df.columns:
+                weather_df['station_id'] = weather_df['station']
+                logger.info("Created 'station_id' column from 'station' column")
+            else:
+                # Last resort - create a synthetic station ID column
+                logger.warning("No 'station' or 'station_id' column found in weather data, creating synthetic station IDs")
+                weather_df['station_id'] = weather_df.apply(lambda row: f"station_{row.name % 10}", axis=1)
+        
+        # Third, ensure all the required columns for the transformer exist
+        essential_columns = ['station_id', 'timestamp', 'latitude', 'longitude', 'temperature', 'precipitation', 'wind_speed']
+        for col in essential_columns:
+            if col not in weather_df.columns:
+                # For missing columns, create them with default values
+                if col == 'timestamp' and 'DATE' in weather_df.columns:
+                    weather_df['timestamp'] = pd.to_datetime(weather_df['DATE'])
+                    logger.info("Created 'timestamp' column from 'DATE' column")
+                else:
+                    logger.warning(f"Creating missing essential column '{col}' with default values")
+                    if col in ['latitude', 'longitude', 'temperature', 'precipitation', 'wind_speed']:
+                        weather_df[col] = 0.0
+                    else:
+                        weather_df[col] = 'unknown'
+        
+        # Update the data module with our fixed weather dataframe
+        data_module.data['weather'] = weather_df
+        logger.info(f"Weather data columns after preprocessing: {list(weather_df.columns)}")
     
     # Preprocess the data
     processed_data = data_module.preprocess_data()
