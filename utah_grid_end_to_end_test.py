@@ -350,6 +350,10 @@ def run_vulnerability_analysis_module(features_df):
     """Run the Vulnerability Analysis Module (Module 2)."""
     logger.info("Running Vulnerability Analysis Module")
     
+    # Import necessary modules for vulnerability analysis
+    from gfmf.vulnerability_analysis.vulnerability_analysis_module import VulnerabilityAnalysisModule
+    from gfmf.vulnerability_analysis.config.config_loader import load_config
+    
     # Initialize the module
     vulnerability_module = VulnerabilityAnalysisModule()
     
