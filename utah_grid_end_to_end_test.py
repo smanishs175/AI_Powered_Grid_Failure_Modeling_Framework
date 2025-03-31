@@ -117,6 +117,12 @@ def run_data_management_module():
                 )
                 logger.info("Renamed 'source'/'target' columns to 'from'/'to' for compatibility")
     
+    # Fix column naming in weather data (from 'date' to 'DATE')
+    if 'weather' in data_module.data and isinstance(data_module.data['weather'], pd.DataFrame):
+        if 'date' in data_module.data['weather'].columns and 'DATE' not in data_module.data['weather'].columns:
+            data_module.data['weather'] = data_module.data['weather'].rename(columns={'date': 'DATE'})
+            logger.info("Renamed 'date' column to 'DATE' in weather data for compatibility")
+    
     # Preprocess the data
     processed_data = data_module.preprocess_data()
     
