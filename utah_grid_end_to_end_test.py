@@ -107,6 +107,16 @@ def run_data_management_module():
     data_module.data['weather'] = weather_df
     data_module.data['outage'] = outage_df
     
+    # Fix column naming in connections data (from 'source'/'target' to 'from'/'to')
+    if 'grid' in data_module.data and isinstance(data_module.data['grid'], dict):
+        if 'lines' in data_module.data['grid'] and isinstance(data_module.data['grid']['lines'], pd.DataFrame):
+            # Rename columns to match expected format
+            if 'source' in data_module.data['grid']['lines'].columns and 'target' in data_module.data['grid']['lines'].columns:
+                data_module.data['grid']['lines'] = data_module.data['grid']['lines'].rename(
+                    columns={'source': 'from', 'target': 'to'}
+                )
+                logger.info("Renamed 'source'/'target' columns to 'from'/'to' for compatibility")
+    
     # Preprocess the data
     processed_data = data_module.preprocess_data()
     
