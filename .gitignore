@@ -49,9 +49,13 @@ env/
 ehthumbs.db
 Thumbs.db
 
-# Project specific files
+# Run status documentation
 run_status.md
-processed_data/
+
+# Chat history files
+docs/failure_prediction/module3_chat.md
+
+# Project specific files
 *.log
 
 # Large data files

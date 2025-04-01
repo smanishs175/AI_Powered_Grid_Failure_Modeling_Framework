@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GFMF Mini Test Workflow</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; padding: 20px; margin: 0; }
+        h1, h2, h3 { color: #333; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 25px; }
+        h1 { margin-top: 0; }
+        h4 { color: #555; }
+        code { background-color: #f4f4f4; padding: 2px 5px; border-radius: 3px; font-family: monospace; border: 1px solid #ddd; }
+        pre { background-color: #f8f8f8; border: 1px solid #ddd; padding: 10px; border-radius: 5px; overflow-x: auto; }
+        pre code { background-color: transparent; border: none; padding: 0; }
+        ul, ol { margin-left: 20px; padding-left: 10px; }
+        li { margin-bottom: 8px; }
+        hr { border: 0; height: 1px; background: #ddd; margin: 30px 0; }
+
+        /* New flowchart styles */
+        .workflow-container {
+            border: 1px solid #ccc;
+            background-color: #fdfdfd;
+            padding: 15px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: auto;
+        }
+        .flowchart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            min-width: 800px;
+        }
+        .module-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            gap: 30px;
+        }
+        .node {
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            min-width: 150px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: relative;
+            font-weight: bold;
+        }
+        .start-end {
+            background-color: #f0f0f0;
+            border: 2px solid #ddd;
+        }
+        .data-node {
+            background-color: #f9f;
+            border: 2px solid #d7d;
+        }
+        .vuln-node {
+            background-color: #ccf;
+            border: 2px solid #aae;
+        }
+        .pred-node {
+            background-color: #cfc;
+            border: 2px solid #aea;
+        }
+        .scen-node {
+            background-color: #ffc;
+            border: 2px solid #eea;
+        }
+        .rl-node {
+            background-color: #fcc;
+            border: 2px solid #eaa;
+        }
+        .report-node {
+            background-color: #cff;
+            border: 2px solid #add;
+        }
+        .arrow {
+            width: 30px;
+            height: 30px;
+            position: relative;
+        }
+        .arrow::after {
+            content: "↓";
+            font-size: 24px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .h-arrow::after {
+            content: "→";
+        }
+        .module-box {
+            border: 1px dashed #999;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 10px 0;
+            background-color: rgba(255,255,255,0.5);
+        }
+        .module-title {
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            background-color: white;
+            padding: 0 10px;
+            font-size: 14px;
+            color: #666;
+        }
+        .zoom-controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 5px;
+            border-radius: 4px;
+            z-index: 10;
+        }
+        .zoom-controls button {
+            background-color: #eee;
+            border: 1px solid #ccc;
+            padding: 4px 8px;
+            margin: 0 2px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        .zoom-controls button:hover {
+            background-color: #ddd;
+        }
+        .readme-section {
+            padding: 15px;
+            border: 1px solid #eee;
+            background-color: #fafafa;
+        }
+        .benefit-section {
+            background-color: #f8f8f8;
+            border-left: 4px solid #4CAF50;
+            padding: 15px 20px;
+            margin: 20px 0;
+        }
+        .data-section {
+            background-color: #f0f7ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px 20px;
+            margin: 20px 0;
+        }
+        .application-box {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+    </style>
+</head>
+<body>
+
+    <h1>GFMF Utah Grid End-to-End Mini Test Workflow</h1>
+
+    <section class="benefit-section">
+        <h2>The Grid Failure Modeling Framework (GFMF): Real-World Benefits and Applications</h2>
+        
+        <h3>What GFMF Does in Simple Terms</h3>
+        <p>The Grid Failure Modeling Framework (GFMF) helps power utilities predict, prepare for, and prevent power outages before they happen. Think of it as an early warning system that not only tells you when parts of the power grid might fail, but also recommends the most cost-effective ways to strengthen those vulnerable points.</p>
+        
+        <h3>Real-World Applications</h3>
+        <div class="application-box">
+            <h4>1. Preventing Blackouts</h4>
+            <p>Instead of reacting to outages after they happen, utilities can identify vulnerable power lines or transformers and reinforce them before storms or heat waves hit.</p>
+        </div>
+        
+        <div class="application-box">
+            <h4>2. Smarter Budget Allocation</h4>
+            <p>Rather than upgrading grid components randomly or based on age alone, utilities can target their limited budgets on the components most likely to fail and cause widespread outages.</p>
+        </div>
+        
+        <div class="application-box">
+            <h4>3. Disaster Preparedness</h4>
+            <p>When extreme weather is forecast, the framework helps utilities position repair crews and resources in areas most likely to experience problems.</p>
+        </div>
+        
+        <div class="application-box">
+            <h4>4. Better Than Current Approaches</h4>
+            <p>Today, most utilities rely on historical patterns, age-based maintenance, and reactive responses. This framework adds predictive intelligence by combining multiple factors (weather patterns, equipment condition, grid topology) to make more accurate predictions.</p>
+        </div>
+        
+        <h3>Example: Using GFMF in Texas</h3>
+        <p>If a Texas utility wanted to use this framework, here's how it would work:</p>
+        
+        <ol>
+            <li><strong>Data Collection:</strong> The utility would gather:
+                <ul>
+                    <li>Grid topology data: Locations and connections of all substations, transformers, and transmission lines</li>
+                    <li>3-5 years of weather data for their service area: temperatures, rainfall, wind speeds, storm events</li>
+                    <li>Historical outage records: When, where, and why outages occurred</li>
+                </ul>
+            </li>
+            <li><strong>Training the System:</strong> The framework processes this data to learn patterns between:
+                <ul>
+                    <li>Weather conditions that preceded outages</li>
+                    <li>Grid components that frequently fail</li>
+                    <li>How failures cascade through their specific network</li>
+                </ul>
+            </li>
+            <li><strong>Getting Results:</strong> After training, the utility receives:
+                <ul>
+                    <li>Vulnerability maps showing which components are at highest risk</li>
+                    <li>Specific recommendations for which components to upgrade first</li>
+                    <li>Predictions about how different weather scenarios might affect their grid</li>
+                    <li>A strategy for efficiently hardening their grid within budget constraints</li>
+                </ul>
+            </li>
+        </ol>
+        
+        <h3>Why It's Better Than Current Approaches</h3>
+        <p>Most utilities today use:</p>
+        <ul>
+            <li>Regular inspection cycles regardless of risk</li>
+            <li>Age-based replacement schedules</li>
+            <li>Simple statistical models that don't account for complex interactions</li>
+        </ul>
+        
+        <p>GFMF improves on these by:</p>
+        <ul>
+            <li>Targeting resources where they're most needed</li>
+            <li>Considering multiple risk factors simultaneously</li>
+            <li>Using advanced machine learning to find patterns humans might miss</li>
+            <li>Simulating "what-if" scenarios to test different hardening strategies</li>
+            <li>Providing cost-effective solutions within budget constraints</li>
+        </ul>
+    </section>
+    
+    <section class="data-section">
+        <h2>The GFMF Workflow and Required Data</h2>
+        
+        <h3>Input Data Needed</h3>
+        <p>For any region (Texas, Utah, or any utility's service area), you need:</p>
+        
+        <div class="application-box">
+            <h4>1. Grid Topology Data</h4>
+            <ul>
+                <li>Locations of all substations, transformers, power lines</li>
+                <li>How these components connect to each other</li>
+                <li>Technical specifications (capacity, voltage, age, etc.)</li>
+                <li>Format: Usually JSON or GIS data files</li>
+            </ul>
+        </div>
+        
+        <div class="application-box">
+            <h4>2. Weather Data</h4>
+            <ul>
+                <li>Historical weather conditions (temperature, precipitation, wind)</li>
+                <li>Extreme weather events (storms, heat waves, cold fronts)</li>
+                <li>Climate data specific to the region</li>
+                <li>Format: CSV files with timestamps and measurements</li>
+            </ul>
+        </div>
+        
+        <div class="application-box">
+            <h4>3. Outage History</h4>
+            <ul>
+                <li>Records of past outages (times, locations, durations)</li>
+                <li>Cause of each outage (if known)</li>
+                <li>Components affected</li>
+                <li>Format: CSV files with outage details</li>
+            </ul>
+        </div>
+        
+        <h3>How Each Module Works and What It Produces</h3>
+        
+        <div class="application-box">
+            <h4>Module 1: Data Management</h4>
+            <p><strong>What it does:</strong> Cleans, combines, and prepares all input data.</p>
+            <p><strong>Input:</strong> Raw grid topology, weather, and outage data files</p>
+            <p><strong>Output:</strong> Processed features dataset that links weather patterns, grid components, and historical failures</p>
+            <p><strong>Why it matters:</strong> High-quality, cleaned data is essential for accurate predictions. This module handles missing values, normalizes formats, and creates useful features.</p>
+        </div>
+        
+        <div class="application-box">
+            <h4>Module 2: Vulnerability Analysis</h4>
+            <p><strong>What it does:</strong> Analyzes which components are most likely to fail and why.</p>
+            <p><strong>Input:</strong> Processed features dataset</p>
+            <p><strong>Output:</strong> Vulnerability scores for each component in the grid</p>
+            <p><strong>Why it matters:</strong> Identifies which parts of the grid are most at risk, considering factors like age, maintenance history, and environmental exposure.</p>
+        </div>
+        
+        <div class="application-box">
+            <h4>Module 3: Failure Prediction</h4>
+            <p><strong>What it does:</strong> Builds a neural network model to predict future failures.</p>
+            <p><strong>Input:</strong> Vulnerability scores and processed features</p>
+            <p><strong>Output:</strong> Probability of failure for each component under various conditions</p>
+            <p><strong>Why it matters:</strong> Unlike simple statistical models, this can capture complex interactions between weather, component age, and grid topology.</p>
+        </div>
+        
+        <div class="application-box">
+            <h4>Module 4: Scenario Generation</h4>
+            <p><strong>What it does:</strong> Creates "what-if" scenarios to test grid resilience.</p>
+            <p><strong>Input:</strong> Vulnerability scores and system configurations</p>
+            <p><strong>Output:</strong> Impact analysis for different failure scenarios (e.g., extreme weather events)</p>
+            <p><strong>Why it matters:</strong> Allows utilities to prepare for specific threats like ice storms, heat waves, or hurricanes before they happen.</p>
+        </div>
+        
+        <div class="application-box">
+            <h4>Module 5: Reinforcement Learning</h4>
+            <p><strong>What it does:</strong> Discovers optimal grid hardening strategies within budget constraints.</p>
+            <p><strong>Input:</strong> Vulnerability scores, scenario impacts, and budget limits</p>
+            <p><strong>Output:</strong> Prioritized hardening policy (which components to upgrade first)</p>
+            <p><strong>Why it matters:</strong> Makes smart economic choices by finding the best bang-for-buck in grid improvements.</p>
+        </div>
+        
+        <div class="application-box">
+            <h4>Module 6: Visualization & Reporting</h4>
+            <p><strong>What it does:</strong> Creates visual reports and actionable recommendations.</p>
+            <p><strong>Input:</strong> All previous module outputs</p>
+            <p><strong>Output:</strong> Maps, charts, and prioritized action lists</p>
+            <p><strong>Why it matters:</strong> Translates complex data into clear visuals and recommendations that utility managers can understand and implement.</p>
+        </div>
+    </section>
+
+    <div class="workflow-container">
+        <h2>Workflow Diagram</h2>
+        <div id="flowchart-container" class="flowchart">
+            <!-- Row 1 -->
+            <div class="module-row">
+                <div class="node start-end">Start Mini Test</div>
+            </div>
+            <div class="arrow"></div>
+
+            <!-- Row 2 -->
+            <div class="module-row">
+                <div class="node data-node">Generate/Verify Test Data</div>
+            </div>
+            <div class="arrow"></div>
+
+            <!-- Row 3: Data Management -->
+            <div class="module-row" style="position: relative;">
+                <div class="module-box" style="width: 100%;">
+                    <div class="module-title">Module 1: Data Management</div>
+                    <div class="node data-node">Data Management Module</div>
+                    <div class="arrow"></div>
+                    <div class="node data-node">Limit Components</div>
+                    <div class="arrow"></div>
+                    <div class="node data-node">Preprocess Data</div>
+                </div>
+            </div>
+            <div class="arrow"></div>
+
+            <!-- Row 4: Vulnerability Analysis -->
+            <div class="module-row" style="position: relative;">
+                <div class="module-box" style="width: 100%;">
+                    <div class="module-title">Module 2: Vulnerability Analysis</div>
+                    <div class="node vuln-node">Vulnerability Analysis Module</div>
+                    <div class="arrow"></div>
+                    <div class="node vuln-node">Calculate Component & Environmental Vulnerability</div>
+                </div>
+            </div>
+            <div class="arrow"></div>
+
+            <!-- Row 5: Failure Prediction -->
+            <div class="module-row" style="position: relative;">
+                <div class="module-box" style="width: 100%;">
+                    <div class="module-title">Module 3: Failure Prediction</div>
+                    <div class="node pred-node">Failure Prediction Module</div>
+                    <div class="arrow"></div>
+                    <div class="node pred-node">Train Neural Predictor (Simplified)</div>
+                    <div class="arrow"></div>
+                    <div class="node pred-node">Predict Failure Probability</div>
+                </div>
+            </div>
+            <div class="arrow"></div>
+
+            <!-- Row 6: Scenario Generation -->
+            <div class="module-row" style="position: relative;">
+                <div class="module-box" style="width: 100%;">
+                    <div class="module-title">Module 4: Scenario Generation</div>
+                    <div class="node scen-node">Scenario Generation Module</div>
+                    <div class="arrow"></div>
+                    <div class="node scen-node">Generate Baseline, Failure & Weather Scenarios</div>
+                    <div class="arrow"></div>
+                    <div class="node scen-node">Calculate Impacts</div>
+                </div>
+            </div>
+            <div class="arrow"></div>
+
+            <!-- Row 7: Reinforcement Learning -->
+            <div class="module-row" style="position: relative;">
+                <div class="module-box" style="width: 100%;">
+                    <div class="module-title">Module 5: Reinforcement Learning</div>
+                    <div class="node rl-node">Reinforcement Learning Module</div>
+                    <div class="arrow"></div>
+                    <div class="node rl-node">Create GridEnv (Reduced Size)</div>
+                    <div class="arrow"></div>
+                    <div class="node rl-node">Train SAC & TD3 Agents</div>
+                    <div class="arrow"></div>
+                    <div class="node rl-node">Evaluate Agents</div>
+                    <div class="arrow"></div>
+                    <div class="node rl-node">Generate Hardening Policy</div>
+                </div>
+            </div>
+            <div class="arrow"></div>
+
+            <!-- Row 8: Visualization & Reporting -->
+            <div class="module-row" style="position: relative;">
+                <div class="module-box" style="width: 100%;">
+                    <div class="module-title">Module 6: Visualization & Reporting</div>
+                    <div class="node report-node">Visualization & Reporting</div>
+                    <div class="arrow"></div>
+                    <div class="node report-node">Generate Text Summary Report</div>
+                </div>
+            </div>
+            <div class="arrow"></div>
+
+            <!-- Row 9 -->
+            <div class="module-row">
+                <div class="node start-end">End Mini Test</div>
+            </div>
+        </div>
+        <div class="zoom-controls">
+            <button id="zoom-in">Zoom In (+)</button>
+            <button id="zoom-out">Zoom Out (-)</button>
+            <button id="zoom-reset">Reset Zoom</button>
+        </div>
+    </div>
+
+
+    <div class="readme-section">
+        <h2>README: <code>utah_grid_end_to_end_test_mini.py</code></h2>
+
+        <h3>Purpose</h3>
+        <p>This script provides a lightweight, end-to-end test of the Grid Failure Modeling Framework (GFMF) pipeline. It's designed for quick verification of the overall workflow integration using reduced data sizes and simplified model training steps. This makes it much faster to run than the full end-to-end test while still exercising all the core modules.</p>
+        <p><strong>Key differences from the full test:</strong></p>
+        <ul>
+            <li>Uses a separate output directory (<code>outputs/utah_grid_test_mini/</code>).</li>
+            <li>Uses separate, potentially dummy, input data (<code>test_data/utah_grid_mini/</code>).</li>
+            <li>Limits the number of grid components processed (e.g., 20).</li>
+            <li>Reduces the complexity and duration of model training (e.g., fewer epochs for failure prediction, fewer timesteps for RL).</li>
+            <li>Generates fewer scenarios.</li>
+            <li>Simplifies visualization and reporting (e.g., basic text report).</li>
+            <li>Includes basic error handling and fallbacks for each module to improve robustness during testing.</li>
+        </ul>
+
+        <h3>Prerequisites</h3>
+        <ol>
+            <li><strong>Python Environment:</strong> A Python environment (e.g., venv or conda) with necessary libraries installed.</li>
+            <li><strong>GFMF Package:</strong> The <code>gfmf</code> package must be installed and available in the Python path. This includes all submodules (<code>data_management</code>, <code>vulnerability_analysis</code>, <code>failure_prediction</code>, <code>scenario_generation</code>, <code>reinforcement_learning</code>, <code>visualization_reporting</code>).</li>
+            <li><strong>Dependencies:</strong> All dependencies required by the GFMF modules (e.g., <code>pandas</code>, <code>numpy</code>, <code>scikit-learn</code>, <code>tensorflow</code> or <code>pytorch</code>, <code>gymnasium</code>, <code>pyyaml</code>, <code>mermaid</code>). You might need to install <code>tensorflow</code> or <code>pytorch</code> depending on the <code>NeuralPredictor</code> implementation.</li>
+            <li><strong>(Optional) <code>utah_grid_generator.py</code>:</strong> If available in <code>test_data/utah_grid/</code>, this script generates more realistic synthetic test data. If not found, the mini-test script will generate minimal dummy data automatically.</li>
+        </ol>
+
+        <h3>How to Run</h3>
+        <p>Execute the script from the root directory of the project:</p>
+        <pre><code class="language-bash">python utah_grid_end_to_end_test_mini.py</code></pre>
+
+        <h3>Workflow Overview</h3>
+        <p>The script executes the GFMF pipeline sequentially through its modules:</p>
+        <ol>
+            <li><strong>Generate/Verify Test Data:</strong> Ensures minimal test data exists in <code>test_data/utah_grid_mini/</code>. Uses <code>utah_grid_generator.py</code> if found, otherwise creates basic dummy files.</li>
+            <li><strong>Module 1: Data Management:</strong>
+                <ul>
+                    <li><strong>Input:</strong> Raw grid topology (<code>.json</code>), weather (<code>.csv</code>), and outage (<code>.csv</code>) data from <code>test_data/utah_grid_mini/</code>.</li>
+                    <li><strong>Processing:</strong> Loads data, limits the number of components (default: 20), performs basic preprocessing and feature engineering (e.g., calculates outage counts).</li>
+                    <li><strong>Output:</strong> A features DataFrame (<code>processed_features_mini.csv</code>) saved in <code>outputs/utah_grid_test_mini/module_1_processed_data/</code>.</li>
+                </ul>
+            </li>
+            <li><strong>Module 2: Vulnerability Analysis:</strong>
+                <ul>
+                    <li><strong>Input:</strong> Features DataFrame from Module 1.</li>
+                    <li><strong>Processing:</strong> Calculates component and environmental vulnerability scores based on the input features. Uses fallback mechanisms if the module fails.</li>
+                    <li><strong>Output:</strong> Vulnerability scores DataFrame (<code>vulnerability_scores_mini.csv</code>) saved in <code>outputs/utah_grid_test_mini/module_2_vulnerability_analysis/</code>.</li>
+                </ul>
+            </li>
+            <li><strong>Module 3: Failure Prediction:</strong>
+                <ul>
+                    <li><strong>Input:</strong> Features DataFrame (Module 1), Vulnerability Scores DataFrame (Module 2).</li>
+                    <li><strong>Processing:</strong> Merges inputs, prepares data, trains a simplified Neural Network predictor (reduced epochs, e.g., 3) to predict failure probability based on features and vulnerability. Uses fallback mechanisms.</li>
+                    <li><strong>Output:</strong> Failure predictions DataFrame (<code>failure_predictions_mini.csv</code>) saved in <code>outputs/utah_grid_test_mini/module_3_failure_prediction/</code>. The trained model object is also returned but not explicitly saved in the mini version.</li>
+                </ul>
+            </li>
+            <li><strong>Module 4: Scenario Generation:</strong>
+                <ul>
+                    <li><strong>Input:</strong> Vulnerability Scores DataFrame (Module 2). (Failure predictions from Module 3 are available but not heavily used in the simplified generation logic).</li>
+                    <li><strong>Processing:</strong> Generates a baseline scenario, a small number of component failure scenarios (default: 2) based on highest vulnerability, and a single extreme weather scenario ('extreme_heat'). Calculates simplified impacts (operational percentage, cascading impact).</li>
+                    <li><strong>Output:</strong> Scenario impacts DataFrame (<code>scenario_impacts_mini.csv</code>) saved in <code>outputs/utah_grid_test_mini/module_4_scenario_generation/</code>.</li>
+                </ul>
+            </li>
+            <li><strong>Module 5: Reinforcement Learning:</strong>
+                <ul>
+                    <li><strong>Input:</strong> Vulnerability Scores DataFrame (Module 2), Scenario Impacts DataFrame (Module 4).</li>
+                    <li><strong>Processing:</strong> Creates a <code>GridEnv</code> environment with a reduced grid size (default: 10 most vulnerable components) and fewer simulation steps. Trains SAC and TD3 agents for significantly fewer timesteps (default: 1000). Evaluates agents and generates a simplified hardening policy based directly on vulnerability scores (not complex agent policy extraction). Uses fallback mechanisms.</li>
+                    <li><strong>Output:</strong>
+                        <ul>
+                            <li>Hardening policy DataFrame (<code>hardening_policy_mini.csv</code>).</li>
+                            <li>Agent performance metrics (<code>agent_performance_mini.json</code>).</li>
+                            <li>Both saved in <code>outputs/utah_grid_test_mini/module_5_reinforcement_learning/</code>.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li><strong>Module 6: Visualization & Reporting:</strong>
+                <ul>
+                    <li><strong>Input:</strong> Outputs from previous modules (Grid Topology, Vulnerability Scores, Failure Predictions, Scenario Impacts, Hardening Policy, Agent Performance).</li>
+                    <li><strong>Processing:</strong> Initializes the module with a minimal configuration. Generates a basic text summary report. Skips complex visualizations generated in the full test.</li>
+                    <li><strong>Output:</strong> A text summary report (<code>summary_report_mini.txt</code>) saved in <code>outputs/utah_grid_test_mini/module_6_visualization_reporting/</code>.</li>
+                </ul>
+            </li>
+        </ol>
+
+        <h3>Expected Outputs</h3>
+        <ul>
+            <li><strong>Log File:</strong> <code>utah_grid_test_mini_run.log</code> in the project root, containing detailed logs of the script execution.</li>
+            <li><strong>Output Directory:</strong> <code>outputs/utah_grid_test_mini/</code> containing subdirectories for each module's output:
+                <ul>
+                    <li><code>module_1_processed_data/processed_features_mini.csv</code></li>
+                    <li><code>module_2_vulnerability_analysis/vulnerability_scores_mini.csv</code></li>
+                    <li><code>module_3_failure_prediction/failure_predictions_mini.csv</code></li>
+                    <li><code>module_4_scenario_generation/scenario_impacts_mini.csv</code></li>
+                    <li><code>module_5_reinforcement_learning/hardening_policy_mini.csv</code></li>
+                    <li><code>module_5_reinforcement_learning/agent_performance_mini.json</code></li>
+                    <li><code>module_6_visualization_reporting/summary_report_mini.txt</code></li>
+                    <li><code>module_6_visualization_reporting/mini_viz_config.yaml</code></li>
+                </ul>
+            </li>
+            <li><strong>Console Output:</strong> Logging messages and a final summary printed to the console upon completion or failure.</li>
+        </ul>
+
+        <h3>Error Handling</h3>
+        <p>The mini-test script includes <code>try...except</code> blocks around major module initializations and execution steps. If a module fails, it logs an error and attempts to use fallback mechanisms (e.g., generating dummy data or skipping the step) to allow the pipeline to continue as much as possible for integration testing purposes. Check the log file for details on any errors encountered.</p>
+    </div>
+
+    <!-- Panzoom JS -->
+    <script src="https://unpkg.com/@panzoom/panzoom@4.5.1/dist/panzoom.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const flowchartContainer = document.getElementById('flowchart-container');
+            const zoomControls = document.querySelector('.zoom-controls');
+            
+            try {
+                // Initialize Panzoom
+                const panzoomInstance = Panzoom(flowchartContainer, {
+                    maxScale: 5,
+                    minScale: 0.3,
+                    contain: 'outside'
+                });
+
+                // Setup button controls
+                zoomControls.querySelector('#zoom-in').addEventListener('click', () => panzoomInstance.zoomIn());
+                zoomControls.querySelector('#zoom-out').addEventListener('click', () => panzoomInstance.zoomOut());
+                zoomControls.querySelector('#zoom-reset').addEventListener('click', () => panzoomInstance.reset());
+                
+                // Enable mousewheel zoom
+                flowchartContainer.parentElement.addEventListener('wheel', (event) => {
+                    event.preventDefault();
+                    panzoomInstance.zoomWithWheel(event);
+                });
+                
+                // Add grab/grabbing cursor
+                flowchartContainer.parentElement.style.cursor = 'grab';
+                flowchartContainer.parentElement.addEventListener('mousedown', (e) => {
+                    if (e.button === 0) {
+                        flowchartContainer.parentElement.style.cursor = 'grabbing';
+                    }
+                });
+                flowchartContainer.parentElement.addEventListener('mouseup', () => { 
+                    flowchartContainer.parentElement.style.cursor = 'grab';
+                });
+                flowchartContainer.parentElement.addEventListener('mouseleave', () => { 
+                    flowchartContainer.parentElement.style.cursor = 'grab';
+                });
+                
+                console.log("Flowchart initialized with Panzoom successfully!");
+                
+            } catch (error) {
+                console.error("Error initializing flowchart:", error);
+                flowchartContainer.innerHTML = `
+                    <p style='color: red; font-weight: bold;'>Error initializing flowchart:</p>
+                    <p style='color: red;'>${error.message}</p>
+                `;
+                
+                if (zoomControls) {
+                    zoomControls.style.display = 'none';
+                }
+            }
+        });
+    </script>
+
+</body>
+</html> 

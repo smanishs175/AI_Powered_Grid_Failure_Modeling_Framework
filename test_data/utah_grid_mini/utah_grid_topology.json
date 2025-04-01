@@ -1,0 +1,5605 @@
+{
+  "components": [
+    {
+      "id": "generating_station_0",
+      "type": "generating_station",
+      "capacity": 939.35,
+      "age": 18.4,
+      "location": {
+        "lat": 40.6878976327356,
+        "lon": -111.81342965945393
+      },
+      "status": "operational",
+      "maintenance_frequency": 5,
+      "criticality": "medium"
+    },
+    {
+      "id": "generating_station_1",
+      "type": "generating_station",
+      "capacity": 967.81,
+      "age": 32.2,
+      "location": {
+        "lat": 40.72307351709421,
+        "lon": -112.00257661249874
+      },
+      "status": "operational",
+      "maintenance_frequency": 6,
+      "criticality": "low"
+    },
+    {
+      "id": "generating_station_2",
+      "type": "generating_station",
+      "capacity": 102.85,
+      "age": 12.4,
+      "location": {
+        "lat": 40.142143594563755,
+        "lon": -111.60460842561244
+      },
+      "status": "operational",
+      "maintenance_frequency": 8,
+      "criticality": "low"
+    },
+    {
+      "id": "generating_station_3",
+      "type": "generating_station",
+      "capacity": 699.75,
+      "age": 39.5,
+      "location": {
+        "lat": 40.569723000948926,
+        "lon": -112.05128027266586
+      },
+      "status": "operational",
+      "maintenance_frequency": 6,
+      "criticality": "high"
+    },
+    {
+      "id": "generating_station_4",
+      "type": "generating_station",
+      "capacity": 349.93,
+      "age": 21.3,
+      "location": {
+        "lat": 40.38010627734649,
+        "lon": -111.6053712933033
+      },
+      "status": "operational",
+      "maintenance_frequency": 3,
+      "criticality": "high"
+    },
+    {
+      "id": "generating_station_5",
+      "type": "generating_station",
+      "capacity": 561.83,
+      "age": 35.2,
+      "location": {
+        "lat": 40.5297486412819,
+        "lon": -111.74072031225084
+      },
+      "status": "operational",
+      "maintenance_frequency": 2,
+      "criticality": "medium"
+    },
+    {
+      "id": "generating_station_6",
+      "type": "generating_station",
+      "capacity": 930.35,
+      "age": 16.3,
+      "location": {
+        "lat": 41.2167798535853,
+        "lon": -111.92144536190862
+      },
+      "status": "operational",
+      "maintenance_frequency": 11,
+      "criticality": "medium"
+    },
+    {
+      "id": "generating_station_7",
+      "type": "generating_station",
+      "capacity": 533.92,
+      "age": 34.1,
+      "location": {
+        "lat": 37.15690993806032,
+        "lon": -113.48908397721927
+      },
+      "status": "operational",
+      "maintenance_frequency": 4,
+      "criticality": "medium"
+    },
+    {
+      "id": "generating_station_8",
+      "type": "generating_station",
+      "capacity": 683.66,
+      "age": 36.1,
+      "location": {
+        "lat": 40.981214920251674,
+        "lon": -111.96637045625695
+      },
+      "status": "operational",
+      "maintenance_frequency": 2,
+      "criticality": "medium"
+    },
+    {
+      "id": "generating_station_9",
+      "type": "generating_station",
+      "capacity": 963.18,
+      "age": 8.5,
+      "location": {
+        "lat": 40.4777206638238,
+        "lon": -111.84212596228791
+      },
+      "status": "operational",
+      "maintenance_frequency": 11,
+      "criticality": "medium"
+    },
+    {
+      "id": "generating_station_10",
+      "type": "generating_station",
+      "capacity": 438.64,
+      "age": 39.4,
+      "location": {
+        "lat": 37.948834147646885,
+        "lon": -110.65051142296417
+      },
+      "status": "operational",
+      "maintenance_frequency": 8,
+      "criticality": "low"
+    },
+    {
+      "id": "generating_station_11",
+      "type": "generating_station",
+      "capacity": 497.23,
+      "age": 27.2,
+      "location": {
+        "lat": 41.85460460687974,
+        "lon": -113.09271837873665
+      },
+      "status": "operational",
+      "maintenance_frequency": 8,
+      "criticality": "medium"
+    },
+    {
+      "id": "generating_station_12",
+      "type": "generating_station",
+      "capacity": 805.03,
+      "age": 13.5,
+      "location": {
+        "lat": 40.18077491303119,
+        "lon": -110.40082178772478
+      },
+      "status": "operational",
+      "maintenance_frequency": 2,
+      "criticality": "low"
+    },
+    {
+      "id": "generating_station_13",
+      "type": "generating_station",
+      "capacity": 871.4,
+      "age": 3.0,
+      "location": {
+        "lat": 36.63872385010826,
+        "lon": -112.80615880576737
+      },
+      "status": "operational",
+      "maintenance_frequency": 3,
+      "criticality": "medium"
+    },
+    {
+      "id": "generating_station_14",
+      "type": "generating_station",
+      "capacity": 230.65,
+      "age": 6.3,
+      "location": {
+        "lat": 37.793510101135944,
+        "lon": -112.20449187093394
+      },
+      "status": "operational",
+      "maintenance_frequency": 2,
+      "criticality": "high"
+    },
+    {
+      "id": "transmission_substation_15",
+      "type": "transmission_substation",
+      "capacity": 664.61,
+      "age": 24.0,
+      "location": {
+        "lat": 40.68970394562657,
+        "lon": -111.98510512531425
+      },
+      "status": "operational",
+      "maintenance_frequency": 6,
+      "criticality": "high"
+    },
+    {
+      "id": "transmission_substation_16",
+      "type": "transmission_substation",
+      "capacity": 435.95,
+      "age": 25.2,
+      "location": {
+        "lat": 40.62675475310656,
+        "lon": -111.97916031484208
+      },
+      "status": "operational",
+      "maintenance_frequency": 5,
+      "criticality": "medium"
+    },
+    {
+      "id": "transmission_substation_17",
+      "type": "transmission_substation",
+      "capacity": 350.42,
+      "age": 34.1,
+      "location": {
+        "lat": 40.31010053260773,
+        "lon": -111.72515670158742
+      },
+      "status": "operational",
+      "maintenance_frequency": 12,
+      "criticality": "high"
+    },
+    {
+      "id": "transmission_substation_18",
+      "type": "transmission_substation",
+      "capacity": 550.27,
+      "age": 29.8,
+      "location": {
+        "lat": 40.53600126176303,
+        "lon": -112.03290434371425
+      },
+      "status": "operational",
+      "maintenance_frequency": 7,
+      "criticality": "medium"
+    },
+    {
+      "id": "transmission_substation_19",
+      "type": "transmission_substation",
+      "capacity": 492.39,
+      "age": 7.4,
+      "location": {
+        "lat": 40.32118835217669,
+        "lon": -111.7173571723005
+      },
+      "status": "operational",
+      "maintenance_frequency": 12,
+      "criticality": "high"
+    },
+    {
+      "id": "transmission_substation_20",
+      "type": "transmission_substation",
+      "capacity": 597.96,
+      "age": 5.3,
+      "location": {
+        "lat": 40.48220672742414,
+        "lon": -111.81855267901152
+      },
+      "status": "operational",
+      "maintenance_frequency": 8,
+      "criticality": "medium"
+    },
+    {
+      "id": "transmission_substation_21",
+      "type": "transmission_substation",
+      "capacity": 361.19,
+      "age": 33.3,
+      "location": {
+        "lat": 41.19205861578261,
+        "lon": -112.00565822442226
+      },
+      "status": "operational",
+      "maintenance_frequency": 5,
+      "criticality": "medium"
+    },
+    {
+      "id": "transmission_substation_22",
+      "type": "transmission_substation",
+      "capacity": 474.96,
+      "age": 33.7,
+      "location": {
+        "lat": 37.008994808193975,
+        "lon": -113.5705454017028
+      },
+      "status": "operational",
+      "maintenance_frequency": 4,
+      "criticality": "low"
+    },
+    {
+      "id": "transmission_substation_23",
+      "type": "transmission_substation",
+      "capacity": 638.17,
+      "age": 3.5,
+      "location": {
+        "lat": 41.059949072782466,
+        "lon": -111.88564737900725
+      },
+      "status": "operational",
+      "maintenance_frequency": 4,
+      "criticality": "high"
+    },
+    {
+      "id": "transmission_substation_24",
+      "type": "transmission_substation",
+      "capacity": 470.14,
+      "age": 17.7,
+      "location": {
+        "lat": 40.59097608604204,
+        "lon": -112.01731494621
+      },
+      "status": "operational",
+      "maintenance_frequency": 10,
+      "criticality": "high"
+    },
+    {
+      "id": "transmission_substation_25",
+      "type": "transmission_substation",
+      "capacity": 323.32,
+      "age": 7.0,
+      "location": {
+        "lat": 39.849469363761294,
+        "lon": -111.04700967986724
+      },
+      "status": "operational",
+      "maintenance_frequency": 10,
+      "criticality": "medium"
+    },
+    {
+      "id": "transmission_substation_26",
+      "type": "transmission_substation",
+      "capacity": 732.52,
+      "age": 15.6,
+      "location": {
+        "lat": 37.76685924626871,
+        "lon": -109.74810821611968
+      },
+      "status": "operational",
+      "maintenance_frequency": 8,
+      "criticality": "medium"
+    },
+    {
+      "id": "transmission_substation_27",
+      "type": "transmission_substation",
+      "capacity": 608.98,
+      "age": 25.4,
+      "location": {
+        "lat": 38.481422526435466,
+        "lon": -110.13892644699365
+      },
+      "status": "operational",
+      "maintenance_frequency": 6,
+      "criticality": "low"
+    },
+    {
+      "id": "transmission_substation_28",
+      "type": "transmission_substation",
+      "capacity": 486.93,
+      "age": 6.2,
+      "location": {
+        "lat": 36.64069188537335,
+        "lon": -110.3953814813965
+      },
+      "status": "operational",
+      "maintenance_frequency": 6,
+      "criticality": "medium"
+    },
+    {
+      "id": "transmission_substation_29",
+      "type": "transmission_substation",
+      "capacity": 402.67,
+      "age": 25.8,
+      "location": {
+        "lat": 40.11358160222683,
+        "lon": -109.00228712850087
+      },
+      "status": "operational",
+      "maintenance_frequency": 9,
+      "criticality": "low"
+    },
+    {
+      "id": "transmission_substation_30",
+      "type": "transmission_substation",
+      "capacity": 668.52,
+      "age": 4.9,
+      "location": {
+        "lat": 40.185079077249306,
+        "lon": -111.34076332308814
+      },
+      "status": "operational",
+      "maintenance_frequency": 8,
+      "criticality": "medium"
+    },
+    {
+      "id": "transmission_substation_31",
+      "type": "transmission_substation",
+      "capacity": 780.82,
+      "age": 9.0,
+      "location": {
+        "lat": 41.500792553177675,
+        "lon": -109.03111961383777
+      },
+      "status": "operational",
+      "maintenance_frequency": 4,
+      "criticality": "low"
+    },
+    {
+      "id": "transmission_substation_32",
+      "type": "transmission_substation",
+      "capacity": 612.6,
+      "age": 8.2,
+      "location": {
+        "lat": 38.3881702679125,
+        "lon": -113.21702442774183
+      },
+      "status": "operational",
+      "maintenance_frequency": 7,
+      "criticality": "low"
+    },
+    {
+      "id": "transmission_substation_33",
+      "type": "transmission_substation",
+      "capacity": 651.29,
+      "age": 32.3,
+      "location": {
+        "lat": 39.67511169681379,
+        "lon": -111.93853734532311
+      },
+      "status": "operational",
+      "maintenance_frequency": 6,
+      "criticality": "medium"
+    },
+    {
+      "id": "transmission_substation_34",
+      "type": "transmission_substation",
+      "capacity": 795.63,
+      "age": 13.8,
+      "location": {
+        "lat": 41.78177533243736,
+        "lon": -110.54468894978454
+      },
+      "status": "operational",
+      "maintenance_frequency": 3,
+      "criticality": "low"
+    },
+    {
+      "id": "transmission_substation_35",
+      "type": "transmission_substation",
+      "capacity": 443.57,
+      "age": 17.1,
+      "location": {
+        "lat": 37.35871873079395,
+        "lon": -112.59816681694137
+      },
+      "status": "operational",
+      "maintenance_frequency": 8,
+      "criticality": "low"
+    },
+    {
+      "id": "transmission_substation_36",
+      "type": "transmission_substation",
+      "capacity": 349.76,
+      "age": 25.7,
+      "location": {
+        "lat": 38.75222508893462,
+        "lon": -109.39470452941832
+      },
+      "status": "operational",
+      "maintenance_frequency": 5,
+      "criticality": "medium"
+    },
+    {
+      "id": "transmission_substation_37",
+      "type": "transmission_substation",
+      "capacity": 764.41,
+      "age": 32.1,
+      "location": {
+        "lat": 39.08172194117121,
+        "lon": -113.04979581814926
+      },
+      "status": "operational",
+      "maintenance_frequency": 8,
+      "criticality": "medium"
+    },
+    {
+      "id": "transmission_substation_38",
+      "type": "transmission_substation",
+      "capacity": 429.65,
+      "age": 10.6,
+      "location": {
+        "lat": 40.139602910706444,
+        "lon": -109.9278076475787
+      },
+      "status": "operational",
+      "maintenance_frequency": 9,
+      "criticality": "medium"
+    },
+    {
+      "id": "transmission_substation_39",
+      "type": "transmission_substation",
+      "capacity": 450.71,
+      "age": 13.5,
+      "location": {
+        "lat": 40.50347263004717,
+        "lon": -110.29071922050184
+      },
+      "status": "operational",
+      "maintenance_frequency": 12,
+      "criticality": "medium"
+    },
+    {
+      "id": "transmission_substation_40",
+      "type": "transmission_substation",
+      "capacity": 669.56,
+      "age": 23.3,
+      "location": {
+        "lat": 41.519517315980174,
+        "lon": -110.95608546246712
+      },
+      "status": "operational",
+      "maintenance_frequency": 4,
+      "criticality": "medium"
+    },
+    {
+      "id": "transmission_substation_41",
+      "type": "transmission_substation",
+      "capacity": 516.23,
+      "age": 24.0,
+      "location": {
+        "lat": 38.48713787579942,
+        "lon": -113.581936385715
+      },
+      "status": "operational",
+      "maintenance_frequency": 3,
+      "criticality": "high"
+    },
+    {
+      "id": "transmission_substation_42",
+      "type": "transmission_substation",
+      "capacity": 460.32,
+      "age": 31.3,
+      "location": {
+        "lat": 41.7480627655308,
+        "lon": -109.66216061702004
+      },
+      "status": "operational",
+      "maintenance_frequency": 3,
+      "criticality": "medium"
+    },
+    {
+      "id": "transmission_substation_43",
+      "type": "transmission_substation",
+      "capacity": 463.9,
+      "age": 32.3,
+      "location": {
+        "lat": 41.19199440500074,
+        "lon": -111.36310436023884
+      },
+      "status": "operational",
+      "maintenance_frequency": 9,
+      "criticality": "low"
+    },
+    {
+      "id": "transmission_substation_44",
+      "type": "transmission_substation",
+      "capacity": 455.13,
+      "age": 27.3,
+      "location": {
+        "lat": 41.26963171549673,
+        "lon": -110.41384397588791
+      },
+      "status": "operational",
+      "maintenance_frequency": 10,
+      "criticality": "medium"
+    },
+    {
+      "id": "distribution_substation_45",
+      "type": "distribution_substation",
+      "capacity": 225.19,
+      "age": 15.5,
+      "location": {
+        "lat": 40.75765547330674,
+        "lon": -111.84310137171282
+      },
+      "status": "operational",
+      "maintenance_frequency": 2,
+      "criticality": "medium"
+    },
+    {
+      "id": "distribution_substation_46",
+      "type": "distribution_substation",
+      "capacity": 173.27,
+      "age": 17.7,
+      "location": {
+        "lat": 40.772239940197615,
+        "lon": -112.09525489356308
+      },
+      "status": "operational",
+      "maintenance_frequency": 12,
+      "criticality": "low"
+    },
+    {
+      "id": "distribution_substation_47",
+      "type": "distribution_substation",
+      "capacity": 115.08,
+      "age": 31.8,
+      "location": {
+        "lat": 40.172766635180174,
+        "lon": -111.62259191294993
+      },
+      "status": "operational",
+      "maintenance_frequency": 2,
+      "criticality": "high"
+    },
+    {
+      "id": "distribution_substation_48",
+      "type": "distribution_substation",
+      "capacity": 100.93,
+      "age": 14.6,
+      "location": {
+        "lat": 40.70038501661434,
+        "lon": -112.07161581311152
+      },
+      "status": "operational",
+      "maintenance_frequency": 4,
+      "criticality": "medium"
+    },
+    {
+      "id": "distribution_substation_49",
+      "type": "distribution_substation",
+      "capacity": 217.37,
+      "age": 3.2,
+      "location": {
+        "lat": 40.22733688318481,
+        "lon": -111.75350586527419
+      },
+      "status": "operational",
+      "maintenance_frequency": 7,
+      "criticality": "medium"
+    },
+    {
+      "id": "distribution_substation_50",
+      "type": "distribution_substation",
+      "capacity": 144.94,
+      "age": 42.8,
+      "location": {
+        "lat": 40.528173182339934,
+        "lon": -111.75416664760651
+      },
+      "status": "operational",
+      "maintenance_frequency": 7,
+      "criticality": "medium"
+    },
+    {
+      "id": "distribution_substation_51",
+      "type": "distribution_substation",
+      "capacity": 298.64,
+      "age": 19.0,
+      "location": {
+        "lat": 41.17674701920557,
+        "lon": -111.94897336239511
+      },
+      "status": "operational",
+      "maintenance_frequency": 11,
+      "criticality": "medium"
+    },
+    {
+      "id": "distribution_substation_52",
+      "type": "distribution_substation",
+      "capacity": 263.81,
+      "age": 5.3,
+      "location": {
+        "lat": 37.08812954103809,
+        "lon": -113.487646827826
+      },
+      "status": "operational",
+      "maintenance_frequency": 7,
+      "criticality": "medium"
+    },
+    {
+      "id": "distribution_substation_53",
+      "type": "distribution_substation",
+      "capacity": 258.45,
+      "age": 32.5,
+      "location": {
+        "lat": 41.00157321288557,
+        "lon": -112.02650803243918
+      },
+      "status": "operational",
+      "maintenance_frequency": 10,
+      "criticality": "high"
+    },
+    {
+      "id": "distribution_substation_54",
+      "type": "distribution_substation",
+      "capacity": 141.41,
+      "age": 42.3,
+      "location": {
+        "lat": 40.465746436032795,
+        "lon": -111.90071118733321
+      },
+      "status": "operational",
+      "maintenance_frequency": 5,
+      "criticality": "medium"
+    },
+    {
+      "id": "distribution_substation_55",
+      "type": "distribution_substation",
+      "capacity": 205.21,
+      "age": 3.7,
+      "location": {
+        "lat": 36.50929048853635,
+        "lon": -112.25611895274089
+      },
+      "status": "operational",
+      "maintenance_frequency": 10,
+      "criticality": "high"
+    },
+    {
+      "id": "distribution_substation_56",
+      "type": "distribution_substation",
+      "capacity": 225.69,
+      "age": 14.6,
+      "location": {
+        "lat": 40.29139797394389,
+        "lon": -109.7703734882159
+      },
+      "status": "operational",
+      "maintenance_frequency": 1,
+      "criticality": "low"
+    },
+    {
+      "id": "distribution_substation_57",
+      "type": "distribution_substation",
+      "capacity": 212.43,
+      "age": 24.1,
+      "location": {
+        "lat": 39.775621575840994,
+        "lon": -111.09135536906314
+      },
+      "status": "operational",
+      "maintenance_frequency": 9,
+      "criticality": "low"
+    },
+    {
+      "id": "distribution_substation_58",
+      "type": "distribution_substation",
+      "capacity": 208.49,
+      "age": 2.3,
+      "location": {
+        "lat": 36.83640442825918,
+        "lon": -111.26473939199039
+      },
+      "status": "operational",
+      "maintenance_frequency": 7,
+      "criticality": "high"
+    },
+    {
+      "id": "distribution_substation_59",
+      "type": "distribution_substation",
+      "capacity": 187.24,
+      "age": 18.3,
+      "location": {
+        "lat": 36.91050212963586,
+        "lon": -109.05957336846733
+      },
+      "status": "operational",
+      "maintenance_frequency": 7,
+      "criticality": "medium"
+    },
+    {
+      "id": "distribution_substation_60",
+      "type": "distribution_substation",
+      "capacity": 251.91,
+      "age": 13.4,
+      "location": {
+        "lat": 37.432614180191436,
+        "lon": -109.64563752603243
+      },
+      "status": "operational",
+      "maintenance_frequency": 12,
+      "criticality": "medium"
+    },
+    {
+      "id": "distribution_substation_61",
+      "type": "distribution_substation",
+      "capacity": 246.33,
+      "age": 15.3,
+      "location": {
+        "lat": 41.024692954618516,
+        "lon": -110.35892301938422
+      },
+      "status": "operational",
+      "maintenance_frequency": 12,
+      "criticality": "low"
+    },
+    {
+      "id": "distribution_substation_62",
+      "type": "distribution_substation",
+      "capacity": 217.51,
+      "age": 11.4,
+      "location": {
+        "lat": 39.759050013308546,
+        "lon": -113.30542236820332
+      },
+      "status": "operational",
+      "maintenance_frequency": 2,
+      "criticality": "low"
+    },
+    {
+      "id": "distribution_substation_63",
+      "type": "distribution_substation",
+      "capacity": 96.29,
+      "age": 44.4,
+      "location": {
+        "lat": 40.487798651152644,
+        "lon": -112.49450825259954
+      },
+      "status": "operational",
+      "maintenance_frequency": 6,
+      "criticality": "medium"
+    },
+    {
+      "id": "distribution_substation_64",
+      "type": "distribution_substation",
+      "capacity": 222.79,
+      "age": 3.1,
+      "location": {
+        "lat": 36.71259515570854,
+        "lon": -113.72618565662992
+      },
+      "status": "operational",
+      "maintenance_frequency": 7,
+      "criticality": "low"
+    },
+    {
+      "id": "distribution_substation_65",
+      "type": "distribution_substation",
+      "capacity": 83.64,
+      "age": 16.5,
+      "location": {
+        "lat": 37.61084020952692,
+        "lon": -110.62482883882926
+      },
+      "status": "operational",
+      "maintenance_frequency": 8,
+      "criticality": "high"
+    },
+    {
+      "id": "distribution_substation_66",
+      "type": "distribution_substation",
+      "capacity": 135.01,
+      "age": 25.3,
+      "location": {
+        "lat": 40.445570312528844,
+        "lon": -113.2813748185202
+      },
+      "status": "operational",
+      "maintenance_frequency": 5,
+      "criticality": "medium"
+    },
+    {
+      "id": "distribution_substation_67",
+      "type": "distribution_substation",
+      "capacity": 164.62,
+      "age": 3.2,
+      "location": {
+        "lat": 41.650601030392934,
+        "lon": -109.84880085960481
+      },
+      "status": "operational",
+      "maintenance_frequency": 3,
+      "criticality": "medium"
+    },
+    {
+      "id": "distribution_substation_68",
+      "type": "distribution_substation",
+      "capacity": 150.33,
+      "age": 38.8,
+      "location": {
+        "lat": 37.17945257431823,
+        "lon": -112.41799986420642
+      },
+      "status": "operational",
+      "maintenance_frequency": 2,
+      "criticality": "low"
+    },
+    {
+      "id": "distribution_substation_69",
+      "type": "distribution_substation",
+      "capacity": 127.59,
+      "age": 19.9,
+      "location": {
+        "lat": 40.631829655805646,
+        "lon": -113.00762915255974
+      },
+      "status": "operational",
+      "maintenance_frequency": 3,
+      "criticality": "medium"
+    },
+    {
+      "id": "distribution_substation_70",
+      "type": "distribution_substation",
+      "capacity": 187.72,
+      "age": 8.7,
+      "location": {
+        "lat": 37.072404846368784,
+        "lon": -109.83688896910557
+      },
+      "status": "operational",
+      "maintenance_frequency": 11,
+      "criticality": "low"
+    },
+    {
+      "id": "distribution_substation_71",
+      "type": "distribution_substation",
+      "capacity": 167.44,
+      "age": 28.7,
+      "location": {
+        "lat": 37.116450894225736,
+        "lon": -109.64929381674528
+      },
+      "status": "operational",
+      "maintenance_frequency": 6,
+      "criticality": "medium"
+    },
+    {
+      "id": "distribution_substation_72",
+      "type": "distribution_substation",
+      "capacity": 192.52,
+      "age": 40.7,
+      "location": {
+        "lat": 40.55685305634814,
+        "lon": -113.38979494988098
+      },
+      "status": "operational",
+      "maintenance_frequency": 6,
+      "criticality": "medium"
+    },
+    {
+      "id": "distribution_substation_73",
+      "type": "distribution_substation",
+      "capacity": 102.85,
+      "age": 20.2,
+      "location": {
+        "lat": 40.246375212836355,
+        "lon": -109.02976535472911
+      },
+      "status": "operational",
+      "maintenance_frequency": 4,
+      "criticality": "low"
+    },
+    {
+      "id": "distribution_substation_74",
+      "type": "distribution_substation",
+      "capacity": 176.11,
+      "age": 6.2,
+      "location": {
+        "lat": 38.87674230230826,
+        "lon": -113.43021304396284
+      },
+      "status": "operational",
+      "maintenance_frequency": 5,
+      "criticality": "low"
+    },
+    {
+      "id": "distribution_substation_75",
+      "type": "distribution_substation",
+      "capacity": 232.15,
+      "age": 42.6,
+      "location": {
+        "lat": 38.288402820738604,
+        "lon": -112.2074077781295
+      },
+      "status": "operational",
+      "maintenance_frequency": 4,
+      "criticality": "low"
+    },
+    {
+      "id": "distribution_substation_76",
+      "type": "distribution_substation",
+      "capacity": 80.57,
+      "age": 15.9,
+      "location": {
+        "lat": 37.027456844407574,
+        "lon": -111.09252228880077
+      },
+      "status": "operational",
+      "maintenance_frequency": 10,
+      "criticality": "medium"
+    },
+    {
+      "id": "distribution_substation_77",
+      "type": "distribution_substation",
+      "capacity": 136.65,
+      "age": 9.3,
+      "location": {
+        "lat": 39.03107245637197,
+        "lon": -113.65316328322892
+      },
+      "status": "operational",
+      "maintenance_frequency": 3,
+      "criticality": "high"
+    },
+    {
+      "id": "distribution_substation_78",
+      "type": "distribution_substation",
+      "capacity": 69.13,
+      "age": 6.6,
+      "location": {
+        "lat": 37.27634845346694,
+        "lon": -111.82132203834641
+      },
+      "status": "operational",
+      "maintenance_frequency": 10,
+      "criticality": "medium"
+    },
+    {
+      "id": "distribution_substation_79",
+      "type": "distribution_substation",
+      "capacity": 170.44,
+      "age": 30.1,
+      "location": {
+        "lat": 40.51432471931953,
+        "lon": -112.84320683319649
+      },
+      "status": "operational",
+      "maintenance_frequency": 5,
+      "criticality": "medium"
+    },
+    {
+      "id": "distribution_substation_80",
+      "type": "distribution_substation",
+      "capacity": 89.69,
+      "age": 42.0,
+      "location": {
+        "lat": 39.549552463775164,
+        "lon": -109.83721683892085
+      },
+      "status": "operational",
+      "maintenance_frequency": 1,
+      "criticality": "low"
+    },
+    {
+      "id": "distribution_substation_81",
+      "type": "distribution_substation",
+      "capacity": 274.64,
+      "age": 6.5,
+      "location": {
+        "lat": 38.33676024928965,
+        "lon": -110.36544774427392
+      },
+      "status": "operational",
+      "maintenance_frequency": 3,
+      "criticality": "medium"
+    },
+    {
+      "id": "distribution_substation_82",
+      "type": "distribution_substation",
+      "capacity": 98.11,
+      "age": 44.0,
+      "location": {
+        "lat": 38.00435698914619,
+        "lon": -111.71740809732098
+      },
+      "status": "operational",
+      "maintenance_frequency": 1,
+      "criticality": "low"
+    },
+    {
+      "id": "distribution_substation_83",
+      "type": "distribution_substation",
+      "capacity": 245.94,
+      "age": 12.4,
+      "location": {
+        "lat": 36.97806709806293,
+        "lon": -111.69926391146114
+      },
+      "status": "operational",
+      "maintenance_frequency": 6,
+      "criticality": "medium"
+    },
+    {
+      "id": "distribution_substation_84",
+      "type": "distribution_substation",
+      "capacity": 155.68,
+      "age": 38.3,
+      "location": {
+        "lat": 40.03174097287901,
+        "lon": -113.30040098044012
+      },
+      "status": "operational",
+      "maintenance_frequency": 10,
+      "criticality": "medium"
+    },
+    {
+      "id": "distribution_substation_85",
+      "type": "distribution_substation",
+      "capacity": 108.35,
+      "age": 2.8,
+      "location": {
+        "lat": 39.14815630152073,
+        "lon": -109.11215805709239
+      },
+      "status": "operational",
+      "maintenance_frequency": 7,
+      "criticality": "low"
+    },
+    {
+      "id": "distribution_substation_86",
+      "type": "distribution_substation",
+      "capacity": 244.0,
+      "age": 17.1,
+      "location": {
+        "lat": 37.46665901248095,
+        "lon": -109.07923845475013
+      },
+      "status": "operational",
+      "maintenance_frequency": 2,
+      "criticality": "medium"
+    },
+    {
+      "id": "distribution_substation_87",
+      "type": "distribution_substation",
+      "capacity": 85.54,
+      "age": 37.1,
+      "location": {
+        "lat": 39.0239387083106,
+        "lon": -113.36965685808555
+      },
+      "status": "operational",
+      "maintenance_frequency": 7,
+      "criticality": "high"
+    },
+    {
+      "id": "distribution_substation_88",
+      "type": "distribution_substation",
+      "capacity": 155.43,
+      "age": 43.1,
+      "location": {
+        "lat": 39.50892796398038,
+        "lon": -110.3717186957889
+      },
+      "status": "operational",
+      "maintenance_frequency": 7,
+      "criticality": "low"
+    },
+    {
+      "id": "distribution_substation_89",
+      "type": "distribution_substation",
+      "capacity": 194.37,
+      "age": 42.8,
+      "location": {
+        "lat": 38.68600981972886,
+        "lon": -109.3801608529266
+      },
+      "status": "operational",
+      "maintenance_frequency": 4,
+      "criticality": "medium"
+    },
+    {
+      "id": "distribution_substation_90",
+      "type": "distribution_substation",
+      "capacity": 183.95,
+      "age": 24.1,
+      "location": {
+        "lat": 40.29905996960686,
+        "lon": -111.67710717158128
+      },
+      "status": "operational",
+      "maintenance_frequency": 3,
+      "criticality": "low"
+    },
+    {
+      "id": "distribution_substation_91",
+      "type": "distribution_substation",
+      "capacity": 118.9,
+      "age": 40.8,
+      "location": {
+        "lat": 41.60101426267143,
+        "lon": -109.6515560445116
+      },
+      "status": "operational",
+      "maintenance_frequency": 4,
+      "criticality": "low"
+    },
+    {
+      "id": "distribution_substation_92",
+      "type": "distribution_substation",
+      "capacity": 253.48,
+      "age": 44.3,
+      "location": {
+        "lat": 41.84160226842908,
+        "lon": -109.59862555534552
+      },
+      "status": "operational",
+      "maintenance_frequency": 4,
+      "criticality": "low"
+    },
+    {
+      "id": "distribution_substation_93",
+      "type": "distribution_substation",
+      "capacity": 231.04,
+      "age": 23.2,
+      "location": {
+        "lat": 38.16912867358893,
+        "lon": -111.04212894030007
+      },
+      "status": "operational",
+      "maintenance_frequency": 7,
+      "criticality": "medium"
+    },
+    {
+      "id": "distribution_substation_94",
+      "type": "distribution_substation",
+      "capacity": 155.21,
+      "age": 18.3,
+      "location": {
+        "lat": 40.54538550303472,
+        "lon": -111.86054667123155
+      },
+      "status": "operational",
+      "maintenance_frequency": 6,
+      "criticality": "medium"
+    },
+    {
+      "id": "distribution_substation_95",
+      "type": "distribution_substation",
+      "capacity": 53.71,
+      "age": 37.7,
+      "location": {
+        "lat": 36.7611056312702,
+        "lon": -112.25643103230222
+      },
+      "status": "operational",
+      "maintenance_frequency": 4,
+      "criticality": "low"
+    },
+    {
+      "id": "distribution_substation_96",
+      "type": "distribution_substation",
+      "capacity": 283.54,
+      "age": 30.8,
+      "location": {
+        "lat": 37.15863250208845,
+        "lon": -111.98024362703616
+      },
+      "status": "operational",
+      "maintenance_frequency": 8,
+      "criticality": "low"
+    },
+    {
+      "id": "distribution_substation_97",
+      "type": "distribution_substation",
+      "capacity": 139.75,
+      "age": 29.5,
+      "location": {
+        "lat": 38.724605536789866,
+        "lon": -109.12728763688466
+      },
+      "status": "operational",
+      "maintenance_frequency": 3,
+      "criticality": "high"
+    },
+    {
+      "id": "distribution_substation_98",
+      "type": "distribution_substation",
+      "capacity": 293.79,
+      "age": 8.0,
+      "location": {
+        "lat": 39.876530549692966,
+        "lon": -113.50843703223484
+      },
+      "status": "operational",
+      "maintenance_frequency": 11,
+      "criticality": "medium"
+    },
+    {
+      "id": "distribution_substation_99",
+      "type": "distribution_substation",
+      "capacity": 141.34,
+      "age": 32.1,
+      "location": {
+        "lat": 39.43146045285225,
+        "lon": -113.33009271382572
+      },
+      "status": "operational",
+      "maintenance_frequency": 9,
+      "criticality": "high"
+    },
+    {
+      "id": "distribution_substation_100",
+      "type": "distribution_substation",
+      "capacity": 124.43,
+      "age": 5.2,
+      "location": {
+        "lat": 37.753765320414104,
+        "lon": -112.92044138279098
+      },
+      "status": "operational",
+      "maintenance_frequency": 7,
+      "criticality": "medium"
+    },
+    {
+      "id": "distribution_substation_101",
+      "type": "distribution_substation",
+      "capacity": 176.08,
+      "age": 33.0,
+      "location": {
+        "lat": 38.707831499091654,
+        "lon": -113.35433384124065
+      },
+      "status": "operational",
+      "maintenance_frequency": 4,
+      "criticality": "medium"
+    },
+    {
+      "id": "distribution_substation_102",
+      "type": "distribution_substation",
+      "capacity": 70.68,
+      "age": 8.7,
+      "location": {
+        "lat": 40.4362850315792,
+        "lon": -109.76618998204837
+      },
+      "status": "operational",
+      "maintenance_frequency": 2,
+      "criticality": "medium"
+    },
+    {
+      "id": "distribution_substation_103",
+      "type": "distribution_substation",
+      "capacity": 154.94,
+      "age": 2.9,
+      "location": {
+        "lat": 38.595726919522235,
+        "lon": -113.95900346622616
+      },
+      "status": "operational",
+      "maintenance_frequency": 12,
+      "criticality": "high"
+    },
+    {
+      "id": "distribution_substation_104",
+      "type": "distribution_substation",
+      "capacity": 200.65,
+      "age": 39.4,
+      "location": {
+        "lat": 36.62038622825127,
+        "lon": -113.23902758306906
+      },
+      "status": "operational",
+      "maintenance_frequency": 6,
+      "criticality": "medium"
+    },
+    {
+      "id": "transformer_105",
+      "type": "transformer",
+      "capacity": 82.33,
+      "age": 17.0,
+      "location": {
+        "lat": 37.73870203593135,
+        "lon": -113.78606078005572
+      },
+      "status": "operational",
+      "maintenance_frequency": 12,
+      "criticality": "high"
+    },
+    {
+      "id": "transformer_106",
+      "type": "transformer",
+      "capacity": 93.77,
+      "age": 4.8,
+      "location": {
+        "lat": 39.17526977592922,
+        "lon": -112.69241012558274
+      },
+      "status": "operational",
+      "maintenance_frequency": 4,
+      "criticality": "high"
+    },
+    {
+      "id": "transformer_107",
+      "type": "transformer",
+      "capacity": 10.28,
+      "age": 34.3,
+      "location": {
+        "lat": 40.49683338907028,
+        "lon": -110.53437559390791
+      },
+      "status": "operational",
+      "maintenance_frequency": 4,
+      "criticality": "medium"
+    },
+    {
+      "id": "transformer_108",
+      "type": "transformer",
+      "capacity": 33.23,
+      "age": 13.9,
+      "location": {
+        "lat": 40.49363088948636,
+        "lon": -110.5813874146453
+      },
+      "status": "operational",
+      "maintenance_frequency": 5,
+      "criticality": "low"
+    },
+    {
+      "id": "transformer_109",
+      "type": "transformer",
+      "capacity": 57.27,
+      "age": 46.5,
+      "location": {
+        "lat": 39.93816136510598,
+        "lon": -109.73915428060747
+      },
+      "status": "operational",
+      "maintenance_frequency": 4,
+      "criticality": "medium"
+    },
+    {
+      "id": "transformer_110",
+      "type": "transformer",
+      "capacity": 34.99,
+      "age": 14.1,
+      "location": {
+        "lat": 36.5601207674983,
+        "lon": -110.49325477711464
+      },
+      "status": "operational",
+      "maintenance_frequency": 6,
+      "criticality": "high"
+    },
+    {
+      "id": "transformer_111",
+      "type": "transformer",
+      "capacity": 57.04,
+      "age": 11.5,
+      "location": {
+        "lat": 41.175883055262176,
+        "lon": -110.23033252516824
+      },
+      "status": "operational",
+      "maintenance_frequency": 11,
+      "criticality": "low"
+    },
+    {
+      "id": "transformer_112",
+      "type": "transformer",
+      "capacity": 86.82,
+      "age": 49.8,
+      "location": {
+        "lat": 37.56239338728821,
+        "lon": -112.46826045906505
+      },
+      "status": "operational",
+      "maintenance_frequency": 6,
+      "criticality": "low"
+    },
+    {
+      "id": "transformer_113",
+      "type": "transformer",
+      "capacity": 28.55,
+      "age": 40.9,
+      "location": {
+        "lat": 37.00012170191576,
+        "lon": -111.19841364413243
+      },
+      "status": "operational",
+      "maintenance_frequency": 4,
+      "criticality": "medium"
+    },
+    {
+      "id": "transformer_114",
+      "type": "transformer",
+      "capacity": 20.98,
+      "age": 43.2,
+      "location": {
+        "lat": 40.40267887509495,
+        "lon": -110.9802232193316
+      },
+      "status": "operational",
+      "maintenance_frequency": 4,
+      "criticality": "medium"
+    },
+    {
+      "id": "transformer_115",
+      "type": "transformer",
+      "capacity": 28.66,
+      "age": 49.4,
+      "location": {
+        "lat": 39.8416053920588,
+        "lon": -111.58199565599463
+      },
+      "status": "operational",
+      "maintenance_frequency": 3,
+      "criticality": "low"
+    },
+    {
+      "id": "transformer_116",
+      "type": "transformer",
+      "capacity": 31.18,
+      "age": 49.3,
+      "location": {
+        "lat": 37.38873418016363,
+        "lon": -111.25314859436614
+      },
+      "status": "operational",
+      "maintenance_frequency": 2,
+      "criticality": "medium"
+    },
+    {
+      "id": "transformer_117",
+      "type": "transformer",
+      "capacity": 89.48,
+      "age": 13.8,
+      "location": {
+        "lat": 41.579337226762874,
+        "lon": -112.96900962795829
+      },
+      "status": "operational",
+      "maintenance_frequency": 4,
+      "criticality": "low"
+    },
+    {
+      "id": "transformer_118",
+      "type": "transformer",
+      "capacity": 91.24,
+      "age": 35.9,
+      "location": {
+        "lat": 39.6863122926174,
+        "lon": -112.92055721867291
+      },
+      "status": "operational",
+      "maintenance_frequency": 8,
+      "criticality": "medium"
+    },
+    {
+      "id": "transformer_119",
+      "type": "transformer",
+      "capacity": 82.99,
+      "age": 14.9,
+      "location": {
+        "lat": 36.5924092443028,
+        "lon": -113.968340116729
+      },
+      "status": "operational",
+      "maintenance_frequency": 7,
+      "criticality": "low"
+    },
+    {
+      "id": "transformer_120",
+      "type": "transformer",
+      "capacity": 29.54,
+      "age": 15.8,
+      "location": {
+        "lat": 37.9152135268914,
+        "lon": -112.42190748462937
+      },
+      "status": "operational",
+      "maintenance_frequency": 3,
+      "criticality": "low"
+    },
+    {
+      "id": "transformer_121",
+      "type": "transformer",
+      "capacity": 56.29,
+      "age": 50.0,
+      "location": {
+        "lat": 37.3156367703725,
+        "lon": -109.77029604148642
+      },
+      "status": "operational",
+      "maintenance_frequency": 11,
+      "criticality": "low"
+    },
+    {
+      "id": "transformer_122",
+      "type": "transformer",
+      "capacity": 40.77,
+      "age": 14.5,
+      "location": {
+        "lat": 41.829054593373755,
+        "lon": -112.24289649375957
+      },
+      "status": "operational",
+      "maintenance_frequency": 6,
+      "criticality": "medium"
+    },
+    {
+      "id": "transformer_123",
+      "type": "transformer",
+      "capacity": 26.94,
+      "age": 4.5,
+      "location": {
+        "lat": 38.678142908296834,
+        "lon": -110.41157894268953
+      },
+      "status": "operational",
+      "maintenance_frequency": 1,
+      "criticality": "medium"
+    },
+    {
+      "id": "transformer_124",
+      "type": "transformer",
+      "capacity": 82.06,
+      "age": 42.3,
+      "location": {
+        "lat": 37.80180006124349,
+        "lon": -112.46773643375344
+      },
+      "status": "operational",
+      "maintenance_frequency": 11,
+      "criticality": "medium"
+    },
+    {
+      "id": "transformer_125",
+      "type": "transformer",
+      "capacity": 89.28,
+      "age": 44.5,
+      "location": {
+        "lat": 37.74854752525884,
+        "lon": -109.7926074934254
+      },
+      "status": "operational",
+      "maintenance_frequency": 1,
+      "criticality": "medium"
+    },
+    {
+      "id": "transformer_126",
+      "type": "transformer",
+      "capacity": 56.6,
+      "age": 36.0,
+      "location": {
+        "lat": 41.92886666212131,
+        "lon": -110.87475816359144
+      },
+      "status": "operational",
+      "maintenance_frequency": 7,
+      "criticality": "medium"
+    },
+    {
+      "id": "transformer_127",
+      "type": "transformer",
+      "capacity": 95.94,
+      "age": 35.6,
+      "location": {
+        "lat": 39.79134456127136,
+        "lon": -111.84678696972121
+      },
+      "status": "operational",
+      "maintenance_frequency": 4,
+      "criticality": "low"
+    },
+    {
+      "id": "transformer_128",
+      "type": "transformer",
+      "capacity": 11.58,
+      "age": 3.3,
+      "location": {
+        "lat": 38.1207373421979,
+        "lon": -109.5259320459628
+      },
+      "status": "operational",
+      "maintenance_frequency": 7,
+      "criticality": "medium"
+    },
+    {
+      "id": "transformer_129",
+      "type": "transformer",
+      "capacity": 66.24,
+      "age": 41.0,
+      "location": {
+        "lat": 39.69764171682107,
+        "lon": -109.0815345995914
+      },
+      "status": "operational",
+      "maintenance_frequency": 8,
+      "criticality": "low"
+    },
+    {
+      "id": "transformer_130",
+      "type": "transformer",
+      "capacity": 36.14,
+      "age": 9.9,
+      "location": {
+        "lat": 36.87804058871381,
+        "lon": -109.98365556564414
+      },
+      "status": "operational",
+      "maintenance_frequency": 2,
+      "criticality": "medium"
+    },
+    {
+      "id": "transformer_131",
+      "type": "transformer",
+      "capacity": 84.74,
+      "age": 38.6,
+      "location": {
+        "lat": 36.50419467620116,
+        "lon": -113.7259053119493
+      },
+      "status": "operational",
+      "maintenance_frequency": 11,
+      "criticality": "low"
+    },
+    {
+      "id": "transformer_132",
+      "type": "transformer",
+      "capacity": 41.56,
+      "age": 22.5,
+      "location": {
+        "lat": 40.66031859911137,
+        "lon": -110.89486294394843
+      },
+      "status": "operational",
+      "maintenance_frequency": 11,
+      "criticality": "medium"
+    },
+    {
+      "id": "transformer_133",
+      "type": "transformer",
+      "capacity": 13.18,
+      "age": 33.8,
+      "location": {
+        "lat": 38.53756169493222,
+        "lon": -113.62690135078725
+      },
+      "status": "operational",
+      "maintenance_frequency": 8,
+      "criticality": "low"
+    },
+    {
+      "id": "transformer_134",
+      "type": "transformer",
+      "capacity": 59.39,
+      "age": 47.1,
+      "location": {
+        "lat": 39.87748646201863,
+        "lon": -111.9351017162304
+      },
+      "status": "operational",
+      "maintenance_frequency": 2,
+      "criticality": "medium"
+    },
+    {
+      "id": "transformer_135",
+      "type": "transformer",
+      "capacity": 71.78,
+      "age": 29.4,
+      "location": {
+        "lat": 38.2613334961579,
+        "lon": -112.70326313946177
+      },
+      "status": "operational",
+      "maintenance_frequency": 5,
+      "criticality": "low"
+    },
+    {
+      "id": "transformer_136",
+      "type": "transformer",
+      "capacity": 79.82,
+      "age": 17.6,
+      "location": {
+        "lat": 40.60057894719887,
+        "lon": -110.93472724371496
+      },
+      "status": "operational",
+      "maintenance_frequency": 4,
+      "criticality": "low"
+    },
+    {
+      "id": "transformer_137",
+      "type": "transformer",
+      "capacity": 87.96,
+      "age": 45.7,
+      "location": {
+        "lat": 39.97221517272868,
+        "lon": -111.31789243813144
+      },
+      "status": "operational",
+      "maintenance_frequency": 11,
+      "criticality": "medium"
+    },
+    {
+      "id": "transformer_138",
+      "type": "transformer",
+      "capacity": 37.07,
+      "age": 6.9,
+      "location": {
+        "lat": 41.34907311377662,
+        "lon": -111.99371140407229
+      },
+      "status": "operational",
+      "maintenance_frequency": 10,
+      "criticality": "medium"
+    },
+    {
+      "id": "transformer_139",
+      "type": "transformer",
+      "capacity": 73.9,
+      "age": 37.8,
+      "location": {
+        "lat": 38.84881868372036,
+        "lon": -110.03435375197252
+      },
+      "status": "operational",
+      "maintenance_frequency": 10,
+      "criticality": "low"
+    },
+    {
+      "id": "transformer_140",
+      "type": "transformer",
+      "capacity": 79.15,
+      "age": 19.9,
+      "location": {
+        "lat": 38.97715560929105,
+        "lon": -110.31909692799212
+      },
+      "status": "operational",
+      "maintenance_frequency": 5,
+      "criticality": "high"
+    },
+    {
+      "id": "transformer_141",
+      "type": "transformer",
+      "capacity": 29.95,
+      "age": 12.7,
+      "location": {
+        "lat": 40.3681616931203,
+        "lon": -113.34355774153724
+      },
+      "status": "operational",
+      "maintenance_frequency": 9,
+      "criticality": "medium"
+    },
+    {
+      "id": "transformer_142",
+      "type": "transformer",
+      "capacity": 97.17,
+      "age": 14.7,
+      "location": {
+        "lat": 40.77718156513038,
+        "lon": -110.06570219845908
+      },
+      "status": "operational",
+      "maintenance_frequency": 12,
+      "criticality": "medium"
+    },
+    {
+      "id": "transformer_143",
+      "type": "transformer",
+      "capacity": 48.56,
+      "age": 9.3,
+      "location": {
+        "lat": 37.07260346404102,
+        "lon": -112.76390698573493
+      },
+      "status": "operational",
+      "maintenance_frequency": 11,
+      "criticality": "medium"
+    },
+    {
+      "id": "transformer_144",
+      "type": "transformer",
+      "capacity": 45.37,
+      "age": 21.2,
+      "location": {
+        "lat": 37.39202344417016,
+        "lon": -109.7080886278259
+      },
+      "status": "operational",
+      "maintenance_frequency": 1,
+      "criticality": "medium"
+    },
+    {
+      "id": "transformer_145",
+      "type": "transformer",
+      "capacity": 22.8,
+      "age": 31.4,
+      "location": {
+        "lat": 36.80998729269356,
+        "lon": -111.15604959720395
+      },
+      "status": "operational",
+      "maintenance_frequency": 2,
+      "criticality": "low"
+    },
+    {
+      "id": "transformer_146",
+      "type": "transformer",
+      "capacity": 73.2,
+      "age": 34.8,
+      "location": {
+        "lat": 36.84517553989874,
+        "lon": -109.50131938560855
+      },
+      "status": "operational",
+      "maintenance_frequency": 2,
+      "criticality": "medium"
+    },
+    {
+      "id": "transformer_147",
+      "type": "transformer",
+      "capacity": 53.2,
+      "age": 10.9,
+      "location": {
+        "lat": 39.23663176913246,
+        "lon": -111.69604730681267
+      },
+      "status": "operational",
+      "maintenance_frequency": 6,
+      "criticality": "medium"
+    },
+    {
+      "id": "transformer_148",
+      "type": "transformer",
+      "capacity": 73.88,
+      "age": 25.9,
+      "location": {
+        "lat": 41.9281831118608,
+        "lon": -111.57220324930078
+      },
+      "status": "operational",
+      "maintenance_frequency": 4,
+      "criticality": "low"
+    },
+    {
+      "id": "transformer_149",
+      "type": "transformer",
+      "capacity": 81.23,
+      "age": 8.9,
+      "location": {
+        "lat": 38.29625265414623,
+        "lon": -113.06913772532354
+      },
+      "status": "operational",
+      "maintenance_frequency": 9,
+      "criticality": "high"
+    },
+    {
+      "id": "transformer_150",
+      "type": "transformer",
+      "capacity": 68.05,
+      "age": 47.8,
+      "location": {
+        "lat": 36.90982116900401,
+        "lon": -113.59899613573111
+      },
+      "status": "operational",
+      "maintenance_frequency": 10,
+      "criticality": "high"
+    },
+    {
+      "id": "transformer_151",
+      "type": "transformer",
+      "capacity": 47.72,
+      "age": 33.6,
+      "location": {
+        "lat": 38.63711541854959,
+        "lon": -111.21452812044569
+      },
+      "status": "operational",
+      "maintenance_frequency": 8,
+      "criticality": "medium"
+    },
+    {
+      "id": "transformer_152",
+      "type": "transformer",
+      "capacity": 82.73,
+      "age": 39.4,
+      "location": {
+        "lat": 40.523298371104445,
+        "lon": -109.33670719810478
+      },
+      "status": "operational",
+      "maintenance_frequency": 7,
+      "criticality": "low"
+    },
+    {
+      "id": "transformer_153",
+      "type": "transformer",
+      "capacity": 25.74,
+      "age": 38.4,
+      "location": {
+        "lat": 39.296020085771836,
+        "lon": -111.69951598341555
+      },
+      "status": "operational",
+      "maintenance_frequency": 9,
+      "criticality": "high"
+    },
+    {
+      "id": "transformer_154",
+      "type": "transformer",
+      "capacity": 60.23,
+      "age": 11.1,
+      "location": {
+        "lat": 37.788950938474116,
+        "lon": -112.01842291982753
+      },
+      "status": "operational",
+      "maintenance_frequency": 10,
+      "criticality": "medium"
+    },
+    {
+      "id": "transformer_155",
+      "type": "transformer",
+      "capacity": 74.82,
+      "age": 14.0,
+      "location": {
+        "lat": 41.15850470072888,
+        "lon": -109.15180113175805
+      },
+      "status": "operational",
+      "maintenance_frequency": 2,
+      "criticality": "medium"
+    },
+    {
+      "id": "transformer_156",
+      "type": "transformer",
+      "capacity": 45.08,
+      "age": 33.3,
+      "location": {
+        "lat": 41.519984681061786,
+        "lon": -110.47998735118745
+      },
+      "status": "operational",
+      "maintenance_frequency": 8,
+      "criticality": "medium"
+    },
+    {
+      "id": "transformer_157",
+      "type": "transformer",
+      "capacity": 66.94,
+      "age": 2.7,
+      "location": {
+        "lat": 39.80236661964876,
+        "lon": -113.74445310814554
+      },
+      "status": "operational",
+      "maintenance_frequency": 1,
+      "criticality": "low"
+    },
+    {
+      "id": "transformer_158",
+      "type": "transformer",
+      "capacity": 28.14,
+      "age": 7.5,
+      "location": {
+        "lat": 39.44685987362634,
+        "lon": -111.57972591705901
+      },
+      "status": "operational",
+      "maintenance_frequency": 7,
+      "criticality": "high"
+    },
+    {
+      "id": "transformer_159",
+      "type": "transformer",
+      "capacity": 20.04,
+      "age": 20.3,
+      "location": {
+        "lat": 40.66721552063098,
+        "lon": -109.53846225700033
+      },
+      "status": "operational",
+      "maintenance_frequency": 3,
+      "criticality": "low"
+    },
+    {
+      "id": "transformer_160",
+      "type": "transformer",
+      "capacity": 42.27,
+      "age": 15.3,
+      "location": {
+        "lat": 41.59345265763674,
+        "lon": -113.40346778853602
+      },
+      "status": "operational",
+      "maintenance_frequency": 3,
+      "criticality": "medium"
+    },
+    {
+      "id": "transformer_161",
+      "type": "transformer",
+      "capacity": 14.28,
+      "age": 29.5,
+      "location": {
+        "lat": 39.30559162788152,
+        "lon": -111.82612827781102
+      },
+      "status": "operational",
+      "maintenance_frequency": 7,
+      "criticality": "low"
+    },
+    {
+      "id": "transformer_162",
+      "type": "transformer",
+      "capacity": 76.97,
+      "age": 6.3,
+      "location": {
+        "lat": 37.50601467571655,
+        "lon": -113.25088528493997
+      },
+      "status": "operational",
+      "maintenance_frequency": 11,
+      "criticality": "medium"
+    },
+    {
+      "id": "transformer_163",
+      "type": "transformer",
+      "capacity": 15.64,
+      "age": 17.4,
+      "location": {
+        "lat": 41.532832903536374,
+        "lon": -113.56961211622645
+      },
+      "status": "operational",
+      "maintenance_frequency": 5,
+      "criticality": "low"
+    },
+    {
+      "id": "transformer_164",
+      "type": "transformer",
+      "capacity": 71.95,
+      "age": 38.9,
+      "location": {
+        "lat": 37.48240788203755,
+        "lon": -112.49378404590199
+      },
+      "status": "operational",
+      "maintenance_frequency": 1,
+      "criticality": "medium"
+    },
+    {
+      "id": "transformer_165",
+      "type": "transformer",
+      "capacity": 58.94,
+      "age": 28.7,
+      "location": {
+        "lat": 36.99135694980569,
+        "lon": -111.21361442581316
+      },
+      "status": "operational",
+      "maintenance_frequency": 8,
+      "criticality": "low"
+    },
+    {
+      "id": "transformer_166",
+      "type": "transformer",
+      "capacity": 86.41,
+      "age": 41.5,
+      "location": {
+        "lat": 41.4765635679887,
+        "lon": -112.24578598013198
+      },
+      "status": "operational",
+      "maintenance_frequency": 6,
+      "criticality": "high"
+    },
+    {
+      "id": "transformer_167",
+      "type": "transformer",
+      "capacity": 68.04,
+      "age": 24.8,
+      "location": {
+        "lat": 40.8658778865549,
+        "lon": -112.67970024734424
+      },
+      "status": "operational",
+      "maintenance_frequency": 9,
+      "criticality": "high"
+    },
+    {
+      "id": "transformer_168",
+      "type": "transformer",
+      "capacity": 47.42,
+      "age": 33.9,
+      "location": {
+        "lat": 40.01177056881707,
+        "lon": -113.70448347056357
+      },
+      "status": "operational",
+      "maintenance_frequency": 5,
+      "criticality": "low"
+    },
+    {
+      "id": "transformer_169",
+      "type": "transformer",
+      "capacity": 77.82,
+      "age": 48.1,
+      "location": {
+        "lat": 41.24158327470385,
+        "lon": -109.61959788153965
+      },
+      "status": "operational",
+      "maintenance_frequency": 3,
+      "criticality": "low"
+    },
+    {
+      "id": "transformer_170",
+      "type": "transformer",
+      "capacity": 66.97,
+      "age": 37.6,
+      "location": {
+        "lat": 40.79300424207136,
+        "lon": -111.65937471059962
+      },
+      "status": "operational",
+      "maintenance_frequency": 3,
+      "criticality": "high"
+    },
+    {
+      "id": "transformer_171",
+      "type": "transformer",
+      "capacity": 53.45,
+      "age": 47.2,
+      "location": {
+        "lat": 37.882315984152235,
+        "lon": -111.56112938967921
+      },
+      "status": "operational",
+      "maintenance_frequency": 8,
+      "criticality": "high"
+    },
+    {
+      "id": "transformer_172",
+      "type": "transformer",
+      "capacity": 75.0,
+      "age": 2.0,
+      "location": {
+        "lat": 37.64533672700304,
+        "lon": -109.52803696951077
+      },
+      "status": "operational",
+      "maintenance_frequency": 12,
+      "criticality": "low"
+    },
+    {
+      "id": "transformer_173",
+      "type": "transformer",
+      "capacity": 85.76,
+      "age": 20.5,
+      "location": {
+        "lat": 39.90090653808483,
+        "lon": -111.389563947082
+      },
+      "status": "operational",
+      "maintenance_frequency": 7,
+      "criticality": "medium"
+    },
+    {
+      "id": "transformer_174",
+      "type": "transformer",
+      "capacity": 79.29,
+      "age": 2.7,
+      "location": {
+        "lat": 41.201469590258995,
+        "lon": -111.05899673736923
+      },
+      "status": "operational",
+      "maintenance_frequency": 12,
+      "criticality": "medium"
+    },
+    {
+      "id": "transformer_175",
+      "type": "transformer",
+      "capacity": 56.68,
+      "age": 40.1,
+      "location": {
+        "lat": 39.15769670316282,
+        "lon": -113.10678472959981
+      },
+      "status": "operational",
+      "maintenance_frequency": 7,
+      "criticality": "medium"
+    },
+    {
+      "id": "transformer_176",
+      "type": "transformer",
+      "capacity": 16.05,
+      "age": 15.2,
+      "location": {
+        "lat": 37.89634299325291,
+        "lon": -110.17082340708754
+      },
+      "status": "operational",
+      "maintenance_frequency": 11,
+      "criticality": "medium"
+    },
+    {
+      "id": "transformer_177",
+      "type": "transformer",
+      "capacity": 94.49,
+      "age": 27.3,
+      "location": {
+        "lat": 37.57969574881416,
+        "lon": -112.19822010047568
+      },
+      "status": "operational",
+      "maintenance_frequency": 5,
+      "criticality": "medium"
+    },
+    {
+      "id": "transformer_178",
+      "type": "transformer",
+      "capacity": 16.19,
+      "age": 41.9,
+      "location": {
+        "lat": 38.95550751368205,
+        "lon": -112.46500653284201
+      },
+      "status": "operational",
+      "maintenance_frequency": 11,
+      "criticality": "low"
+    },
+    {
+      "id": "transformer_179",
+      "type": "transformer",
+      "capacity": 75.9,
+      "age": 21.7,
+      "location": {
+        "lat": 38.43188618265629,
+        "lon": -110.63912115105913
+      },
+      "status": "operational",
+      "maintenance_frequency": 6,
+      "criticality": "high"
+    },
+    {
+      "id": "transformer_180",
+      "type": "transformer",
+      "capacity": 35.78,
+      "age": 24.7,
+      "location": {
+        "lat": 41.50976671229449,
+        "lon": -110.96006476606927
+      },
+      "status": "operational",
+      "maintenance_frequency": 3,
+      "criticality": "high"
+    },
+    {
+      "id": "transformer_181",
+      "type": "transformer",
+      "capacity": 56.64,
+      "age": 23.5,
+      "location": {
+        "lat": 41.776683705499664,
+        "lon": -112.23689677289339
+      },
+      "status": "operational",
+      "maintenance_frequency": 4,
+      "criticality": "medium"
+    },
+    {
+      "id": "transformer_182",
+      "type": "transformer",
+      "capacity": 98.03,
+      "age": 2.8,
+      "location": {
+        "lat": 40.42882602358149,
+        "lon": -111.78411660096026
+      },
+      "status": "operational",
+      "maintenance_frequency": 7,
+      "criticality": "low"
+    },
+    {
+      "id": "transformer_183",
+      "type": "transformer",
+      "capacity": 79.35,
+      "age": 49.3,
+      "location": {
+        "lat": 38.166424518768274,
+        "lon": -109.13364816379801
+      },
+      "status": "operational",
+      "maintenance_frequency": 5,
+      "criticality": "medium"
+    },
+    {
+      "id": "transformer_184",
+      "type": "transformer",
+      "capacity": 74.13,
+      "age": 9.9,
+      "location": {
+        "lat": 41.39015665623862,
+        "lon": -111.5917926189139
+      },
+      "status": "operational",
+      "maintenance_frequency": 12,
+      "criticality": "high"
+    },
+    {
+      "id": "transformer_185",
+      "type": "transformer",
+      "capacity": 62.56,
+      "age": 10.8,
+      "location": {
+        "lat": 40.57268092568,
+        "lon": -113.05170716345494
+      },
+      "status": "operational",
+      "maintenance_frequency": 5,
+      "criticality": "medium"
+    },
+    {
+      "id": "transformer_186",
+      "type": "transformer",
+      "capacity": 19.75,
+      "age": 27.7,
+      "location": {
+        "lat": 37.87615430038327,
+        "lon": -113.44115798603109
+      },
+      "status": "operational",
+      "maintenance_frequency": 6,
+      "criticality": "high"
+    },
+    {
+      "id": "transformer_187",
+      "type": "transformer",
+      "capacity": 80.97,
+      "age": 26.5,
+      "location": {
+        "lat": 40.27047095483663,
+        "lon": -110.55207949299577
+      },
+      "status": "operational",
+      "maintenance_frequency": 8,
+      "criticality": "medium"
+    },
+    {
+      "id": "transformer_188",
+      "type": "transformer",
+      "capacity": 40.37,
+      "age": 5.1,
+      "location": {
+        "lat": 38.775657499434246,
+        "lon": -110.11395794538609
+      },
+      "status": "operational",
+      "maintenance_frequency": 4,
+      "criticality": "low"
+    },
+    {
+      "id": "transformer_189",
+      "type": "transformer",
+      "capacity": 73.27,
+      "age": 45.0,
+      "location": {
+        "lat": 41.89027033386638,
+        "lon": -109.01251853934416
+      },
+      "status": "operational",
+      "maintenance_frequency": 5,
+      "criticality": "low"
+    },
+    {
+      "id": "transformer_190",
+      "type": "transformer",
+      "capacity": 64.6,
+      "age": 28.3,
+      "location": {
+        "lat": 37.159877840379615,
+        "lon": -112.31320420067685
+      },
+      "status": "operational",
+      "maintenance_frequency": 10,
+      "criticality": "low"
+    },
+    {
+      "id": "transformer_191",
+      "type": "transformer",
+      "capacity": 55.89,
+      "age": 5.2,
+      "location": {
+        "lat": 40.702513203437285,
+        "lon": -112.19686347232232
+      },
+      "status": "operational",
+      "maintenance_frequency": 4,
+      "criticality": "high"
+    },
+    {
+      "id": "transformer_192",
+      "type": "transformer",
+      "capacity": 38.97,
+      "age": 12.9,
+      "location": {
+        "lat": 40.714398730384154,
+        "lon": -110.96357386342287
+      },
+      "status": "operational",
+      "maintenance_frequency": 3,
+      "criticality": "low"
+    },
+    {
+      "id": "transformer_193",
+      "type": "transformer",
+      "capacity": 19.67,
+      "age": 34.1,
+      "location": {
+        "lat": 38.53890783471084,
+        "lon": -109.12231383178599
+      },
+      "status": "operational",
+      "maintenance_frequency": 11,
+      "criticality": "high"
+    },
+    {
+      "id": "transformer_194",
+      "type": "transformer",
+      "capacity": 24.26,
+      "age": 39.1,
+      "location": {
+        "lat": 37.530290402019425,
+        "lon": -112.35685593828552
+      },
+      "status": "operational",
+      "maintenance_frequency": 9,
+      "criticality": "low"
+    },
+    {
+      "id": "transformer_195",
+      "type": "transformer",
+      "capacity": 85.07,
+      "age": 28.5,
+      "location": {
+        "lat": 40.84784758995144,
+        "lon": -110.15027102011021
+      },
+      "status": "operational",
+      "maintenance_frequency": 9,
+      "criticality": "medium"
+    },
+    {
+      "id": "transformer_196",
+      "type": "transformer",
+      "capacity": 87.08,
+      "age": 43.3,
+      "location": {
+        "lat": 40.71945916515212,
+        "lon": -112.53223591242127
+      },
+      "status": "operational",
+      "maintenance_frequency": 5,
+      "criticality": "low"
+    },
+    {
+      "id": "transformer_197",
+      "type": "transformer",
+      "capacity": 99.18,
+      "age": 28.8,
+      "location": {
+        "lat": 38.84071745681405,
+        "lon": -110.58692324078174
+      },
+      "status": "operational",
+      "maintenance_frequency": 11,
+      "criticality": "medium"
+    },
+    {
+      "id": "transformer_198",
+      "type": "transformer",
+      "capacity": 90.54,
+      "age": 41.5,
+      "location": {
+        "lat": 39.85023823410868,
+        "lon": -110.69520359677676
+      },
+      "status": "operational",
+      "maintenance_frequency": 5,
+      "criticality": "medium"
+    },
+    {
+      "id": "transformer_199",
+      "type": "transformer",
+      "capacity": 21.17,
+      "age": 23.9,
+      "location": {
+        "lat": 38.02472587568161,
+        "lon": -110.34654579140826
+      },
+      "status": "operational",
+      "maintenance_frequency": 10,
+      "criticality": "low"
+    },
+    {
+      "id": "transformer_200",
+      "type": "transformer",
+      "capacity": 79.66,
+      "age": 11.3,
+      "location": {
+        "lat": 38.961205739736435,
+        "lon": -111.79642955545759
+      },
+      "status": "operational",
+      "maintenance_frequency": 11,
+      "criticality": "low"
+    },
+    {
+      "id": "transformer_201",
+      "type": "transformer",
+      "capacity": 59.03,
+      "age": 43.1,
+      "location": {
+        "lat": 38.79432537316346,
+        "lon": -109.14761154159247
+      },
+      "status": "operational",
+      "maintenance_frequency": 9,
+      "criticality": "medium"
+    },
+    {
+      "id": "transformer_202",
+      "type": "transformer",
+      "capacity": 82.5,
+      "age": 28.3,
+      "location": {
+        "lat": 40.90618089270681,
+        "lon": -113.36741937125076
+      },
+      "status": "operational",
+      "maintenance_frequency": 4,
+      "criticality": "medium"
+    },
+    {
+      "id": "transformer_203",
+      "type": "transformer",
+      "capacity": 99.24,
+      "age": 19.8,
+      "location": {
+        "lat": 39.482389788918006,
+        "lon": -113.55753118989519
+      },
+      "status": "operational",
+      "maintenance_frequency": 12,
+      "criticality": "low"
+    },
+    {
+      "id": "transformer_204",
+      "type": "transformer",
+      "capacity": 17.06,
+      "age": 40.3,
+      "location": {
+        "lat": 40.353748153374866,
+        "lon": -111.43570705533587
+      },
+      "status": "operational",
+      "maintenance_frequency": 1,
+      "criticality": "low"
+    }
+  ],
+  "connections": [
+    {
+      "id": "transmission_line_0",
+      "type": "transmission_line",
+      "source": "generating_station_0",
+      "target": "transmission_substation_15",
+      "capacity": 500.49,
+      "length": 14.59,
+      "age": 15.5,
+      "status": "operational",
+      "voltage": 345,
+      "maintenance_frequency": 16
+    },
+    {
+      "id": "transmission_line_1",
+      "type": "transmission_line",
+      "source": "generating_station_0",
+      "target": "transmission_substation_16",
+      "capacity": 419.31,
+      "length": 15.64,
+      "age": 29.5,
+      "status": "operational",
+      "voltage": 500,
+      "maintenance_frequency": 9
+    },
+    {
+      "id": "transmission_line_2",
+      "type": "transmission_line",
+      "source": "generating_station_0",
+      "target": "transmission_substation_24",
+      "capacity": 429.32,
+      "length": 20.4,
+      "age": 12.8,
+      "status": "operational",
+      "voltage": 345,
+      "maintenance_frequency": 23
+    },
+    {
+      "id": "transmission_line_3",
+      "type": "transmission_line",
+      "source": "generating_station_1",
+      "target": "transmission_substation_15",
+      "capacity": 578.77,
+      "length": 3.99,
+      "age": 25.0,
+      "status": "operational",
+      "voltage": 345,
+      "maintenance_frequency": 6
+    },
+    {
+      "id": "transmission_line_4",
+      "type": "transmission_line",
+      "source": "generating_station_2",
+      "target": "transmission_substation_17",
+      "capacity": 101.93,
+      "length": 21.27,
+      "age": 39.4,
+      "status": "operational",
+      "voltage": 230,
+      "maintenance_frequency": 19
+    },
+    {
+      "id": "transmission_line_5",
+      "type": "transmission_line",
+      "source": "generating_station_2",
+      "target": "transmission_substation_19",
+      "capacity": 90.06,
+      "length": 22.06,
+      "age": 15.6,
+      "status": "operational",
+      "voltage": 138,
+      "maintenance_frequency": 3
+    },
+    {
+      "id": "transmission_line_6",
+      "type": "transmission_line",
+      "source": "generating_station_2",
+      "target": "transmission_substation_30",
+      "capacity": 95.77,
+      "length": 22.93,
+      "age": 36.9,
+      "status": "operational",
+      "voltage": 345,
+      "maintenance_frequency": 4
+    },
+    {
+      "id": "transmission_line_7",
+      "type": "transmission_line",
+      "source": "generating_station_3",
+      "target": "transmission_substation_24",
+      "capacity": 446.64,
+      "length": 3.73,
+      "age": 18.7,
+      "status": "operational",
+      "voltage": 345,
+      "maintenance_frequency": 18
+    },
+    {
+      "id": "transmission_line_8",
+      "type": "transmission_line",
+      "source": "generating_station_3",
+      "target": "transmission_substation_18",
+      "capacity": 424.76,
+      "length": 4.06,
+      "age": 2.3,
+      "status": "operational",
+      "voltage": 138,
+      "maintenance_frequency": 11
+    },
+    {
+      "id": "transmission_line_9",
+      "type": "transmission_line",
+      "source": "generating_station_4",
+      "target": "transmission_substation_19",
+      "capacity": 276.37,
+      "length": 11.55,
+      "age": 3.1,
+      "status": "operational",
+      "voltage": 345,
+      "maintenance_frequency": 7
+    },
+    {
+      "id": "transmission_line_10",
+      "type": "transmission_line",
+      "source": "generating_station_4",
+      "target": "transmission_substation_17",
+      "capacity": 316.87,
+      "length": 12.81,
+      "age": 23.3,
+      "status": "operational",
+      "voltage": 500,
+      "maintenance_frequency": 23
+    },
+    {
+      "id": "transmission_line_11",
+      "type": "transmission_line",
+      "source": "generating_station_5",
+      "target": "transmission_substation_20",
+      "capacity": 505.42,
+      "length": 8.46,
+      "age": 26.5,
+      "status": "operational",
+      "voltage": 230,
+      "maintenance_frequency": 9
+    },
+    {
+      "id": "transmission_line_12",
+      "type": "transmission_line",
+      "source": "generating_station_5",
+      "target": "transmission_substation_16",
+      "capacity": 428.7,
+      "length": 22.95,
+      "age": 8.9,
+      "status": "operational",
+      "voltage": 230,
+      "maintenance_frequency": 24
+    },
+    {
+      "id": "transmission_line_13",
+      "type": "transmission_line",
+      "source": "generating_station_5",
+      "target": "transmission_substation_19",
+      "capacity": 433.68,
+      "length": 23.24,
+      "age": 29.6,
+      "status": "operational",
+      "voltage": 230,
+      "maintenance_frequency": 7
+    },
+    {
+      "id": "transmission_line_14",
+      "type": "transmission_line",
+      "source": "generating_station_6",
+      "target": "transmission_substation_21",
+      "capacity": 270.54,
+      "length": 7.67,
+      "age": 5.1,
+      "status": "operational",
+      "voltage": 500,
+      "maintenance_frequency": 7
+    },
+    {
+      "id": "transmission_line_15",
+      "type": "transmission_line",
+      "source": "generating_station_6",
+      "target": "transmission_substation_23",
+      "capacity": 516.17,
+      "length": 17.67,
+      "age": 35.2,
+      "status": "operational",
+      "voltage": 500,
+      "maintenance_frequency": 22
+    },
+    {
+      "id": "transmission_line_16",
+      "type": "transmission_line",
+      "source": "generating_station_7",
+      "target": "transmission_substation_22",
+      "capacity": 470.79,
+      "length": 17.82,
+      "age": 4.5,
+      "status": "operational",
+      "voltage": 138,
+      "maintenance_frequency": 8
+    },
+    {
+      "id": "transmission_line_17",
+      "type": "transmission_line",
+      "source": "generating_station_7",
+      "target": "transmission_substation_35",
+      "capacity": 332.24,
+      "length": 78.97,
+      "age": 14.3,
+      "status": "operational",
+      "voltage": 500,
+      "maintenance_frequency": 8
+    },
+    {
+      "id": "transmission_line_18",
+      "type": "transmission_line",
+      "source": "generating_station_8",
+      "target": "transmission_substation_23",
+      "capacity": 605.96,
+      "length": 11.11,
+      "age": 20.3,
+      "status": "operational",
+      "voltage": 500,
+      "maintenance_frequency": 8
+    },
+    {
+      "id": "transmission_line_19",
+      "type": "transmission_line",
+      "source": "generating_station_8",
+      "target": "transmission_substation_21",
+      "capacity": 338.54,
+      "length": 23.64,
+      "age": 14.7,
+      "status": "operational",
+      "voltage": 345,
+      "maintenance_frequency": 16
+    },
+    {
+      "id": "transmission_line_20",
+      "type": "transmission_line",
+      "source": "generating_station_8",
+      "target": "transmission_substation_15",
+      "capacity": 501.76,
+      "length": 32.4,
+      "age": 14.9,
+      "status": "operational",
+      "voltage": 230,
+      "maintenance_frequency": 13
+    },
+    {
+      "id": "transmission_line_21",
+      "type": "transmission_line",
+      "source": "generating_station_9",
+      "target": "transmission_substation_20",
+      "capacity": 482.76,
+      "length": 2.06,
+      "age": 21.7,
+      "status": "operational",
+      "voltage": 345,
+      "maintenance_frequency": 4
+    },
+    {
+      "id": "transmission_line_22",
+      "type": "transmission_line",
+      "source": "generating_station_9",
+      "target": "transmission_substation_18",
+      "capacity": 407.4,
+      "length": 17.46,
+      "age": 32.5,
+      "status": "operational",
+      "voltage": 500,
+      "maintenance_frequency": 12
+    },
+    {
+      "id": "transmission_line_23",
+      "type": "transmission_line",
+      "source": "generating_station_10",
+      "target": "transmission_substation_27",
+      "capacity": 433.05,
+      "length": 73.39,
+      "age": 4.3,
+      "status": "operational",
+      "voltage": 500,
+      "maintenance_frequency": 11
+    },
+    {
+      "id": "transmission_line_24",
+      "type": "transmission_line",
+      "source": "generating_station_10",
+      "target": "transmission_substation_26",
+      "capacity": 329.19,
+      "length": 79.32,
+      "age": 12.7,
+      "status": "operational",
+      "voltage": 230,
+      "maintenance_frequency": 10
+    },
+    {
+      "id": "transmission_line_25",
+      "type": "transmission_line",
+      "source": "generating_station_11",
+      "target": "transmission_substation_21",
+      "capacity": 353.89,
+      "length": 118.09,
+      "age": 30.3,
+      "status": "operational",
+      "voltage": 230,
+      "maintenance_frequency": 10
+    },
+    {
+      "id": "transmission_line_26",
+      "type": "transmission_line",
+      "source": "generating_station_12",
+      "target": "transmission_substation_39",
+      "capacity": 410.41,
+      "length": 37.02,
+      "age": 5.6,
+      "status": "operational",
+      "voltage": 230,
+      "maintenance_frequency": 4
+    },
+    {
+      "id": "transmission_line_27",
+      "type": "transmission_line",
+      "source": "generating_station_12",
+      "target": "transmission_substation_38",
+      "capacity": 409.59,
+      "length": 40.47,
+      "age": 5.9,
+      "status": "operational",
+      "voltage": 345,
+      "maintenance_frequency": 3
+    },
+    {
+      "id": "transmission_line_28",
+      "type": "transmission_line",
+      "source": "generating_station_12",
+      "target": "transmission_substation_25",
+      "capacity": 284.45,
+      "length": 66.1,
+      "age": 35.5,
+      "status": "operational",
+      "voltage": 230,
+      "maintenance_frequency": 10
+    },
+    {
+      "id": "transmission_line_29",
+      "type": "transmission_line",
+      "source": "generating_station_13",
+      "target": "transmission_substation_22",
+      "capacity": 406.92,
+      "length": 76.88,
+      "age": 36.9,
+      "status": "operational",
+      "voltage": 500,
+      "maintenance_frequency": 16
+    },
+    {
+      "id": "transmission_line_30",
+      "type": "transmission_line",
+      "source": "generating_station_14",
+      "target": "transmission_substation_35",
+      "capacity": 203.2,
+      "length": 58.73,
+      "age": 20.9,
+      "status": "operational",
+      "voltage": 230,
+      "maintenance_frequency": 10
+    },
+    {
+      "id": "transmission_line_31",
+      "type": "transmission_line",
+      "source": "transmission_substation_15",
+      "target": "distribution_substation_48",
+      "capacity": 94.91,
+      "length": 7.45,
+      "age": 17.3,
+      "status": "operational",
+      "voltage": 115,
+      "maintenance_frequency": 10
+    },
+    {
+      "id": "transmission_line_32",
+      "type": "transmission_line",
+      "source": "transmission_substation_15",
+      "target": "distribution_substation_46",
+      "capacity": 151.52,
+      "length": 13.1,
+      "age": 23.6,
+      "status": "operational",
+      "voltage": 69,
+      "maintenance_frequency": 18
+    },
+    {
+      "id": "transmission_line_33",
+      "type": "transmission_line",
+      "source": "transmission_substation_15",
+      "target": "distribution_substation_45",
+      "capacity": 167.76,
+      "length": 14.23,
+      "age": 38.9,
+      "status": "operational",
+      "voltage": 69,
+      "maintenance_frequency": 22
+    },
+    {
+      "id": "transmission_line_34",
+      "type": "transmission_line",
+      "source": "transmission_substation_15",
+      "target": "distribution_substation_94",
+      "capacity": 138.21,
+      "length": 19.2,
+      "age": 12.4,
+      "status": "operational",
+      "voltage": 115,
+      "maintenance_frequency": 20
+    },
+    {
+      "id": "transmission_line_35",
+      "type": "transmission_line",
+      "source": "transmission_substation_15",
+      "target": "distribution_substation_54",
+      "capacity": 140.88,
+      "length": 25.87,
+      "age": 8.1,
+      "status": "operational",
+      "voltage": 115,
+      "maintenance_frequency": 6
+    },
+    {
+      "id": "transmission_line_36",
+      "type": "transmission_line",
+      "source": "transmission_substation_16",
+      "target": "distribution_substation_48",
+      "capacity": 86.86,
+      "length": 11.34,
+      "age": 27.6,
+      "status": "operational",
+      "voltage": 138,
+      "maintenance_frequency": 23
+    },
+    {
+      "id": "transmission_line_37",
+      "type": "transmission_line",
+      "source": "transmission_substation_17",
+      "target": "distribution_substation_90",
+      "capacity": 161.0,
+      "length": 4.26,
+      "age": 9.4,
+      "status": "operational",
+      "voltage": 69,
+      "maintenance_frequency": 21
+    },
+    {
+      "id": "transmission_line_38",
+      "type": "transmission_line",
+      "source": "transmission_substation_17",
+      "target": "distribution_substation_49",
+      "capacity": 152.36,
+      "length": 9.5,
+      "age": 11.1,
+      "status": "operational",
+      "voltage": 138,
+      "maintenance_frequency": 19
+    },
+    {
+      "id": "transmission_line_39",
+      "type": "transmission_line",
+      "source": "transmission_substation_17",
+      "target": "distribution_substation_47",
+      "capacity": 105.51,
+      "length": 17.56,
+      "age": 22.3,
+      "status": "operational",
+      "voltage": 115,
+      "maintenance_frequency": 17
+    },
+    {
+      "id": "transmission_line_40",
+      "type": "transmission_line",
+      "source": "transmission_substation_17",
+      "target": "distribution_substation_54",
+      "capacity": 134.44,
+      "length": 22.83,
+      "age": 29.7,
+      "status": "operational",
+      "voltage": 115,
+      "maintenance_frequency": 20
+    },
+    {
+      "id": "transmission_line_41",
+      "type": "transmission_line",
+      "source": "transmission_substation_17",
+      "target": "distribution_substation_50",
+      "capacity": 130.38,
+      "length": 24.33,
+      "age": 11.3,
+      "status": "operational",
+      "voltage": 115,
+      "maintenance_frequency": 11
+    },
+    {
+      "id": "transmission_line_42",
+      "type": "transmission_line",
+      "source": "transmission_substation_18",
+      "target": "distribution_substation_54",
+      "capacity": 124.95,
+      "length": 13.68,
+      "age": 5.7,
+      "status": "operational",
+      "voltage": 138,
+      "maintenance_frequency": 5
+    },
+    {
+      "id": "transmission_line_43",
+      "type": "transmission_line",
+      "source": "transmission_substation_18",
+      "target": "distribution_substation_94",
+      "capacity": 137.16,
+      "length": 14.69,
+      "age": 36.6,
+      "status": "operational",
+      "voltage": 115,
+      "maintenance_frequency": 22
+    },
+    {
+      "id": "transmission_line_44",
+      "type": "transmission_line",
+      "source": "transmission_substation_18",
+      "target": "distribution_substation_48",
+      "capacity": 81.26,
+      "length": 18.54,
+      "age": 35.8,
+      "status": "operational",
+      "voltage": 138,
+      "maintenance_frequency": 10
+    },
+    {
+      "id": "transmission_line_45",
+      "type": "transmission_line",
+      "source": "transmission_substation_18",
+      "target": "distribution_substation_50",
+      "capacity": 121.88,
+      "length": 23.71,
+      "age": 6.2,
+      "status": "operational",
+      "voltage": 115,
+      "maintenance_frequency": 19
+    },
+    {
+      "id": "transmission_line_46",
+      "type": "transmission_line",
+      "source": "transmission_substation_18",
+      "target": "distribution_substation_46",
+      "capacity": 151.87,
+      "length": 26.75,
+      "age": 31.9,
+      "status": "operational",
+      "voltage": 138,
+      "maintenance_frequency": 7
+    },
+    {
+      "id": "transmission_line_47",
+      "type": "transmission_line",
+      "source": "transmission_substation_19",
+      "target": "distribution_substation_90",
+      "capacity": 165.37,
+      "length": 4.21,
+      "age": 27.7,
+      "status": "operational",
+      "voltage": 138,
+      "maintenance_frequency": 16
+    },
+    {
+      "id": "transmission_line_48",
+      "type": "transmission_line",
+      "source": "transmission_substation_19",
+      "target": "distribution_substation_49",
+      "capacity": 190.41,
+      "length": 10.86,
+      "age": 7.2,
+      "status": "operational",
+      "voltage": 69,
+      "maintenance_frequency": 5
+    },
+    {
+      "id": "transmission_line_49",
+      "type": "transmission_line",
+      "source": "transmission_substation_19",
+      "target": "distribution_substation_47",
+      "capacity": 114.04,
+      "length": 18.34,
+      "age": 1.4,
+      "status": "operational",
+      "voltage": 138,
+      "maintenance_frequency": 20
+    },
+    {
+      "id": "transmission_line_50",
+      "type": "transmission_line",
+      "source": "transmission_substation_19",
+      "target": "distribution_substation_54",
+      "capacity": 99.88,
+      "length": 22.37,
+      "age": 8.1,
+      "status": "operational",
+      "voltage": 138,
+      "maintenance_frequency": 14
+    },
+    {
+      "id": "transmission_line_51",
+      "type": "transmission_line",
+      "source": "transmission_substation_19",
+      "target": "distribution_substation_50",
+      "capacity": 137.51,
+      "length": 23.19,
+      "age": 28.9,
+      "status": "operational",
+      "voltage": 69,
+      "maintenance_frequency": 13
+    },
+    {
+      "id": "transmission_line_52",
+      "type": "transmission_line",
+      "source": "transmission_substation_20",
+      "target": "distribution_substation_54",
+      "capacity": 122.83,
+      "length": 7.22,
+      "age": 38.8,
+      "status": "operational",
+      "voltage": 115,
+      "maintenance_frequency": 22
+    },
+    {
+      "id": "transmission_line_53",
+      "type": "transmission_line",
+      "source": "transmission_substation_20",
+      "target": "distribution_substation_50",
+      "capacity": 137.26,
+      "length": 7.48,
+      "age": 13.9,
+      "status": "operational",
+      "voltage": 115,
+      "maintenance_frequency": 20
+    },
+    {
+      "id": "transmission_line_54",
+      "type": "transmission_line",
+      "source": "transmission_substation_20",
+      "target": "distribution_substation_94",
+      "capacity": 127.52,
+      "length": 7.87,
+      "age": 1.1,
+      "status": "operational",
+      "voltage": 115,
+      "maintenance_frequency": 6
+    },
+    {
+      "id": "transmission_line_55",
+      "type": "transmission_line",
+      "source": "transmission_substation_20",
+      "target": "distribution_substation_90",
+      "capacity": 137.22,
+      "length": 23.62,
+      "age": 27.1,
+      "status": "operational",
+      "voltage": 138,
+      "maintenance_frequency": 14
+    },
+    {
+      "id": "transmission_line_56",
+      "type": "transmission_line",
+      "source": "transmission_substation_20",
+      "target": "distribution_substation_49",
+      "capacity": 216.26,
+      "length": 28.83,
+      "age": 20.6,
+      "status": "operational",
+      "voltage": 115,
+      "maintenance_frequency": 13
+    },
+    {
+      "id": "transmission_line_57",
+      "type": "transmission_line",
+      "source": "transmission_substation_21",
+      "target": "distribution_substation_51",
+      "capacity": 209.47,
+      "length": 5.11,
+      "age": 29.1,
+      "status": "operational",
+      "voltage": 115,
+      "maintenance_frequency": 16
+    },
+    {
+      "id": "transmission_line_58",
+      "type": "transmission_line",
+      "source": "transmission_substation_21",
+      "target": "distribution_substation_53",
+      "capacity": 232.04,
+      "length": 21.22,
+      "age": 14.4,
+      "status": "operational",
+      "voltage": 138,
+      "maintenance_frequency": 3
+    },
+    {
+      "id": "transmission_line_59",
+      "type": "transmission_line",
+      "source": "transmission_substation_21",
+      "target": "distribution_substation_46",
+      "capacity": 136.37,
+      "length": 47.22,
+      "age": 27.5,
+      "status": "operational",
+      "voltage": 115,
+      "maintenance_frequency": 15
+    },
+    {
+      "id": "transmission_line_60",
+      "type": "transmission_line",
+      "source": "transmission_substation_21",
+      "target": "distribution_substation_45",
+      "capacity": 162.42,
+      "length": 50.16,
+      "age": 1.3,
+      "status": "operational",
+      "voltage": 115,
+      "maintenance_frequency": 7
+    },
+    {
+      "id": "transmission_line_61",
+      "type": "transmission_line",
+      "source": "transmission_substation_22",
+      "target": "distribution_substation_52",
+      "capacity": 186.85,
+      "length": 11.26,
+      "age": 25.9,
+      "status": "operational",
+      "voltage": 69,
+      "maintenance_frequency": 17
+    },
+    {
+      "id": "transmission_line_62",
+      "type": "transmission_line",
+      "source": "transmission_substation_22",
+      "target": "distribution_substation_64",
+      "capacity": 176.96,
+      "length": 35.46,
+      "age": 4.4,
+      "status": "operational",
+      "voltage": 69,
+      "maintenance_frequency": 15
+    },
+    {
+      "id": "transmission_line_63",
+      "type": "transmission_line",
+      "source": "transmission_substation_22",
+      "target": "distribution_substation_104",
+      "capacity": 195.28,
+      "length": 51.52,
+      "age": 39.2,
+      "status": "operational",
+      "voltage": 138,
+      "maintenance_frequency": 15
+    },
+    {
+      "id": "transmission_line_64",
+      "type": "transmission_line",
+      "source": "transmission_substation_22",
+      "target": "distribution_substation_100",
+      "capacity": 110.76,
+      "length": 99.44,
+      "age": 25.9,
+      "status": "operational",
+      "voltage": 69,
+      "maintenance_frequency": 13
+    },
+    {
+      "id": "transmission_line_65",
+      "type": "transmission_line",
+      "source": "transmission_substation_23",
+      "target": "distribution_substation_53",
+      "capacity": 184.91,
+      "length": 13.61,
+      "age": 17.9,
+      "status": "operational",
+      "voltage": 69,
+      "maintenance_frequency": 14
+    },
+    {
+      "id": "transmission_line_66",
+      "type": "transmission_line",
+      "source": "transmission_substation_23",
+      "target": "distribution_substation_51",
+      "capacity": 211.41,
+      "length": 14.04,
+      "age": 6.4,
+      "status": "operational",
+      "voltage": 138,
+      "maintenance_frequency": 19
+    },
+    {
+      "id": "transmission_line_67",
+      "type": "transmission_line",
+      "source": "transmission_substation_23",
+      "target": "distribution_substation_45",
+      "capacity": 168.04,
+      "length": 33.75,
+      "age": 19.5,
+      "status": "operational",
+      "voltage": 69,
+      "maintenance_frequency": 23
+    },
+    {
+      "id": "transmission_line_68",
+      "type": "transmission_line",
+      "source": "transmission_substation_24",
+      "target": "distribution_substation_48",
+      "capacity": 90.79,
+      "length": 12.99,
+      "age": 29.0,
+      "status": "operational",
+      "voltage": 138,
+      "maintenance_frequency": 19
+    },
+    {
+      "id": "transmission_line_69",
+      "type": "transmission_line",
+      "source": "transmission_substation_25",
+      "target": "distribution_substation_57",
+      "capacity": 150.11,
+      "length": 9.02,
+      "age": 25.5,
+      "status": "operational",
+      "voltage": 115,
+      "maintenance_frequency": 10
+    },
+    {
+      "id": "transmission_line_70",
+      "type": "transmission_line",
+      "source": "transmission_substation_26",
+      "target": "distribution_substation_60",
+      "capacity": 235.1,
+      "length": 38.11,
+      "age": 9.3,
+      "status": "operational",
+      "voltage": 69,
+      "maintenance_frequency": 4
+    },
+    {
+      "id": "transmission_line_71",
+      "type": "transmission_line",
+      "source": "transmission_substation_26",
+      "target": "distribution_substation_86",
+      "capacity": 210.98,
+      "length": 65.9,
+      "age": 19.3,
+      "status": "operational",
+      "voltage": 115,
+      "maintenance_frequency": 21
+    },
+    {
+      "id": "transmission_line_72",
+      "type": "transmission_line",
+      "source": "transmission_substation_26",
+      "target": "distribution_substation_71",
+      "capacity": 138.95,
+      "length": 72.68,
+      "age": 26.5,
+      "status": "operational",
+      "voltage": 69,
+      "maintenance_frequency": 11
+    },
+    {
+      "id": "transmission_line_73",
+      "type": "transmission_line",
+      "source": "transmission_substation_27",
+      "target": "distribution_substation_81",
+      "capacity": 259.81,
+      "length": 25.07,
+      "age": 38.9,
+      "status": "operational",
+      "voltage": 69,
+      "maintenance_frequency": 18
+    },
+    {
+      "id": "transmission_line_74",
+      "type": "transmission_line",
+      "source": "transmission_substation_27",
+      "target": "distribution_substation_89",
+      "capacity": 168.11,
+      "length": 68.38,
+      "age": 31.3,
+      "status": "operational",
+      "voltage": 138,
+      "maintenance_frequency": 10
+    },
+    {
+      "id": "transmission_line_75",
+      "type": "transmission_line",
+      "source": "transmission_substation_27",
+      "target": "distribution_substation_93",
+      "capacity": 167.21,
+      "length": 84.24,
+      "age": 28.3,
+      "status": "operational",
+      "voltage": 69,
+      "maintenance_frequency": 5
+    },
+    {
+      "id": "transmission_line_76",
+      "type": "transmission_line",
+      "source": "transmission_substation_27",
+      "target": "distribution_substation_97",
+      "capacity": 101.53,
+      "length": 90.13,
+      "age": 35.7,
+      "status": "operational",
+      "voltage": 115,
+      "maintenance_frequency": 9
+    },
+    {
+      "id": "transmission_line_77",
+      "type": "transmission_line",
+      "source": "transmission_substation_27",
+      "target": "distribution_substation_65",
+      "capacity": 76.59,
+      "length": 105.09,
+      "age": 25.0,
+      "status": "operational",
+      "voltage": 69,
+      "maintenance_frequency": 5
+    },
+    {
+      "id": "transmission_line_78",
+      "type": "transmission_line",
+      "source": "transmission_substation_28",
+      "target": "distribution_substation_70",
+      "capacity": 159.85,
+      "length": 67.45,
+      "age": 9.5,
+      "status": "operational",
+      "voltage": 69,
+      "maintenance_frequency": 12
+    },
+    {
+      "id": "transmission_line_79",
+      "type": "transmission_line",
+      "source": "transmission_substation_28",
+      "target": "distribution_substation_76",
+      "capacity": 62.65,
+      "length": 73.17,
+      "age": 37.5,
+      "status": "operational",
+      "voltage": 69,
+      "maintenance_frequency": 3
+    },
+    {
+      "id": "transmission_line_80",
+      "type": "transmission_line",
+      "source": "transmission_substation_28",
+      "target": "distribution_substation_58",
+      "capacity": 199.53,
+      "length": 77.02,
+      "age": 17.8,
+      "status": "operational",
+      "voltage": 69,
+      "maintenance_frequency": 9
+    },
+    {
+      "id": "transmission_line_81",
+      "type": "transmission_line",
+      "source": "transmission_substation_28",
+      "target": "distribution_substation_71",
+      "capacity": 151.88,
+      "length": 82.53,
+      "age": 14.0,
+      "status": "operational",
+      "voltage": 115,
+      "maintenance_frequency": 21
+    },
+    {
+      "id": "transmission_line_82",
+      "type": "transmission_line",
+      "source": "transmission_substation_29",
+      "target": "distribution_substation_73",
+      "capacity": 100.58,
+      "length": 14.92,
+      "age": 27.8,
+      "status": "operational",
+      "voltage": 115,
+      "maintenance_frequency": 23
+    },
+    {
+      "id": "transmission_line_83",
+      "type": "transmission_line",
+      "source": "transmission_substation_29",
+      "target": "distribution_substation_56",
+      "capacity": 190.15,
+      "length": 68.21,
+      "age": 27.8,
+      "status": "operational",
+      "voltage": 115,
+      "maintenance_frequency": 11
+    },
+    {
+      "id": "transmission_line_84",
+      "type": "transmission_line",
+      "source": "transmission_substation_29",
+      "target": "distribution_substation_102",
+      "capacity": 52.15,
+      "length": 74.16,
+      "age": 28.6,
+      "status": "operational",
+      "voltage": 69,
+      "maintenance_frequency": 16
+    },
+    {
+      "id": "transmission_line_85",
+      "type": "transmission_line",
+      "source": "transmission_substation_29",
+      "target": "distribution_substation_80",
+      "capacity": 80.48,
+      "length": 94.64,
+      "age": 6.5,
+      "status": "operational",
+      "voltage": 115,
+      "maintenance_frequency": 14
+    },
+    {
+      "id": "transmission_line_86",
+      "type": "transmission_line",
+      "source": "transmission_substation_29",
+      "target": "distribution_substation_85",
+      "capacity": 91.66,
+      "length": 107.57,
+      "age": 35.0,
+      "status": "operational",
+      "voltage": 115,
+      "maintenance_frequency": 22
+    },
+    {
+      "id": "transmission_line_87",
+      "type": "transmission_line",
+      "source": "transmission_substation_30",
+      "target": "distribution_substation_47",
+      "capacity": 100.44,
+      "length": 23.99,
+      "age": 19.5,
+      "status": "operational",
+      "voltage": 115,
+      "maintenance_frequency": 19
+    },
+    {
+      "id": "transmission_line_88",
+      "type": "transmission_line",
+      "source": "transmission_substation_30",
+      "target": "distribution_substation_90",
+      "capacity": 146.68,
+      "length": 31.26,
+      "age": 39.7,
+      "status": "operational",
+      "voltage": 115,
+      "maintenance_frequency": 22
+    },
+    {
+      "id": "transmission_line_89",
+      "type": "transmission_line",
+      "source": "transmission_substation_30",
+      "target": "distribution_substation_49",
+      "capacity": 176.81,
+      "length": 35.4,
+      "age": 28.4,
+      "status": "operational",
+      "voltage": 69,
+      "maintenance_frequency": 24
+    },
+    {
+      "id": "transmission_line_90",
+      "type": "transmission_line",
+      "source": "transmission_substation_31",
+      "target": "distribution_substation_91",
+      "capacity": 105.11,
+      "length": 53.9,
+      "age": 14.7,
+      "status": "operational",
+      "voltage": 69,
+      "maintenance_frequency": 10
+    },
+    {
+      "id": "transmission_line_91",
+      "type": "transmission_line",
+      "source": "transmission_substation_31",
+      "target": "distribution_substation_92",
+      "capacity": 250.15,
+      "length": 61.3,
+      "age": 22.9,
+      "status": "operational",
+      "voltage": 115,
+      "maintenance_frequency": 20
+    },
+    {
+      "id": "transmission_line_92",
+      "type": "transmission_line",
+      "source": "transmission_substation_31",
+      "target": "distribution_substation_67",
+      "capacity": 145.77,
+      "length": 71.46,
+      "age": 7.8,
+      "status": "operational",
+      "voltage": 138,
+      "maintenance_frequency": 16
+    },
+    {
+      "id": "transmission_line_93",
+      "type": "transmission_line",
+      "source": "transmission_substation_32",
+      "target": "distribution_substation_101",
+      "capacity": 132.7,
+      "length": 37.35,
+      "age": 34.2,
+      "status": "operational",
+      "voltage": 69,
+      "maintenance_frequency": 8
+    },
+    {
+      "id": "transmission_line_94",
+      "type": "transmission_line",
+      "source": "transmission_substation_32",
+      "target": "distribution_substation_74",
+      "capacity": 154.04,
+      "length": 57.18,
+      "age": 37.8,
+      "status": "operational",
+      "voltage": 115,
+      "maintenance_frequency": 18
+    },
+    {
+      "id": "transmission_line_95",
+      "type": "transmission_line",
+      "source": "transmission_substation_32",
+      "target": "distribution_substation_103",
+      "capacity": 149.48,
+      "length": 67.14,
+      "age": 35.7,
+      "status": "operational",
+      "voltage": 69,
+      "maintenance_frequency": 23
+    },
+    {
+      "id": "transmission_line_96",
+      "type": "transmission_line",
+      "source": "transmission_substation_33",
+      "target": "distribution_substation_47",
+      "capacity": 83.38,
+      "length": 61.42,
+      "age": 21.7,
+      "status": "operational",
+      "voltage": 69,
+      "maintenance_frequency": 10
+    },
+    {
+      "id": "transmission_line_97",
+      "type": "transmission_line",
+      "source": "transmission_substation_33",
+      "target": "distribution_substation_49",
+      "capacity": 201.09,
+      "length": 63.28,
+      "age": 17.8,
+      "status": "operational",
+      "voltage": 115,
+      "maintenance_frequency": 14
+    },
+    {
+      "id": "transmission_line_98",
+      "type": "transmission_line",
+      "source": "transmission_substation_33",
+      "target": "distribution_substation_90",
+      "capacity": 131.91,
+      "length": 72.74,
+      "age": 18.5,
+      "status": "operational",
+      "voltage": 69,
+      "maintenance_frequency": 8
+    },
+    {
+      "id": "transmission_line_99",
+      "type": "transmission_line",
+      "source": "transmission_substation_34",
+      "target": "distribution_substation_67",
+      "capacity": 160.41,
+      "length": 60.92,
+      "age": 29.2,
+      "status": "operational",
+      "voltage": 69,
+      "maintenance_frequency": 17
+    },
+    {
+      "id": "transmission_line_100",
+      "type": "transmission_line",
+      "source": "transmission_substation_35",
+      "target": "distribution_substation_68",
+      "capacity": 149.71,
+      "length": 25.11,
+      "age": 24.2,
+      "status": "operational",
+      "voltage": 115,
+      "maintenance_frequency": 20
+    },
+    {
+      "id": "transmission_line_101",
+      "type": "transmission_line",
+      "source": "transmission_substation_36",
+      "target": "distribution_substation_89",
+      "capacity": 163.58,
+      "length": 7.45,
+      "age": 8.9,
+      "status": "operational",
+      "voltage": 115,
+      "maintenance_frequency": 22
+    },
+    {
+      "id": "transmission_line_102",
+      "type": "transmission_line",
+      "source": "transmission_substation_36",
+      "target": "distribution_substation_97",
+      "capacity": 130.09,
+      "length": 22.94,
+      "age": 5.9,
+      "status": "operational",
+      "voltage": 69,
+      "maintenance_frequency": 13
+    },
+    {
+      "id": "transmission_line_103",
+      "type": "transmission_line",
+      "source": "transmission_substation_36",
+      "target": "distribution_substation_85",
+      "capacity": 99.87,
+      "length": 50.08,
+      "age": 26.7,
+      "status": "operational",
+      "voltage": 69,
+      "maintenance_frequency": 6
+    },
+    {
+      "id": "transmission_line_104",
+      "type": "transmission_line",
+      "source": "transmission_substation_36",
+      "target": "distribution_substation_81",
+      "capacity": 254.04,
+      "length": 94.53,
+      "age": 4.2,
+      "status": "operational",
+      "voltage": 115,
+      "maintenance_frequency": 11
+    },
+    {
+      "id": "transmission_line_105",
+      "type": "transmission_line",
+      "source": "transmission_substation_37",
+      "target": "distribution_substation_87",
+      "capacity": 60.79,
+      "length": 27.93,
+      "age": 21.8,
+      "status": "operational",
+      "voltage": 69,
+      "maintenance_frequency": 21
+    },
+    {
+      "id": "transmission_line_106",
+      "type": "transmission_line",
+      "source": "transmission_substation_37",
+      "target": "distribution_substation_74",
+      "capacity": 132.55,
+      "length": 39.54,
+      "age": 34.8,
+      "status": "operational",
+      "voltage": 69,
+      "maintenance_frequency": 4
+    },
+    {
+      "id": "transmission_line_107",
+      "type": "transmission_line",
+      "source": "transmission_substation_37",
+      "target": "distribution_substation_99",
+      "capacity": 129.17,
+      "length": 45.55,
+      "age": 10.4,
+      "status": "operational",
+      "voltage": 69,
+      "maintenance_frequency": 9
+    },
+    {
+      "id": "transmission_line_108",
+      "type": "transmission_line",
+      "source": "transmission_substation_38",
+      "target": "distribution_substation_56",
+      "capacity": 174.07,
+      "length": 21.52,
+      "age": 2.7,
+      "status": "operational",
+      "voltage": 69,
+      "maintenance_frequency": 20
+    },
+    {
+      "id": "transmission_line_109",
+      "type": "transmission_line",
+      "source": "transmission_substation_39",
+      "target": "distribution_substation_102",
+      "capacity": 52.89,
+      "length": 45.2,
+      "age": 18.2,
+      "status": "operational",
+      "voltage": 69,
+      "maintenance_frequency": 4
+    },
+    {
+      "id": "transmission_line_110",
+      "type": "transmission_line",
+      "source": "transmission_substation_39",
+      "target": "distribution_substation_56",
+      "capacity": 208.64,
+      "length": 50.1,
+      "age": 33.1,
+      "status": "operational",
+      "voltage": 69,
+      "maintenance_frequency": 10
+    },
+    {
+      "id": "transmission_line_111",
+      "type": "transmission_line",
+      "source": "transmission_substation_40",
+      "target": "distribution_substation_61",
+      "capacity": 212.03,
+      "length": 74.79,
+      "age": 28.2,
+      "status": "operational",
+      "voltage": 115,
+      "maintenance_frequency": 24
+    },
+    {
+      "id": "transmission_line_112",
+      "type": "transmission_line",
+      "source": "transmission_substation_40",
+      "target": "distribution_substation_51",
+      "capacity": 240.69,
+      "length": 92.58,
+      "age": 19.6,
+      "status": "operational",
+      "voltage": 138,
+      "maintenance_frequency": 16
+    },
+    {
+      "id": "transmission_line_113",
+      "type": "transmission_line",
+      "source": "transmission_substation_40",
+      "target": "distribution_substation_67",
+      "capacity": 150.62,
+      "length": 95.24,
+      "age": 17.5,
+      "status": "operational",
+      "voltage": 138,
+      "maintenance_frequency": 16
+    },
+    {
+      "id": "transmission_line_114",
+      "type": "transmission_line",
+      "source": "transmission_substation_40",
+      "target": "distribution_substation_53",
+      "capacity": 199.72,
+      "length": 107.63,
+      "age": 35.5,
+      "status": "operational",
+      "voltage": 115,
+      "maintenance_frequency": 19
+    },
+    {
+      "id": "transmission_line_115",
+      "type": "transmission_line",
+      "source": "transmission_substation_41",
+      "target": "distribution_substation_101",
+      "capacity": 147.11,
+      "length": 31.22,
+      "age": 39.8,
+      "status": "operational",
+      "voltage": 69,
+      "maintenance_frequency": 16
+    },
+    {
+      "id": "transmission_line_116",
+      "type": "transmission_line",
+      "source": "transmission_substation_42",
+      "target": "distribution_substation_92",
+      "capacity": 226.25,
+      "length": 11.7,
+      "age": 4.5,
+      "status": "operational",
+      "voltage": 138,
+      "maintenance_frequency": 13
+    },
+    {
+      "id": "transmission_line_117",
+      "type": "transmission_line",
+      "source": "transmission_substation_42",
+      "target": "distribution_substation_91",
+      "capacity": 106.62,
+      "length": 16.35,
+      "age": 13.2,
+      "status": "operational",
+      "voltage": 138,
+      "maintenance_frequency": 7
+    },
+    {
+      "id": "transmission_line_118",
+      "type": "transmission_line",
+      "source": "transmission_substation_42",
+      "target": "distribution_substation_67",
+      "capacity": 123.11,
+      "length": 19.2,
+      "age": 11.1,
+      "status": "operational",
+      "voltage": 115,
+      "maintenance_frequency": 8
+    },
+    {
+      "id": "transmission_line_119",
+      "type": "transmission_line",
+      "source": "transmission_substation_42",
+      "target": "distribution_substation_61",
+      "capacity": 232.68,
+      "length": 99.77,
+      "age": 9.8,
+      "status": "operational",
+      "voltage": 138,
+      "maintenance_frequency": 21
+    },
+    {
+      "id": "transmission_line_120",
+      "type": "transmission_line",
+      "source": "transmission_substation_42",
+      "target": "distribution_substation_102",
+      "capacity": 63.49,
+      "length": 145.88,
+      "age": 18.0,
+      "status": "operational",
+      "voltage": 69,
+      "maintenance_frequency": 3
+    },
+    {
+      "id": "transmission_line_121",
+      "type": "transmission_line",
+      "source": "transmission_substation_43",
+      "target": "distribution_substation_51",
+      "capacity": 269.15,
+      "length": 49.83,
+      "age": 31.9,
+      "status": "operational",
+      "voltage": 69,
+      "maintenance_frequency": 13
+    },
+    {
+      "id": "transmission_line_122",
+      "type": "transmission_line",
+      "source": "transmission_substation_43",
+      "target": "distribution_substation_53",
+      "capacity": 210.57,
+      "length": 60.22,
+      "age": 6.0,
+      "status": "operational",
+      "voltage": 115,
+      "maintenance_frequency": 9
+    },
+    {
+      "id": "transmission_line_123",
+      "type": "transmission_line",
+      "source": "transmission_substation_43",
+      "target": "distribution_substation_45",
+      "capacity": 188.11,
+      "length": 63.16,
+      "age": 30.7,
+      "status": "operational",
+      "voltage": 115,
+      "maintenance_frequency": 17
+    },
+    {
+      "id": "transmission_line_124",
+      "type": "transmission_line",
+      "source": "transmission_substation_43",
+      "target": "distribution_substation_46",
+      "capacity": 166.11,
+      "length": 77.74,
+      "age": 15.4,
+      "status": "operational",
+      "voltage": 115,
+      "maintenance_frequency": 12
+    },
+    {
+      "id": "transmission_line_125",
+      "type": "transmission_line",
+      "source": "transmission_substation_44",
+      "target": "distribution_substation_61",
+      "capacity": 214.93,
+      "length": 27.59,
+      "age": 21.7,
+      "status": "operational",
+      "voltage": 115,
+      "maintenance_frequency": 13
+    },
+    {
+      "id": "transmission_line_126",
+      "type": "transmission_line",
+      "source": "transmission_substation_44",
+      "target": "distribution_substation_67",
+      "capacity": 140.02,
+      "length": 63.99,
+      "age": 28.7,
+      "status": "operational",
+      "voltage": 138,
+      "maintenance_frequency": 9
+    },
+    {
+      "id": "transmission_line_127",
+      "type": "transmission_line",
+      "source": "transmission_substation_44",
+      "target": "distribution_substation_91",
+      "capacity": 97.53,
+      "length": 74.51,
+      "age": 14.5,
+      "status": "operational",
+      "voltage": 115,
+      "maintenance_frequency": 16
+    },
+    {
+      "id": "transmission_line_128",
+      "type": "transmission_line",
+      "source": "transmission_substation_44",
+      "target": "distribution_substation_92",
+      "capacity": 197.2,
+      "length": 93.98,
+      "age": 8.6,
+      "status": "operational",
+      "voltage": 69,
+      "maintenance_frequency": 23
+    },
+    {
+      "id": "distribution_line_129",
+      "type": "distribution_line",
+      "source": "distribution_substation_45",
+      "target": "transformer_170",
+      "capacity": 49.57,
+      "length": 16.1,
+      "age": 13.8,
+      "status": "operational",
+      "voltage": 12.47,
+      "maintenance_frequency": 36
+    },
+    {
+      "id": "distribution_line_130",
+      "type": "distribution_line",
+      "source": "distribution_substation_45",
+      "target": "transformer_191",
+      "capacity": 50.51,
+      "length": 30.69,
+      "age": 10.8,
+      "status": "operational",
+      "voltage": 12.47,
+      "maintenance_frequency": 9
+    },
+    {
+      "id": "distribution_line_131",
+      "type": "distribution_line",
+      "source": "distribution_substation_45",
+      "target": "transformer_182",
+      "capacity": 75.82,
+      "length": 36.84,
+      "age": 24.8,
+      "status": "operational",
+      "voltage": 34.5,
+      "maintenance_frequency": 9
+    },
+    {
+      "id": "distribution_line_132",
+      "type": "distribution_line",
+      "source": "distribution_substation_46",
+      "target": "transformer_191",
+      "capacity": 41.84,
+      "length": 11.6,
+      "age": 16.0,
+      "status": "operational",
+      "voltage": 12.47,
+      "maintenance_frequency": 19
+    },
+    {
+      "id": "distribution_line_133",
+      "type": "distribution_line",
+      "source": "distribution_substation_47",
+      "target": "transformer_204",
+      "capacity": 14.26,
+      "length": 25.61,
+      "age": 21.3,
+      "status": "operational",
+      "voltage": 13.8,
+      "maintenance_frequency": 15
+    },
+    {
+      "id": "distribution_line_134",
+      "type": "distribution_line",
+      "source": "distribution_substation_48",
+      "target": "transformer_191",
+      "capacity": 48.44,
+      "length": 10.65,
+      "age": 38.1,
+      "status": "operational",
+      "voltage": 34.5,
+      "maintenance_frequency": 22
+    },
+    {
+      "id": "distribution_line_135",
+      "type": "distribution_line",
+      "source": "distribution_substation_49",
+      "target": "transformer_182",
+      "capacity": 81.42,
+      "length": 22.52,
+      "age": 39.3,
+      "status": "operational",
+      "voltage": 13.8,
+      "maintenance_frequency": 27
+    },
+    {
+      "id": "distribution_line_136",
+      "type": "distribution_line",
+      "source": "distribution_substation_49",
+      "target": "transformer_204",
+      "capacity": 12.74,
+      "length": 30.44,
+      "age": 30.8,
+      "status": "operational",
+      "voltage": 34.5,
+      "maintenance_frequency": 33
+    },
+    {
+      "id": "distribution_line_137",
+      "type": "distribution_line",
+      "source": "distribution_substation_49",
+      "target": "transformer_134",
+      "capacity": 49.39,
+      "length": 41.79,
+      "age": 22.2,
+      "status": "operational",
+      "voltage": 13.8,
+      "maintenance_frequency": 13
+    },
+    {
+      "id": "distribution_line_138",
+      "type": "distribution_line",
+      "source": "distribution_substation_50",
+      "target": "transformer_182",
+      "capacity": 72.65,
+      "length": 11.32,
+      "age": 17.6,
+      "status": "operational",
+      "voltage": 13.8,
+      "maintenance_frequency": 12
+    },
+    {
+      "id": "distribution_line_139",
+      "type": "distribution_line",
+      "source": "distribution_substation_50",
+      "target": "transformer_170",
+      "capacity": 59.66,
+      "length": 30.48,
+      "age": 33.5,
+      "status": "operational",
+      "voltage": 13.8,
+      "maintenance_frequency": 18
+    },
+    {
+      "id": "distribution_line_140",
+      "type": "distribution_line",
+      "source": "distribution_substation_50",
+      "target": "transformer_204",
+      "capacity": 13.85,
+      "length": 33.28,
+      "age": 6.4,
+      "status": "operational",
+      "voltage": 13.8,
+      "maintenance_frequency": 16
+    },
+    {
+      "id": "distribution_line_141",
+      "type": "distribution_line",
+      "source": "distribution_substation_51",
+      "target": "transformer_138",
+      "capacity": 32.86,
+      "length": 19.5,
+      "age": 15.6,
+      "status": "operational",
+      "voltage": 12.47,
+      "maintenance_frequency": 23
+    },
+    {
+      "id": "distribution_line_142",
+      "type": "distribution_line",
+      "source": "distribution_substation_52",
+      "target": "transformer_150",
+      "capacity": 48.36,
+      "length": 21.94,
+      "age": 6.6,
+      "status": "operational",
+      "voltage": 13.8,
+      "maintenance_frequency": 15
+    },
+    {
+      "id": "distribution_line_143",
+      "type": "distribution_line",
+      "source": "distribution_substation_53",
+      "target": "transformer_191",
+      "capacity": 41.56,
+      "length": 36.22,
+      "age": 29.0,
+      "status": "operational",
+      "voltage": 34.5,
+      "maintenance_frequency": 35
+    },
+    {
+      "id": "distribution_line_144",
+      "type": "distribution_line",
+      "source": "distribution_substation_53",
+      "target": "transformer_138",
+      "capacity": 26.45,
+      "length": 38.67,
+      "age": 12.7,
+      "status": "operational",
+      "voltage": 34.5,
+      "maintenance_frequency": 30
+    },
+    {
+      "id": "distribution_line_145",
+      "type": "distribution_line",
+      "source": "distribution_substation_54",
+      "target": "transformer_182",
+      "capacity": 75.78,
+      "length": 10.72,
+      "age": 8.9,
+      "status": "operational",
+      "voltage": 34.5,
+      "maintenance_frequency": 15
+    },
+    {
+      "id": "distribution_line_146",
+      "type": "distribution_line",
+      "source": "distribution_substation_54",
+      "target": "transformer_191",
+      "capacity": 52.27,
+      "length": 36.39,
+      "age": 35.4,
+      "status": "operational",
+      "voltage": 13.8,
+      "maintenance_frequency": 29
+    },
+    {
+      "id": "distribution_line_147",
+      "type": "distribution_line",
+      "source": "distribution_substation_55",
+      "target": "transformer_190",
+      "capacity": 47.81,
+      "length": 72.38,
+      "age": 13.8,
+      "status": "operational",
+      "voltage": 12.47,
+      "maintenance_frequency": 25
+    },
+    {
+      "id": "distribution_line_148",
+      "type": "distribution_line",
+      "source": "distribution_substation_55",
+      "target": "transformer_143",
+      "capacity": 36.33,
+      "length": 75.98,
+      "age": 1.6,
+      "status": "operational",
+      "voltage": 34.5,
+      "maintenance_frequency": 35
+    },
+    {
+      "id": "distribution_line_149",
+      "type": "distribution_line",
+      "source": "distribution_substation_55",
+      "target": "transformer_145",
+      "capacity": 22.43,
+      "length": 99.28,
+      "age": 18.5,
+      "status": "operational",
+      "voltage": 13.8,
+      "maintenance_frequency": 11
+    },
+    {
+      "id": "distribution_line_150",
+      "type": "distribution_line",
+      "source": "distribution_substation_56",
+      "target": "transformer_109",
+      "capacity": 54.4,
+      "length": 39.3,
+      "age": 9.5,
+      "status": "operational",
+      "voltage": 13.8,
+      "maintenance_frequency": 27
+    },
+    {
+      "id": "distribution_line_151",
+      "type": "distribution_line",
+      "source": "distribution_substation_57",
+      "target": "transformer_173",
+      "capacity": 71.12,
+      "length": 28.91,
+      "age": 14.6,
+      "status": "operational",
+      "voltage": 34.5,
+      "maintenance_frequency": 31
+    },
+    {
+      "id": "distribution_line_152",
+      "type": "distribution_line",
+      "source": "distribution_substation_57",
+      "target": "transformer_137",
+      "capacity": 82.59,
+      "length": 29.1,
+      "age": 39.4,
+      "status": "operational",
+      "voltage": 13.8,
+      "maintenance_frequency": 24
+    },
+    {
+      "id": "distribution_line_153",
+      "type": "distribution_line",
+      "source": "distribution_substation_58",
+      "target": "transformer_145",
+      "capacity": 16.26,
+      "length": 9.69,
+      "age": 11.7,
+      "status": "operational",
+      "voltage": 12.47,
+      "maintenance_frequency": 21
+    },
+    {
+      "id": "distribution_line_154",
+      "type": "distribution_line",
+      "source": "distribution_substation_59",
+      "target": "transformer_146",
+      "capacity": 56.7,
+      "length": 38.24,
+      "age": 2.5,
+      "status": "operational",
+      "voltage": 12.47,
+      "maintenance_frequency": 26
+    },
+    {
+      "id": "distribution_line_155",
+      "type": "distribution_line",
+      "source": "distribution_substation_59",
+      "target": "transformer_121",
+      "capacity": 47.87,
+      "length": 75.31,
+      "age": 7.7,
+      "status": "operational",
+      "voltage": 12.47,
+      "maintenance_frequency": 11
+    },
+    {
+      "id": "distribution_line_156",
+      "type": "distribution_line",
+      "source": "distribution_substation_59",
+      "target": "transformer_144",
+      "capacity": 35.18,
+      "length": 76.78,
+      "age": 35.4,
+      "status": "operational",
+      "voltage": 13.8,
+      "maintenance_frequency": 21
+    },
+    {
+      "id": "distribution_line_157",
+      "type": "distribution_line",
+      "source": "distribution_substation_60",
+      "target": "transformer_144",
+      "capacity": 42.61,
+      "length": 6.96,
+      "age": 28.7,
+      "status": "operational",
+      "voltage": 13.8,
+      "maintenance_frequency": 10
+    },
+    {
+      "id": "distribution_line_158",
+      "type": "distribution_line",
+      "source": "distribution_substation_60",
+      "target": "transformer_121",
+      "capacity": 50.23,
+      "length": 16.76,
+      "age": 3.3,
+      "status": "operational",
+      "voltage": 13.8,
+      "maintenance_frequency": 10
+    },
+    {
+      "id": "distribution_line_159",
+      "type": "distribution_line",
+      "source": "distribution_substation_60",
+      "target": "transformer_172",
+      "capacity": 52.84,
+      "length": 25.64,
+      "age": 22.3,
+      "status": "operational",
+      "voltage": 34.5,
+      "maintenance_frequency": 14
+    },
+    {
+      "id": "distribution_line_160",
+      "type": "distribution_line",
+      "source": "distribution_substation_61",
+      "target": "transformer_111",
+      "capacity": 48.32,
+      "length": 20.03,
+      "age": 12.1,
+      "status": "operational",
+      "voltage": 34.5,
+      "maintenance_frequency": 19
+    },
+    {
+      "id": "distribution_line_161",
+      "type": "distribution_line",
+      "source": "distribution_substation_61",
+      "target": "transformer_195",
+      "capacity": 83.43,
+      "length": 26.46,
+      "age": 5.2,
+      "status": "operational",
+      "voltage": 13.8,
+      "maintenance_frequency": 23
+    },
+    {
+      "id": "distribution_line_162",
+      "type": "distribution_line",
+      "source": "distribution_substation_62",
+      "target": "transformer_118",
+      "capacity": 77.07,
+      "length": 33.7,
+      "age": 22.6,
+      "status": "operational",
+      "voltage": 34.5,
+      "maintenance_frequency": 10
+    },
+    {
+      "id": "distribution_line_163",
+      "type": "distribution_line",
+      "source": "distribution_substation_62",
+      "target": "transformer_203",
+      "capacity": 73.23,
+      "length": 37.45,
+      "age": 38.9,
+      "status": "operational",
+      "voltage": 13.8,
+      "maintenance_frequency": 25
+    },
+    {
+      "id": "distribution_line_164",
+      "type": "distribution_line",
+      "source": "distribution_substation_63",
+      "target": "transformer_196",
+      "capacity": 67.62,
+      "length": 25.91,
+      "age": 9.8,
+      "status": "operational",
+      "voltage": 13.8,
+      "maintenance_frequency": 25
+    },
+    {
+      "id": "distribution_line_165",
+      "type": "distribution_line",
+      "source": "distribution_substation_63",
+      "target": "transformer_191",
+      "capacity": 55.75,
+      "length": 34.76,
+      "age": 6.4,
+      "status": "operational",
+      "voltage": 12.47,
+      "maintenance_frequency": 25
+    },
+    {
+      "id": "distribution_line_166",
+      "type": "distribution_line",
+      "source": "distribution_substation_63",
+      "target": "transformer_167",
+      "capacity": 57.31,
+      "length": 44.82,
+      "age": 22.9,
+      "status": "operational",
+      "voltage": 34.5,
+      "maintenance_frequency": 32
+    },
+    {
+      "id": "distribution_line_167",
+      "type": "distribution_line",
+      "source": "distribution_substation_64",
+      "target": "transformer_131",
+      "capacity": 72.24,
+      "length": 23.13,
+      "age": 19.9,
+      "status": "operational",
+      "voltage": 13.8,
+      "maintenance_frequency": 21
+    },
+    {
+      "id": "distribution_line_168",
+      "type": "distribution_line",
+      "source": "distribution_substation_64",
+      "target": "transformer_150",
+      "capacity": 57.9,
+      "length": 24.42,
+      "age": 19.9,
+      "status": "operational",
+      "voltage": 34.5,
+      "maintenance_frequency": 10
+    },
+    {
+      "id": "distribution_line_169",
+      "type": "distribution_line",
+      "source": "distribution_substation_64",
+      "target": "transformer_119",
+      "capacity": 66.52,
+      "length": 24.53,
+      "age": 36.4,
+      "status": "operational",
+      "voltage": 12.47,
+      "maintenance_frequency": 25
+    },
+    {
+      "id": "distribution_line_170",
+      "type": "distribution_line",
+      "source": "distribution_substation_65",
+      "target": "transformer_176",
+      "capacity": 15.17,
+      "length": 49.94,
+      "age": 19.1,
+      "status": "operational",
+      "voltage": 34.5,
+      "maintenance_frequency": 24
+    },
+    {
+      "id": "distribution_line_171",
+      "type": "distribution_line",
+      "source": "distribution_substation_65",
+      "target": "transformer_199",
+      "capacity": 15.21,
+      "length": 51.67,
+      "age": 5.5,
+      "status": "operational",
+      "voltage": 34.5,
+      "maintenance_frequency": 34
+    },
+    {
+      "id": "distribution_line_172",
+      "type": "distribution_line",
+      "source": "distribution_substation_65",
+      "target": "transformer_116",
+      "capacity": 22.24,
+      "length": 58.82,
+      "age": 37.1,
+      "status": "operational",
+      "voltage": 34.5,
+      "maintenance_frequency": 29
+    },
+    {
+      "id": "distribution_line_173",
+      "type": "distribution_line",
+      "source": "distribution_substation_66",
+      "target": "transformer_141",
+      "capacity": 21.31,
+      "length": 10.09,
+      "age": 1.2,
+      "status": "operational",
+      "voltage": 13.8,
+      "maintenance_frequency": 19
+    },
+    {
+      "id": "distribution_line_174",
+      "type": "distribution_line",
+      "source": "distribution_substation_66",
+      "target": "transformer_185",
+      "capacity": 45.27,
+      "length": 24.09,
+      "age": 39.2,
+      "status": "operational",
+      "voltage": 34.5,
+      "maintenance_frequency": 33
+    },
+    {
+      "id": "distribution_line_175",
+      "type": "distribution_line",
+      "source": "distribution_substation_66",
+      "target": "transformer_202",
+      "capacity": 72.44,
+      "length": 51.65,
+      "age": 22.4,
+      "status": "operational",
+      "voltage": 13.8,
+      "maintenance_frequency": 31
+    },
+    {
+      "id": "distribution_line_176",
+      "type": "distribution_line",
+      "source": "distribution_substation_67",
+      "target": "transformer_169",
+      "capacity": 69.92,
+      "length": 49.4,
+      "age": 5.9,
+      "status": "operational",
+      "voltage": 12.47,
+      "maintenance_frequency": 28
+    },
+    {
+      "id": "distribution_line_177",
+      "type": "distribution_line",
+      "source": "distribution_substation_68",
+      "target": "transformer_190",
+      "capacity": 48.84,
+      "length": 9.17,
+      "age": 10.4,
+      "status": "operational",
+      "voltage": 12.47,
+      "maintenance_frequency": 33
+    },
+    {
+      "id": "distribution_line_178",
+      "type": "distribution_line",
+      "source": "distribution_substation_68",
+      "target": "transformer_143",
+      "capacity": 42.64,
+      "length": 31.7,
+      "age": 38.7,
+      "status": "operational",
+      "voltage": 12.47,
+      "maintenance_frequency": 27
+    },
+    {
+      "id": "distribution_line_179",
+      "type": "distribution_line",
+      "source": "distribution_substation_68",
+      "target": "transformer_164",
+      "capacity": 55.52,
+      "length": 34.24,
+      "age": 39.3,
+      "status": "operational",
+      "voltage": 34.5,
+      "maintenance_frequency": 31
+    },
+    {
+      "id": "distribution_line_180",
+      "type": "distribution_line",
+      "source": "distribution_substation_69",
+      "target": "transformer_185",
+      "capacity": 49.95,
+      "length": 7.56,
+      "age": 35.2,
+      "status": "operational",
+      "voltage": 13.8,
+      "maintenance_frequency": 34
+    },
+    {
+      "id": "distribution_line_181",
+      "type": "distribution_line",
+      "source": "distribution_substation_69",
+      "target": "transformer_167",
+      "capacity": 65.88,
+      "length": 38.1,
+      "age": 31.4,
+      "status": "operational",
+      "voltage": 34.5,
+      "maintenance_frequency": 17
+    },
+    {
+      "id": "distribution_line_182",
+      "type": "distribution_line",
+      "source": "distribution_substation_69",
+      "target": "transformer_141",
+      "capacity": 26.53,
+      "length": 40.89,
+      "age": 28.0,
+      "status": "operational",
+      "voltage": 12.47,
+      "maintenance_frequency": 17
+    },
+    {
+      "id": "distribution_line_183",
+      "type": "distribution_line",
+      "source": "distribution_substation_70",
+      "target": "transformer_130",
+      "capacity": 31.88,
+      "length": 24.92,
+      "age": 9.8,
+      "status": "operational",
+      "voltage": 12.47,
+      "maintenance_frequency": 17
+    },
+    {
+      "id": "distribution_line_184",
+      "type": "distribution_line",
+      "source": "distribution_substation_71",
+      "target": "transformer_121",
+      "capacity": 44.16,
+      "length": 24.38,
+      "age": 32.5,
+      "status": "operational",
+      "voltage": 34.5,
+      "maintenance_frequency": 36
+    },
+    {
+      "id": "distribution_line_185",
+      "type": "distribution_line",
+      "source": "distribution_substation_72",
+      "target": "transformer_141",
+      "capacity": 29.4,
+      "length": 21.31,
+      "age": 39.7,
+      "status": "operational",
+      "voltage": 12.47,
+      "maintenance_frequency": 21
+    },
+    {
+      "id": "distribution_line_186",
+      "type": "distribution_line",
+      "source": "distribution_substation_72",
+      "target": "transformer_185",
+      "capacity": 46.37,
+      "length": 28.79,
+      "age": 12.3,
+      "status": "operational",
+      "voltage": 34.5,
+      "maintenance_frequency": 31
+    },
+    {
+      "id": "distribution_line_187",
+      "type": "distribution_line",
+      "source": "distribution_substation_72",
+      "target": "transformer_202",
+      "capacity": 58.28,
+      "length": 38.82,
+      "age": 18.6,
+      "status": "operational",
+      "voltage": 12.47,
+      "maintenance_frequency": 16
+    },
+    {
+      "id": "distribution_line_188",
+      "type": "distribution_line",
+      "source": "distribution_substation_73",
+      "target": "transformer_152",
+      "capacity": 60.24,
+      "length": 40.32,
+      "age": 21.2,
+      "status": "operational",
+      "voltage": 13.8,
+      "maintenance_frequency": 13
+    },
+    {
+      "id": "distribution_line_189",
+      "type": "distribution_line",
+      "source": "distribution_substation_73",
+      "target": "transformer_129",
+      "capacity": 54.24,
+      "length": 61.07,
+      "age": 14.8,
+      "status": "operational",
+      "voltage": 34.5,
+      "maintenance_frequency": 17
+    },
+    {
+      "id": "distribution_line_190",
+      "type": "distribution_line",
+      "source": "distribution_substation_74",
+      "target": "transformer_133",
+      "capacity": 11.29,
+      "length": 41.19,
+      "age": 1.8,
+      "status": "operational",
+      "voltage": 34.5,
+      "maintenance_frequency": 15
+    },
+    {
+      "id": "distribution_line_191",
+      "type": "distribution_line",
+      "source": "distribution_substation_74",
+      "target": "transformer_175",
+      "capacity": 52.77,
+      "length": 41.57,
+      "age": 3.5,
+      "status": "operational",
+      "voltage": 13.8,
+      "maintenance_frequency": 8
+    },
+    {
+      "id": "distribution_line_192",
+      "type": "distribution_line",
+      "source": "distribution_substation_75",
+      "target": "transformer_135",
+      "capacity": 65.83,
+      "length": 42.25,
+      "age": 23.9,
+      "status": "operational",
+      "voltage": 13.8,
+      "maintenance_frequency": 31
+    },
+    {
+      "id": "distribution_line_193",
+      "type": "distribution_line",
+      "source": "distribution_substation_75",
+      "target": "transformer_120",
+      "capacity": 27.19,
+      "length": 45.26,
+      "age": 26.7,
+      "status": "operational",
+      "voltage": 34.5,
+      "maintenance_frequency": 10
+    },
+    {
+      "id": "distribution_line_194",
+      "type": "distribution_line",
+      "source": "distribution_substation_75",
+      "target": "transformer_154",
+      "capacity": 52.96,
+      "length": 57.72,
+      "age": 12.8,
+      "status": "operational",
+      "voltage": 34.5,
+      "maintenance_frequency": 7
+    },
+    {
+      "id": "distribution_line_195",
+      "type": "distribution_line",
+      "source": "distribution_substation_76",
+      "target": "transformer_113",
+      "capacity": 25.38,
+      "length": 9.5,
+      "age": 7.5,
+      "status": "operational",
+      "voltage": 12.47,
+      "maintenance_frequency": 8
+    },
+    {
+      "id": "distribution_line_196",
+      "type": "distribution_line",
+      "source": "distribution_substation_76",
+      "target": "transformer_165",
+      "capacity": 48.94,
+      "length": 11.05,
+      "age": 9.8,
+      "status": "operational",
+      "voltage": 13.8,
+      "maintenance_frequency": 25
+    },
+    {
+      "id": "distribution_line_197",
+      "type": "distribution_line",
+      "source": "distribution_substation_77",
+      "target": "transformer_175",
+      "capacity": 47.0,
+      "length": 48.52,
+      "age": 20.3,
+      "status": "operational",
+      "voltage": 13.8,
+      "maintenance_frequency": 21
+    },
+    {
+      "id": "distribution_line_198",
+      "type": "distribution_line",
+      "source": "distribution_substation_77",
+      "target": "transformer_203",
+      "capacity": 77.22,
+      "length": 50.75,
+      "age": 21.0,
+      "status": "operational",
+      "voltage": 13.8,
+      "maintenance_frequency": 30
+    },
+    {
+      "id": "distribution_line_199",
+      "type": "distribution_line",
+      "source": "distribution_substation_78",
+      "target": "transformer_190",
+      "capacity": 47.58,
+      "length": 43.76,
+      "age": 17.8,
+      "status": "operational",
+      "voltage": 34.5,
+      "maintenance_frequency": 25
+    },
+    {
+      "id": "distribution_line_200",
+      "type": "distribution_line",
+      "source": "distribution_substation_78",
+      "target": "transformer_177",
+      "capacity": 48.41,
+      "length": 46.48,
+      "age": 37.3,
+      "status": "operational",
+      "voltage": 13.8,
+      "maintenance_frequency": 35
+    },
+    {
+      "id": "distribution_line_201",
+      "type": "distribution_line",
+      "source": "distribution_substation_79",
+      "target": "transformer_185",
+      "capacity": 47.86,
+      "length": 18.87,
+      "age": 31.9,
+      "status": "operational",
+      "voltage": 12.47,
+      "maintenance_frequency": 16
+    },
+    {
+      "id": "distribution_line_202",
+      "type": "distribution_line",
+      "source": "distribution_substation_79",
+      "target": "transformer_196",
+      "capacity": 75.52,
+      "length": 34.89,
+      "age": 3.6,
+      "status": "operational",
+      "voltage": 34.5,
+      "maintenance_frequency": 21
+    },
+    {
+      "id": "distribution_line_203",
+      "type": "distribution_line",
+      "source": "distribution_substation_80",
+      "target": "transformer_109",
+      "capacity": 41.66,
+      "length": 43.93,
+      "age": 33.3,
+      "status": "operational",
+      "voltage": 12.47,
+      "maintenance_frequency": 29
+    },
+    {
+      "id": "distribution_line_204",
+      "type": "distribution_line",
+      "source": "distribution_substation_81",
+      "target": "transformer_179",
+      "capacity": 56.63,
+      "length": 25.55,
+      "age": 12.2,
+      "status": "operational",
+      "voltage": 12.47,
+      "maintenance_frequency": 7
+    },
+    {
+      "id": "distribution_line_205",
+      "type": "distribution_line",
+      "source": "distribution_substation_81",
+      "target": "transformer_199",
+      "capacity": 17.92,
+      "length": 34.67,
+      "age": 3.1,
+      "status": "operational",
+      "voltage": 34.5,
+      "maintenance_frequency": 28
+    },
+    {
+      "id": "distribution_line_206",
+      "type": "distribution_line",
+      "source": "distribution_substation_81",
+      "target": "transformer_123",
+      "capacity": 23.64,
+      "length": 38.1,
+      "age": 11.5,
+      "status": "operational",
+      "voltage": 34.5,
+      "maintenance_frequency": 12
+    },
+    {
+      "id": "distribution_line_207",
+      "type": "distribution_line",
+      "source": "distribution_substation_82",
+      "target": "transformer_171",
+      "capacity": 50.6,
+      "length": 18.97,
+      "age": 32.0,
+      "status": "operational",
+      "voltage": 12.47,
+      "maintenance_frequency": 10
+    },
+    {
+      "id": "distribution_line_208",
+      "type": "distribution_line",
+      "source": "distribution_substation_83",
+      "target": "transformer_165",
+      "capacity": 53.56,
+      "length": 41.31,
+      "age": 15.7,
+      "status": "operational",
+      "voltage": 13.8,
+      "maintenance_frequency": 6
+    },
+    {
+      "id": "distribution_line_209",
+      "type": "distribution_line",
+      "source": "distribution_substation_83",
+      "target": "transformer_113",
+      "capacity": 24.3,
+      "length": 42.64,
+      "age": 31.9,
+      "status": "operational",
+      "voltage": 12.47,
+      "maintenance_frequency": 19
+    },
+    {
+      "id": "distribution_line_210",
+      "type": "distribution_line",
+      "source": "distribution_substation_84",
+      "target": "transformer_168",
+      "capacity": 42.84,
+      "length": 34.42,
+      "age": 39.4,
+      "status": "operational",
+      "voltage": 12.47,
+      "maintenance_frequency": 22
+    },
+    {
+      "id": "distribution_line_211",
+      "type": "distribution_line",
+      "source": "distribution_substation_84",
+      "target": "transformer_141",
+      "capacity": 26.56,
+      "length": 37.52,
+      "age": 30.5,
+      "status": "operational",
+      "voltage": 13.8,
+      "maintenance_frequency": 29
+    },
+    {
+      "id": "distribution_line_212",
+      "type": "distribution_line",
+      "source": "distribution_substation_85",
+      "target": "transformer_201",
+      "capacity": 42.21,
+      "length": 39.39,
+      "age": 24.3,
+      "status": "operational",
+      "voltage": 13.8,
+      "maintenance_frequency": 24
+    },
+    {
+      "id": "distribution_line_213",
+      "type": "distribution_line",
+      "source": "distribution_substation_85",
+      "target": "transformer_129",
+      "capacity": 55.14,
+      "length": 61.05,
+      "age": 38.5,
+      "status": "operational",
+      "voltage": 34.5,
+      "maintenance_frequency": 24
+    },
+    {
+      "id": "distribution_line_214",
+      "type": "distribution_line",
+      "source": "distribution_substation_86",
+      "target": "transformer_172",
+      "capacity": 65.34,
+      "length": 43.0,
+      "age": 37.6,
+      "status": "operational",
+      "voltage": 34.5,
+      "maintenance_frequency": 22
+    },
+    {
+      "id": "distribution_line_215",
+      "type": "distribution_line",
+      "source": "distribution_substation_86",
+      "target": "transformer_144",
+      "capacity": 36.04,
+      "length": 54.09,
+      "age": 26.1,
+      "status": "operational",
+      "voltage": 13.8,
+      "maintenance_frequency": 29
+    },
+    {
+      "id": "distribution_line_216",
+      "type": "distribution_line",
+      "source": "distribution_substation_86",
+      "target": "transformer_121",
+      "capacity": 50.43,
+      "length": 61.09,
+      "age": 12.2,
+      "status": "operational",
+      "voltage": 34.5,
+      "maintenance_frequency": 9
+    },
+    {
+      "id": "distribution_line_217",
+      "type": "distribution_line",
+      "source": "distribution_substation_87",
+      "target": "transformer_175",
+      "capacity": 45.52,
+      "length": 26.83,
+      "age": 36.1,
+      "status": "operational",
+      "voltage": 34.5,
+      "maintenance_frequency": 12
+    },
+    {
+      "id": "distribution_line_218",
+      "type": "distribution_line",
+      "source": "distribution_substation_88",
+      "target": "transformer_198",
+      "capacity": 80.06,
+      "length": 46.81,
+      "age": 9.1,
+      "status": "operational",
+      "voltage": 12.47,
+      "maintenance_frequency": 33
+    },
+    {
+      "id": "distribution_line_219",
+      "type": "distribution_line",
+      "source": "distribution_substation_89",
+      "target": "transformer_201",
+      "capacity": 47.44,
+      "length": 23.14,
+      "age": 12.0,
+      "status": "operational",
+      "voltage": 13.8,
+      "maintenance_frequency": 21
+    },
+    {
+      "id": "distribution_line_220",
+      "type": "distribution_line",
+      "source": "distribution_substation_90",
+      "target": "transformer_182",
+      "capacity": 93.39,
+      "length": 17.04,
+      "age": 12.9,
+      "status": "operational",
+      "voltage": 12.47,
+      "maintenance_frequency": 10
+    },
+    {
+      "id": "distribution_line_221",
+      "type": "distribution_line",
+      "source": "distribution_substation_90",
+      "target": "transformer_204",
+      "capacity": 14.19,
+      "length": 21.4,
+      "age": 15.2,
+      "status": "operational",
+      "voltage": 12.47,
+      "maintenance_frequency": 31
+    },
+    {
+      "id": "distribution_line_222",
+      "type": "distribution_line",
+      "source": "distribution_substation_91",
+      "target": "transformer_169",
+      "capacity": 60.07,
+      "length": 39.99,
+      "age": 7.9,
+      "status": "operational",
+      "voltage": 34.5,
+      "maintenance_frequency": 13
+    },
+    {
+      "id": "distribution_line_223",
+      "type": "distribution_line",
+      "source": "distribution_substation_91",
+      "target": "transformer_189",
+      "capacity": 56.64,
+      "length": 63.1,
+      "age": 30.9,
+      "status": "operational",
+      "voltage": 34.5,
+      "maintenance_frequency": 23
+    },
+    {
+      "id": "distribution_line_224",
+      "type": "distribution_line",
+      "source": "distribution_substation_91",
+      "target": "transformer_155",
+      "capacity": 67.43,
+      "length": 64.94,
+      "age": 28.7,
+      "status": "operational",
+      "voltage": 34.5,
+      "maintenance_frequency": 16
+    },
+    {
+      "id": "distribution_line_225",
+      "type": "distribution_line",
+      "source": "distribution_substation_92",
+      "target": "transformer_189",
+      "capacity": 57.8,
+      "length": 50.11,
+      "age": 23.3,
+      "status": "operational",
+      "voltage": 34.5,
+      "maintenance_frequency": 21
+    },
+    {
+      "id": "distribution_line_226",
+      "type": "distribution_line",
+      "source": "distribution_substation_93",
+      "target": "transformer_179",
+      "capacity": 69.11,
+      "length": 44.99,
+      "age": 12.7,
+      "status": "operational",
+      "voltage": 12.47,
+      "maintenance_frequency": 36
+    },
+    {
+      "id": "distribution_line_227",
+      "type": "distribution_line",
+      "source": "distribution_substation_93",
+      "target": "transformer_151",
+      "capacity": 43.21,
+      "length": 53.97,
+      "age": 39.8,
+      "status": "operational",
+      "voltage": 12.47,
+      "maintenance_frequency": 23
+    },
+    {
+      "id": "distribution_line_228",
+      "type": "distribution_line",
+      "source": "distribution_substation_94",
+      "target": "transformer_182",
+      "capacity": 90.23,
+      "length": 14.48,
+      "age": 31.5,
+      "status": "operational",
+      "voltage": 12.47,
+      "maintenance_frequency": 6
+    },
+    {
+      "id": "distribution_line_229",
+      "type": "distribution_line",
+      "source": "distribution_substation_94",
+      "target": "transformer_170",
+      "capacity": 56.53,
+      "length": 32.37,
+      "age": 8.8,
+      "status": "operational",
+      "voltage": 34.5,
+      "maintenance_frequency": 16
+    },
+    {
+      "id": "distribution_line_230",
+      "type": "distribution_line",
+      "source": "distribution_substation_94",
+      "target": "transformer_191",
+      "capacity": 48.78,
+      "length": 33.49,
+      "age": 6.3,
+      "status": "operational",
+      "voltage": 12.47,
+      "maintenance_frequency": 20
+    },
+    {
+      "id": "distribution_line_231",
+      "type": "distribution_line",
+      "source": "distribution_substation_95",
+      "target": "transformer_190",
+      "capacity": 48.2,
+      "length": 44.53,
+      "age": 25.1,
+      "status": "operational",
+      "voltage": 34.5,
+      "maintenance_frequency": 22
+    },
+    {
+      "id": "distribution_line_232",
+      "type": "distribution_line",
+      "source": "distribution_substation_95",
+      "target": "transformer_143",
+      "capacity": 41.69,
+      "length": 55.28,
+      "age": 2.0,
+      "status": "operational",
+      "voltage": 13.8,
+      "maintenance_frequency": 15
+    },
+    {
+      "id": "distribution_line_233",
+      "type": "distribution_line",
+      "source": "distribution_substation_96",
+      "target": "transformer_190",
+      "capacity": 61.43,
+      "length": 28.3,
+      "age": 25.4,
+      "status": "operational",
+      "voltage": 34.5,
+      "maintenance_frequency": 21
+    },
+    {
+      "id": "distribution_line_234",
+      "type": "distribution_line",
+      "source": "distribution_substation_96",
+      "target": "transformer_177",
+      "capacity": 83.04,
+      "length": 50.28,
+      "age": 12.2,
+      "status": "operational",
+      "voltage": 12.47,
+      "maintenance_frequency": 10
+    },
+    {
+      "id": "distribution_line_235",
+      "type": "distribution_line",
+      "source": "distribution_substation_97",
+      "target": "transformer_201",
+      "capacity": 44.19,
+      "length": 7.93,
+      "age": 10.4,
+      "status": "operational",
+      "voltage": 34.5,
+      "maintenance_frequency": 35
+    },
+    {
+      "id": "distribution_line_236",
+      "type": "distribution_line",
+      "source": "distribution_substation_98",
+      "target": "transformer_157",
+      "capacity": 55.97,
+      "length": 21.68,
+      "age": 6.5,
+      "status": "operational",
+      "voltage": 13.8,
+      "maintenance_frequency": 32
+    },
+    {
+      "id": "distribution_line_237",
+      "type": "distribution_line",
+      "source": "distribution_substation_99",
+      "target": "transformer_203",
+      "capacity": 91.04,
+      "length": 20.14,
+      "age": 17.7,
+      "status": "operational",
+      "voltage": 34.5,
+      "maintenance_frequency": 15
+    },
+    {
+      "id": "distribution_line_238",
+      "type": "distribution_line",
+      "source": "distribution_substation_100",
+      "target": "transformer_124",
+      "capacity": 71.68,
+      "length": 38.85,
+      "age": 33.6,
+      "status": "operational",
+      "voltage": 13.8,
+      "maintenance_frequency": 32
+    },
+    {
+      "id": "distribution_line_239",
+      "type": "distribution_line",
+      "source": "distribution_substation_101",
+      "target": "transformer_133",
+      "capacity": 11.85,
+      "length": 29.9,
+      "age": 20.4,
+      "status": "operational",
+      "voltage": 34.5,
+      "maintenance_frequency": 23
+    },
+    {
+      "id": "distribution_line_240",
+      "type": "distribution_line",
+      "source": "distribution_substation_102",
+      "target": "transformer_159",
+      "capacity": 16.79,
+      "length": 32.12,
+      "age": 38.3,
+      "status": "operational",
+      "voltage": 13.8,
+      "maintenance_frequency": 11
+    },
+    {
+      "id": "distribution_line_241",
+      "type": "distribution_line",
+      "source": "distribution_substation_103",
+      "target": "transformer_133",
+      "capacity": 9.53,
+      "length": 28.96,
+      "age": 25.7,
+      "status": "operational",
+      "voltage": 12.47,
+      "maintenance_frequency": 35
+    },
+    {
+      "id": "distribution_line_242",
+      "type": "distribution_line",
+      "source": "distribution_substation_103",
+      "target": "transformer_149",
+      "capacity": 59.7,
+      "length": 82.62,
+      "age": 7.7,
+      "status": "operational",
+      "voltage": 13.8,
+      "maintenance_frequency": 28
+    },
+    {
+      "id": "distribution_line_243",
+      "type": "distribution_line",
+      "source": "distribution_substation_104",
+      "target": "transformer_131",
+      "capacity": 62.31,
+      "length": 43.35,
+      "age": 15.7,
+      "status": "operational",
+      "voltage": 12.47,
+      "maintenance_frequency": 13
+    }
+  ],
+  "metadata": {
+    "region": "Utah",
+    "generated_on": "2025-03-31T17:01:54.098619",
+    "component_count": 205,
+    "connection_count": 244
+  }
+}

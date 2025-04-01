@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ title }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            line-height: 1.6;
+            color: #333;
+        }
+        .header {
+            border-bottom: 2px solid #0066cc;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .logo {
+            height: 60px;
+            float: right;
+        }
+        h1 {
+            color: #004080;
+            margin-top: 0;
+        }
+        h2 {
+            color: #0066cc;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+        }
+        h3 {
+            color: #0077e6;
+        }
+        .section {
+            margin-bottom: 30px;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .overview {
+            background-color: #f5f9ff;
+        }
+        .agent-performance {
+            background-color: #f0f5ff;
+        }
+        .scenario-evaluation {
+            background-color: #f5f5ff;
+        }
+        .recommendations {
+            background-color: #f2f8f2;
+        }
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-gap: 20px;
+            margin: 20px 0;
+        }
+        .metric-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .metric-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #0066cc;
+        }
+        .metric-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #004080;
+        }
+        .metric-description {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+        .footer {
+            text-align: center;
+            font-size: 0.8em;
+            margin-top: 30px;
+            padding-top: 10px;
+            border-top: 1px solid #ddd;
+            color: #666;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 15px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            margin: 15px 0;
+            border: 1px solid #ddd;
+        }
+        .policy-card {
+            background-color: #f8f9fa;
+            border-left: 4px solid #0066cc;
+            padding: 15px;
+            margin: 15px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .policy-card h4 {
+            margin-top: 0;
+            color: #0066cc;
+        }
+        .policy-card.best {
+            background-color: #d1ecf1;
+            border-left-color: #0099cc;
+        }
+        .action-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .action-priority {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .priority-high {
+            color: #dc3545;
+        }
+        .priority-medium {
+            color: #fd7e14;
+        }
+        .priority-low {
+            color: #28a745;
+        }
+        .action-description {
+            margin: 5px 0;
+        }
+        .action-impact {
+            font-style: italic;
+            color: #666;
+        }
+        .scenario-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        .comparison-chart {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        {% if logo_path %}
+        <img src="{{ logo_path }}" alt="Company Logo" class="logo">
+        {% endif %}
+        <h1>{{ title }}</h1>
+        <p>Generated on: {{ timestamp }}</p>
+        <p>{{ company_name }}</p>
+    </div>
+    
+    <div class="section overview">
+        <h2>Policy Evaluation Overview</h2>
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-title">Best Performing Policy</div>
+                <div class="metric-value">{{ best_policy }}</div>
+                <div class="metric-description">Average reward: {{ best_policy_reward }}</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-title">Outage Reduction</div>
+                <div class="metric-value">{{ outage_reduction }}%</div>
+                <div class="metric-description">Compared to baseline policy</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-title">Stability Improvement</div>
+                <div class="metric-value">{{ stability_improvement }}%</div>
+                <div class="metric-description">System stability over baseline</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-title">Policy Evaluation Count</div>
+                <div class="metric-value">{{ policy_eval_count }}</div>
+                <div class="metric-description">Number of scenarios evaluated</div>
+            </div>
+        </div>
+        
+        {{ overview_content|safe }}
+        
+        {% if learning_curves_image %}
+        <div class="comparison-chart">
+            <h3>Policy Learning Curves</h3>
+            <img src="{{ learning_curves_image }}" alt="Policy Learning Curves">
+        </div>
+        {% endif %}
+    </div>
+    
+    <div class="section agent-performance">
+        <h2>Agent Performance Analysis</h2>
+        {{ agent_performance_content|safe }}
+        
+        <h3>Policy Comparison</h3>
+        <table>
+            <tr>
+                <th>Policy</th>
+                <th>Avg. Reward</th>
+                <th>Outage Reduction</th>
+                <th>Stability</th>
+                <th>Recovery Time</th>
+                <th>Resource Usage</th>
+            </tr>
+            {% for policy in policies %}
+            <tr{% if policy.name == best_policy %} style="font-weight: bold; background-color: #d1ecf1;"{% endif %}>
+                <td>{{ policy.name }}</td>
+                <td>{{ policy.reward }}</td>
+                <td>{{ policy.outage_reduction }}%</td>
+                <td>{{ policy.stability }}%</td>
+                <td>{{ policy.recovery_time }}h</td>
+                <td>{{ policy.resource_usage }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        
+        {% if performance_comparison_image %}
+        <div class="comparison-chart">
+            <h3>Performance Metrics Comparison</h3>
+            <img src="{{ performance_comparison_image }}" alt="Performance Comparison">
+        </div>
+        {% endif %}
+        
+        <h3>Top Performing Policies</h3>
+        {% for policy in top_policies %}
+        <div class="policy-card {% if policy.name == best_policy %}best{% endif %}">
+            <h4>{{ policy.name }}</h4>
+            <p><strong>Strengths:</strong> {{ policy.strengths }}</p>
+            <p><strong>Weaknesses:</strong> {{ policy.weaknesses }}</p>
+            <p><strong>Best Scenarios:</strong> {{ policy.best_scenarios }}</p>
+            <p><strong>Key Parameters:</strong> {{ policy.key_parameters }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <div class="section scenario-evaluation">
+        <h2>Scenario-based Evaluation</h2>
+        {{ scenario_evaluation_content|safe }}
+        
+        <h3>Policy Performance by Scenario Type</h3>
+        <table class="scenario-table">
+            <tr>
+                <th>Scenario Type</th>
+                <th>Best Policy</th>
+                <th>Avg. Reward</th>
+                <th>Outage Rate</th>
+                <th>Key Challenges</th>
+            </tr>
+            {% for scenario in scenarios %}
+            <tr>
+                <td>{{ scenario.type }}</td>
+                <td>{{ scenario.best_policy }}</td>
+                <td>{{ scenario.avg_reward }}</td>
+                <td>{{ scenario.outage_rate }}%</td>
+                <td>{{ scenario.challenges }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        
+        {% if scenario_performance_image %}
+        <div class="comparison-chart">
+            <h3>Policy Performance Across Scenarios</h3>
+            <img src="{{ scenario_performance_image }}" alt="Scenario Performance">
+        </div>
+        {% endif %}
+        
+        <h3>Extreme Event Analysis</h3>
+        <p>{{ extreme_event_analysis }}</p>
+        
+        {% if extreme_event_image %}
+        <img src="{{ extreme_event_image }}" alt="Extreme Event Performance">
+        {% endif %}
+    </div>
+    
+    <div class="section recommendations">
+        <h2>Policy Recommendations</h2>
+        {{ recommendations_content|safe }}
+        
+        <h3>Recommended Actions</h3>
+        {% for action in recommended_actions %}
+        <div class="action-card">
+            <div class="action-priority priority-{{ action.priority|lower }}">{{ action.priority }} Priority</div>
+            <h4>{{ action.title }}</h4>
+            <div class="action-description">{{ action.description }}</div>
+            <div><strong>Implementation:</strong> {{ action.implementation }}</div>
+            <div><strong>Benefits:</strong> {{ action.benefits }}</div>
+            <div class="action-impact">Expected Impact: {{ action.impact }}</div>
+        </div>
+        {% endfor %}
+        
+        <h3>Implementation Plan</h3>
+        <p>{{ implementation_plan }}</p>
+        
+        <h3>Future Research Directions</h3>
+        <ul>
+            {% for direction in research_directions %}
+            <li>{{ direction }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    
+    <div class="footer">
+        <p>Copyright © {{ current_year }} {{ company_name }}</p>
+        <p>Generated by Grid Failure Modeling Framework</p>
+    </div>
+</body>
+</html>

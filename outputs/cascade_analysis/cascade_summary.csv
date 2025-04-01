@@ -1,0 +1,4 @@
+scenario_type,avg_failures,max_failures,avg_cascade_steps,max_cascade_steps
+normal,1.2,2,1.2,2
+high_impact,3.4,4,1.4,2
+extreme,6.6,8,2.2,3

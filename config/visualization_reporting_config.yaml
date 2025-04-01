@@ -1,0 +1,76 @@
+###############################################################
+# Configuration for Visualization and Reporting Module (Module 6)
+###############################################################
+
+output_dir: outputs/visualization_reporting
+
+# Grid Visualization Configuration
+grid_visualization:
+  node_size: 300
+  font_size: 10
+  color_scheme:
+    operational: green
+    at_risk: yellow
+    failed: red
+  map_style: light
+  default_format: png
+  dpi: 300
+
+# Performance Visualization Configuration
+performance_visualization:
+  figure_size: [10, 6]
+  dpi: 100
+  style: whitegrid
+  palette: deep
+  default_format: png
+
+# Dashboard Configuration
+dashboard:
+  port: 8050
+  theme: light
+  refresh_interval: 300  # seconds
+  default_layout: grid
+  max_items_per_page: 6
+  components:
+    operational:
+      - grid_status
+      - outage_metrics
+      - weather_alerts
+    vulnerability:
+      - vulnerability_map
+      - component_risk
+      - threat_assessment
+    policy:
+      - policy_recommendations
+      - resource_allocation
+      - action_priority
+
+# Report Generator Configuration
+report_generator:
+  template_dir: gfmf/visualization_reporting/templates/reports
+  default_format: html
+  logo_path: gfmf/visualization_reporting/assets/logo.txt
+  company_name: Grid Resilience Inc.
+  default_sections: 
+    - summary
+    - vulnerability
+    - predictions
+    - policies
+  report_types:
+    daily_summary:
+      title: Daily Grid Status Summary
+      sections:
+        - summary
+        - vulnerability
+        - predictions
+    vulnerability_assessment:
+      title: Grid Vulnerability Assessment
+      sections:
+        - vulnerability
+        - recommendations
+    policy_evaluation:
+      title: Policy Optimization Report
+      sections:
+        - summary
+        - policies
+        - recommendations
