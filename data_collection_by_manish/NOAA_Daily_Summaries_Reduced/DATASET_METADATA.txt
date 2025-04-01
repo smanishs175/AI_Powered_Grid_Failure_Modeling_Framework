@@ -1,8 +1,0 @@
-Original dataset size: ~134GB
-Reduction performed: 2025-03-28 12:16:17
-Reduction method: Random sampling of US weather stations
-Files copied: 551 out of 129621 total files
-Final size: 0.54 GB
-Sample percentage: 0.4251% of total stations
-Note: This is a randomly sampled subset intended for development and testing only.
-For production use, consider a more targeted geographical selection based on your specific grid analysis needs.
