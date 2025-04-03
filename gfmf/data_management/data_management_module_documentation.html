@@ -1,0 +1,2064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Management Module Documentation - Grid Failure Modeling Framework</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2, h3, h4 {
+            color: #2c3e50;
+        }
+        h1 {
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            border-bottom: 1px solid #bdc3c7;
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
+        pre {
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            padding: 15px;
+            overflow-x: auto;
+        }
+        code {
+            font-family: Consolas, Monaco, 'Andale Mono', monospace;
+            background-color: #f4f4f4;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+        }
+        th, td {
+            text-align: left;
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .workflow-container {
+            margin: 30px 0;
+            text-align: center;
+        }
+        .workflow {
+            max-width: 100%;
+        }
+        .note {
+            background-color: #e7f4ff;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .warning {
+            background-color: #fff5e6;
+            border-left: 4px solid #e67e22;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .function-signature {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .parameter {
+            margin-left: 20px;
+            margin-bottom: 5px;
+        }
+        .returns {
+            margin-top: 10px;
+            font-style: italic;
+        }
+        .directory-structure {
+            font-family: monospace;
+            white-space: pre;
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            padding: 15px;
+            overflow-x: auto;
+        }
+        .command {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px;
+            border-radius: 3px;
+            margin: 10px 0;
+        }
+        .diagram-container {
+            width: 100%;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        .mermaid {
+            margin: 0 auto;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'default',
+                securityLevel: 'loose'
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Data Management Module Documentation</h1>
+    <p>
+        The Data Management Module is the first module of the Grid Failure Modeling Framework (GFMF).
+        It serves as the foundation for the entire framework by handling data acquisition, preprocessing,
+        and synthetic data generation. This module ensures that all other modules receive consistent, 
+        high-quality data for their operations.
+    </p>
+
+    <h2>Table of Contents</h2>
+    <ol>
+        <li><a href="#directory-structure">Directory Structure</a></li>
+        <li><a href="#workflow">Workflow Diagram</a></li>
+        <li><a href="#components">Module Components</a></li>
+        <li><a href="#files">File Descriptions</a></li>
+        <li><a href="#classes">Key Classes and Functions</a></li>
+        <li><a href="#execution">Execution Commands</a></li>
+        <li><a href="#configuration">Configuration</a></li>
+        <li><a href="#unit-tests">Unit Tests</a></li>
+        <li><a href="#detailed-components">Detailed Component Documentation</a></li>
+    </ol>
+
+    <h2 id="directory-structure">1. Directory Structure</h2>
+    <div class="directory-structure">
+gfmf/
+└── data_management/
+    ├── __init__.py               # Module initialization and exports
+    ├── data_management_module.py # Main module class
+    ├── data_loader.py            # Data loading classes
+    ├── preprocessor.py           # Data preprocessing
+    ├── synthetic_generator.py    # Synthetic data generation
+    ├── config/
+    │   └── default_config.yaml   # Default configuration
+    ├── utils/
+    │   ├── __init__.py           # Utils initialization
+    │   ├── validators.py         # Data validation functions
+    │   ├── transformers.py       # Data transformation functions
+    │   └── metrics.py            # Data quality metrics
+    └── tests/                    # Module-specific tests
+</div>
+
+    <h2 id="workflow">2. Workflow Diagram</h2>
+
+    <div class="diagram-container">
+        <div class="mermaid">
+            flowchart TD
+                A[Input Data Sources] --> B[DataLoader]
+                B --> |Grid Topology| C[Data Preprocessing]
+                B --> |Weather Data| C
+                B --> |Outage Data| C
+                C --> D[DataManagementModule]
+                E[Configuration] --> D
+                D --> F[Data Quality Assessment]
+                D --> G[Feature Engineering]
+                D --> H[Data Alignment]
+                F --> I[Processed Data]
+                G --> I
+                H --> I
+                I --> J[Output to Other Modules]
+                
+                K[SyntheticGenerator] --> L[Synthetic Grid]
+                K --> M[Synthetic Weather]
+                K --> N[Synthetic Outages]
+                L --> O[Combined Synthetic Data]
+                M --> O
+                N --> O
+                O --> J
+                
+                subgraph Data Sources
+                A
+                end
+                
+                subgraph Data Management Module
+                B
+                C
+                D
+                F
+                G
+                H
+                I
+                K
+                L
+                M
+                N
+                O
+                end
+                
+                subgraph Framework Integration
+                J
+                end
+        </div>
+    </div>
+
+    <h2 id="components">3. Module Components</h2>
+    <p>The Data Management Module consists of the following major components:</p>
+    
+    <h3>3.1. Data Loading</h3>
+    <p>
+        Responsible for loading data from various sources, including grid topology data,
+        weather data, and outage data. It provides a unified interface for accessing different
+        types of data.
+    </p>
+    
+    <h3>3.2. Data Preprocessing</h3>
+    <p>
+        Handles data cleaning, normalization, and feature engineering. It ensures that the data
+        is in a consistent format and ready for analysis.
+    </p>
+    
+    <h3>3.3. Synthetic Data Generation</h3>
+    <p>
+        Generates synthetic grid topologies, weather data, and outage events. This is particularly
+        useful for testing and validation when real data is limited or unavailable.
+    </p>
+    
+    <h3>3.4. Data Quality Assessment</h3>
+    <p>
+        Evaluates the quality of the data, including completeness, consistency, and validity.
+        It provides metrics that can be used to assess the reliability of the data.
+    </p>
+
+    <h2 id="files">4. File Descriptions</h2>
+    
+    <h3>4.1. data_management_module.py</h3>
+    <p>
+        This is the main file containing the <code>DataManagementModule</code> class, which provides
+        a unified interface for all data management operations. It integrates data loading, preprocessing,
+        and synthetic data generation components.
+    </p>
+    <p>Key responsibilities:</p>
+    <ul>
+        <li>Loading configuration from files or using defaults</li>
+        <li>Creating necessary directories for data storage</li>
+        <li>Coordinating data loading from various sources</li>
+        <li>Managing data preprocessing</li>
+        <li>Orchestrating synthetic data generation</li>
+        <li>Evaluating data quality</li>
+        <li>Exporting processed data for other modules</li>
+    </ul>
+    
+    <h3>4.2. data_loader.py</h3>
+    <p>
+        Contains classes for loading different types of data from various sources. It includes
+        the base <code>DataLoader</code> class, as well as specialized loaders for grid topology,
+        weather, and outage data.
+    </p>
+    <p>Key classes:</p>
+    <ul>
+        <li><code>DataLoader</code>: Base class for loading all data types</li>
+        <li><code>GridTopologyLoader</code>: Specializes in loading grid topology data</li>
+        <li><code>WeatherDataLoader</code>: Specializes in loading weather data</li>
+        <li><code>OutageDataLoader</code>: Specializes in loading outage data</li>
+    </ul>
+    
+    <h3>4.3. preprocessor.py</h3>
+    <p>
+        Contains the <code>DataPreprocessor</code> class for preprocessing and feature engineering.
+        It transforms raw data into a format suitable for analysis and model training.
+    </p>
+    <p>Key responsibilities:</p>
+    <ul>
+        <li>Cleaning and normalizing data</li>
+        <li>Handling missing values</li>
+        <li>Detecting and handling outliers</li>
+        <li>Feature engineering for grid, weather, and outage data</li>
+        <li>Aligning different data types temporally and spatially</li>
+    </ul>
+    
+    <h3>4.4. synthetic_generator.py</h3>
+    <p>
+        Contains the <code>SyntheticGenerator</code> class for generating synthetic data. It can
+        create realistic grid topologies, weather patterns, and outage events.
+    </p>
+    <p>Key capabilities:</p>
+    <ul>
+        <li>Generating various grid topologies (mesh, ring, radial)</li>
+        <li>Creating realistic weather data with temporal patterns</li>
+        <li>Simulating outage events with causal relationships</li>
+        <li>Maintaining consistency between different data types</li>
+    </ul>
+    
+    <h3>4.5. Utils Directory</h3>
+    <p>Contains utility functions used by the main module components:</p>
+    <ul>
+        <li><code>validators.py</code>: Functions for validating different types of data</li>
+        <li><code>transformers.py</code>: Functions for transforming data and engineering features</li>
+        <li><code>metrics.py</code>: Functions for calculating data quality metrics</li>
+    </ul>
+
+    <h2 id="classes">5. Key Classes and Functions</h2>
+    
+    <h3>5.1. DataManagementModule</h3>
+    <p class="function-signature">class DataManagementModule(config_path: Optional[str] = None)</p>
+    <p>Main class for the Data Management Module that integrates all components.</p>
+    <p>Key methods:</p>
+    
+    <div class="function-signature">load_data(data_types: Optional[List[str]] = None, validate: bool = True) -> Dict[str, Any]</div>
+    <p>Loads data from specified sources.</p>
+    <p class="parameter"><strong>data_types</strong>: List of data types to load ('grid', 'weather', 'outage'). If None, load all types.</p>
+    <p class="parameter"><strong>validate</strong>: Whether to validate data after loading.</p>
+    <p class="returns">Returns: Dictionary containing loaded data</p>
+    
+    <div class="function-signature">preprocess_data(data_types: Optional[List[str]] = None) -> Dict[str, Any]</div>
+    <p>Preprocesses the loaded data.</p>
+    <p class="parameter"><strong>data_types</strong>: List of data types to preprocess. If None, preprocess all types.</p>
+    <p class="returns">Returns: Dictionary containing preprocessed data</p>
+    
+    <div class="function-signature">generate_synthetic_data(grid_params: Optional[Dict[str, Any]] = None, weather_params: Optional[Dict[str, Any]] = None, outage_params: Optional[Dict[str, Any]] = None, save: bool = True) -> Dict[str, pd.DataFrame]</div>
+    <p>Generates synthetic data for testing and validation.</p>
+    <p class="parameter"><strong>grid_params</strong>: Parameters for grid topology generation.</p>
+    <p class="parameter"><strong>weather_params</strong>: Parameters for weather data generation.</p>
+    <p class="parameter"><strong>outage_params</strong>: Parameters for outage data generation.</p>
+    <p class="parameter"><strong>save</strong>: Whether to save the generated data to files.</p>
+    <p class="returns">Returns: Dictionary containing synthetic data</p>
+    
+    <div class="function-signature">export_data(data_type: str, file_path: str, format: str = 'csv') -> bool</div>
+    <p>Exports data to a file in the specified format.</p>
+    <p class="parameter"><strong>data_type</strong>: Type of data to export ('grid', 'weather', 'outage', 'combined').</p>
+    <p class="parameter"><strong>file_path</strong>: Path to save the file.</p>
+    <p class="parameter"><strong>format</strong>: Format of the file (csv, json, pickle).</p>
+    <p class="returns">Returns: True if export is successful, False otherwise</p>
+    
+    <h3>5.2. DataLoader</h3>
+    <p class="function-signature">class DataLoader(config: Dict[str, Any])</p>
+    <p>Base data loader class for loading data of all types.</p>
+    <p>Key methods:</p>
+    
+    <div class="function-signature">load_all(data_types: Optional[List[str]] = None) -> Dict[str, Any]</div>
+    <p>Loads all specified data types.</p>
+    <p class="parameter"><strong>data_types</strong>: List of data types to load. Options: 'grid', 'weather', 'outage'. If None, load all types.</p>
+    <p class="returns">Returns: Dictionary containing loaded data</p>
+    
+    <h3>5.3. DataPreprocessor</h3>
+    <p class="function-signature">class DataPreprocessor(config: Dict[str, Any])</p>
+    <p>Preprocessor for all data types in the Grid Failure Modeling Framework.</p>
+    <p>Key methods:</p>
+    
+    <div class="function-signature">preprocess(raw_data: Dict[str, Any], save_path: Optional[str] = None) -> Dict[str, Any]</div>
+    <p>Preprocesses all data types in the raw data dictionary.</p>
+    <p class="parameter"><strong>raw_data</strong>: Dictionary containing raw data loaded by DataLoader.</p>
+    <p class="parameter"><strong>save_path</strong>: Optional path to save processed data.</p>
+    <p class="returns">Returns: Dictionary containing processed data</p>
+    
+    <h3>5.4. SyntheticGenerator</h3>
+    <p class="function-signature">class SyntheticGenerator(config: Dict[str, Any])</p>
+    <p>Generator for synthetic data in the Grid Failure Modeling Framework.</p>
+    <p>Key methods:</p>
+    
+    <div class="function-signature">generate_all(sample_data: Optional[Dict[str, Any]] = None, save_path: Optional[str] = None) -> Dict[str, Any]</div>
+    <p>Generates all types of synthetic data.</p>
+    <p class="parameter"><strong>sample_data</strong>: Optional dictionary containing sample data to base generation on.</p>
+    <p class="parameter"><strong>save_path</strong>: Optional path to save synthetic data.</p>
+    <p class="returns">Returns: Dictionary containing synthetic data</p>
+    
+    <div class="function-signature">generate_grid_topology(sample_grid: Optional[pd.DataFrame] = None, num_nodes: Optional[int] = None, num_lines: Optional[int] = None, topology_type: str = 'mesh') -> pd.DataFrame</div>
+    <p>Generates synthetic grid topology data.</p>
+    <p class="returns">Returns: DataFrame containing synthetic grid topology</p>
+    
+    <div class="function-signature">generate_weather_data(sample_weather: Optional[pd.DataFrame] = None, grid_data: Optional[pd.DataFrame] = None, num_stations: Optional[int] = None, start_date: Optional[str] = None, end_date: Optional[str] = None, frequency: str = 'D') -> pd.DataFrame</div>
+    <p>Generates synthetic weather data.</p>
+    <p class="returns">Returns: DataFrame containing synthetic weather data</p>
+    
+    <div class="function-signature">generate_outage_data(sample_outage: Optional[pd.DataFrame] = None, grid_data: Optional[pd.DataFrame] = None, weather_data: Optional[pd.DataFrame] = None, num_outages: Optional[int] = None, baseline_rate: float = 0.01) -> pd.DataFrame</div>
+    <p>Generates synthetic outage data.</p>
+    <p class="returns">Returns: DataFrame containing synthetic outage data</p>
+
+    <h2 id="execution">6. Execution Commands</h2>
+    <p>Here are some examples of how to use the Data Management Module in Python code:</p>
+    
+    <h3>6.1. Basic Usage</h3>
+    <pre><code>from gfmf.data_management import DataManagementModule
+
+# Initialize the module
+dm = DataManagementModule()
+
+# Load data
+data = dm.load_data(['grid', 'weather', 'outage'])
+
+# Preprocess data
+processed_data = dm.preprocess_data()
+
+# Export processed data
+dm.export_data('combined', 'data/processed/combined_data.csv')</code></pre>
+    
+    <h3>6.2. Synthetic Data Generation</h3>
+    <pre><code>from gfmf.data_management import DataManagementModule
+
+# Initialize the module
+dm = DataManagementModule()
+
+# Generate synthetic data
+synthetic_data = dm.generate_synthetic_data(
+    grid_params={
+        'num_nodes': 100,
+        'num_lines': 150,
+        'topology_type': 'mesh'
+    },
+    weather_params={
+        'num_stations': 10,
+        'start_date': '2023-01-01',
+        'end_date': '2023-12-31',
+        'frequency': 'D'
+    },
+    outage_params={
+        'num_outages': 200,
+        'baseline_rate': 0.02
+    },
+    save=True
+)</code></pre>
+    
+    <h3>6.3. Command Line Example</h3>
+    <p>To run the data management module from the command line:</p>
+    <div class="command">python -m gfmf.data_management.data_management_module --config config/my_config.yaml --output data/processed</div>
+    
+    <h3>6.4. Running Tests</h3>
+    <div class="command">python -m unittest tests.unit.data_management.test_data_management_module</div>
+    
+    <h3>6.5. Integration with Other Modules</h3>
+    <pre><code>from gfmf.data_management import DataManagementModule
+from gfmf.failure_prediction import FailurePredictionModule
+
+# Initialize the Data Management Module
+dm = DataManagementModule()
+
+# Load and preprocess data
+processed_data = dm.preprocess_data()
+
+# Initialize the Failure Prediction Module with processed data
+fp = FailurePredictionModule(processed_data['combined'])</code></pre>
+
+    <h2 id="configuration">7. Configuration</h2>
+    <p>
+        The Data Management Module can be configured using a YAML configuration file. Here's an example
+        of the configuration structure:
+    </p>
+    <pre><code># Data paths
+data_paths:
+  base_path: ""  # Base path for all data
+  grid_path: "data/grid"  # Path to grid topology data
+  weather_path: "data/weather"  # Path to weather data
+  outage_path: "data/outage"  # Path to outage data
+  processed_path: "data/processed"  # Path to save processed data
+  synthetic_path: "data/synthetic"  # Path to save synthetic data
+  cache_path: "data/cache"  # Path to cache data
+
+# Data loading settings
+data_loading:
+  weather_sample_limit: 10000  # Limit number of weather data points
+  validate_data: true  # Validate data after loading
+
+# Data preprocessing settings
+data_preprocessing:
+  remove_outliers: true  # Remove outliers from data
+  standardize_weather: true  # Standardize weather data
+  impute_missing_values: true  # Impute missing values in data
+  temporal_aggregation: "D"  # Temporal aggregation frequency
+
+# Synthetic data generation settings
+synthetic_data:
+  num_nodes: 50  # Number of nodes in synthetic grid
+  num_lines: 75  # Number of lines in synthetic grid
+  num_weather_stations: 5  # Number of weather stations
+  sim_start_date: "2023-01-01"  # Start date of simulation
+  sim_end_date: "2023-12-31"  # End date of simulation
+  frequency: "D"  # Frequency of data
+  num_outages: 100  # Number of synthetic outages to generate</code></pre>
+
+    <h2 id="unit-tests">8. Unit Tests</h2>
+    <p>
+        The Data Management Module includes a comprehensive suite of unit tests to ensure
+        its functionality. The tests cover:
+    </p>
+    <ul>
+        <li>Module initialization</li>
+        <li>Data loading</li>
+        <li>Data preprocessing</li>
+        <li>Data quality evaluation</li>
+        <li>Synthetic data generation</li>
+    </ul>
+    <p>Key test file:</p>
+    <ul>
+        <li><code>tests/unit/data_management/test_data_management_module.py</code>: Tests for the main module class</li>
+    </ul>
+
+    <div class="note">
+        <strong>Note:</strong> This documentation provides an overview of the Data Management Module.
+        For more detailed information on specific components, refer to the inline documentation in the
+        source code files.
+    </div>
+
+    <h2 id="detailed-components">9. Detailed Component Documentation</h2>
+    
+    <h3 id="validators">9.1. Validators (validators.py)</h3>
+    <p>
+        The <code>validators.py</code> file provides specialized functions for validating different types of data
+        used by the Data Management Module. These validators ensure that the data loaded into the system
+        meets the required structure and format for further processing.
+    </p>
+    
+    <h4>9.1.1. Key Functions</h4>
+    
+    <div class="function-signature">validate_grid_topology_data(data: Dict[str, Any]) -> bool</div>
+    <p>Validates grid topology data structure, ensuring it contains properly formatted nodes and lines.</p>
+    <p class="parameter"><strong>data</strong>: Dictionary containing grid topology data</p>
+    <p class="returns">Returns: True if data is valid, False otherwise</p>
+    
+    <div class="function-signature">validate_weather_data(data: pd.DataFrame) -> bool</div>
+    <p>Validates weather data, checking for required columns and appropriate data formats.</p>
+    <p class="parameter"><strong>data</strong>: DataFrame containing weather data</p>
+    <p class="returns">Returns: True if data is valid, False otherwise</p>
+    
+    <div class="function-signature">validate_outage_data(data: pd.DataFrame) -> bool</div>
+    <p>Validates outage data, supporting both merged and aggregated formats.</p>
+    <p class="parameter"><strong>data</strong>: DataFrame containing outage data</p>
+    <p class="returns">Returns: True if data is valid, False otherwise</p>
+    
+    <h4>9.1.2. Validation Process</h4>
+    <p>
+        The validation process follows these general steps:
+    </p>
+    <ol>
+        <li>Check for the presence of required fields/columns</li>
+        <li>Validate data types and values (e.g., non-negative durations)</li>
+        <li>Verify references between data elements (e.g., lines connecting to valid nodes)</li>
+        <li>Check for data consistency (e.g., no duplicate station-date combinations)</li>
+        <li>Log warnings or errors for any validation issues</li>
+    </ol>
+    
+    <h4>9.1.3. Example: Grid Topology Validation</h4>
+    <pre><code>import json
+from gfmf.data_management.utils.validators import validate_grid_topology_data
+
+# Example grid topology data
+grid_data = {
+    "nodes": {
+        "node_1": {
+            "id": "node_1",
+            "type": "bus",
+            "voltage": 13.8
+        },
+        "node_2": {
+            "id": "node_2",
+            "type": "load",
+            "voltage": 4.16
+        },
+        "node_3": {
+            "id": "node_3",
+            "type": "generator",
+            "voltage": 13.8
+        }
+    },
+    "lines": {
+        "line_1": {
+            "id": "line_1",
+            "from": "node_1",
+            "to": "node_2",
+            "length_km": 0.8,
+            "type": "overhead"
+        },
+        "line_2": {
+            "id": "line_2",
+            "from": "node_1",
+            "to": "node_3",
+            "length_km": 1.2,
+            "type": "overhead"
+        }
+    }
+}
+
+# Validate the grid topology data
+is_valid = validate_grid_topology_data(grid_data)
+print(f"Grid topology data is valid: {is_valid}")
+
+# Example of invalid data (missing 'to' field in line_2)
+invalid_grid_data = {
+    "nodes": grid_data["nodes"],
+    "lines": {
+        "line_1": grid_data["lines"]["line_1"],
+        "line_2": {
+            "id": "line_2",
+            "from": "node_1",
+            "length_km": 1.2,
+            "type": "overhead"
+        }
+    }
+}
+
+# Validate the invalid grid topology data
+is_valid = validate_grid_topology_data(invalid_grid_data)
+print(f"Invalid grid topology data is valid: {is_valid}")  # Should print False
+</code></pre>
+
+    <h4>9.1.4. Example: Weather Data Validation</h4>
+    <pre><code>import pandas as pd
+from gfmf.data_management.utils.validators import validate_weather_data
+
+# Example weather data
+weather_data = pd.DataFrame({
+    'STATION': ['S1', 'S1', 'S2', 'S2'],
+    'DATE': ['2023-01-01', '2023-01-02', '2023-01-01', '2023-01-02'],
+    'LATITUDE': [37.7749, 37.7749, 34.0522, 34.0522],
+    'LONGITUDE': [-122.4194, -122.4194, -118.2437, -118.2437],
+    'PRCP': [0, 2.5, 0, 0],
+    'SNOW': [0, 0, 0, 0],
+    'TMAX': [18.3, 16.7, 25.6, 24.4],
+    'TMIN': [12.2, 11.1, 15.0, 14.4],
+    'AWND': [3.1, 4.2, 2.5, 3.0]
+})
+
+# Validate the weather data
+is_valid = validate_weather_data(weather_data)
+print(f"Weather data is valid: {is_valid}")
+
+# Example of invalid data (missing required column LONGITUDE)
+invalid_weather_data = weather_data.drop(columns=['LONGITUDE'])
+
+# Validate the invalid weather data
+is_valid = validate_weather_data(invalid_weather_data)
+print(f"Invalid weather data is valid: {is_valid}")  # Should print False
+</code></pre>
+
+    <h4>9.1.5. Example: Outage Data Validation</h4>
+    <pre><code>import pandas as pd
+from gfmf.data_management.utils.validators import validate_outage_data
+
+# Example outage data (merged format)
+outage_data_merged = pd.DataFrame({
+    'fips': [1001, 1003, 1005, 1007],
+    'state': ['AL', 'AL', 'CA', 'CA'],
+    'county': ['County1', 'County2', 'County3', 'County4'],
+    'start_time': ['2023-01-01 08:00:00', '2023-01-02 14:30:00', 
+                  '2023-01-03 10:15:00', '2023-01-04 18:45:00'],
+    'duration': [2.5, 4.0, 1.75, 6.25],
+    'customers_affected': [150, 200, 75, 350],
+    'cause': ['weather', 'equipment', 'weather', 'unknown']
+})
+
+# Validate the merged format outage data
+is_valid = validate_outage_data(outage_data_merged)
+print(f"Merged format outage data is valid: {is_valid}")
+
+# Example outage data (aggregated format)
+outage_data_agg = pd.DataFrame({
+    'state': ['AL', 'AL', 'CA', 'CA'],
+    'year': [2023, 2023, 2023, 2023],
+    'month': [1, 2, 1, 2],
+    'outage_count': [15, 8, 12, 5],
+    'avg_duration': [3.2, 2.5, 4.1, 3.7]
+})
+
+# Validate the aggregated format outage data
+is_valid = validate_outage_data(outage_data_agg)
+print(f"Aggregated format outage data is valid: {is_valid}")
+
+# Example of invalid data (negative duration)
+invalid_outage_data = outage_data_merged.copy()
+invalid_outage_data.loc[2, 'duration'] = -1.5
+
+# Validate the invalid outage data
+is_valid = validate_outage_data(invalid_outage_data)
+print(f"Invalid outage data is valid: {is_valid}")  # Should print False
+</code></pre>
+
+    <h3 id="transformers">9.2. Transformers (transformers.py)</h3>
+    <p>
+        The <code>transformers.py</code> file contains functions that transform and engineer features from
+        different types of data used in the Grid Failure Modeling Framework. These transformation functions
+        convert raw data into a format that is optimized for analysis and model training.
+    </p>
+    
+    <h4>9.2.1. Key Functions</h4>
+    
+    <div class="function-signature">transform_grid_topology_data(grid_data: Dict, config: Optional[Dict] = None) -> pd.DataFrame</div>
+    <p>Transforms grid topology data into a unified component DataFrame with derived features.</p>
+    <p class="parameter"><strong>grid_data</strong>: Dictionary containing grid topology data (nodes and lines)</p>
+    <p class="parameter"><strong>config</strong>: Optional configuration dictionary with preprocessing settings</p>
+    <p class="returns">Returns: DataFrame with combined grid components and derived features</p>
+    
+    <div class="function-signature">transform_weather_data(weather_df: pd.DataFrame, config: Dict) -> pd.DataFrame</div>
+    <p>Transforms weather data and engineers features related to weather conditions.</p>
+    <p class="parameter"><strong>weather_df</strong>: DataFrame containing weather data</p>
+    <p class="parameter"><strong>config</strong>: Configuration dictionary with preprocessing settings</p>
+    <p class="returns">Returns: DataFrame with transformed weather data and engineered features</p>
+    
+    <div class="function-signature">transform_outage_data(outage_df: pd.DataFrame, config: Dict) -> pd.DataFrame</div>
+    <p>Transforms outage data and engineers features related to outage events.</p>
+    <p class="parameter"><strong>outage_df</strong>: DataFrame containing outage data</p>
+    <p class="parameter"><strong>config</strong>: Configuration dictionary with preprocessing settings</p>
+    <p class="returns">Returns: DataFrame with transformed outage data and engineered features</p>
+    
+    <div class="function-signature">align_datasets(grid_df: pd.DataFrame, weather_df: pd.DataFrame, outage_df: pd.DataFrame, config: Optional[Dict] = None) -> pd.DataFrame</div>
+    <p>Aligns grid, weather, and outage data into a single comprehensive dataset.</p>
+    <p class="parameter"><strong>grid_df</strong>: DataFrame containing grid component data</p>
+    <p class="parameter"><strong>weather_df</strong>: DataFrame containing weather data</p>
+    <p class="parameter"><strong>outage_df</strong>: DataFrame containing outage data</p>
+    <p class="parameter"><strong>config</strong>: Optional configuration dictionary with alignment settings</p>
+    <p class="returns">Returns: DataFrame with aligned data from all sources</p>
+    
+    <h4>9.2.2. Grid Topology Transformation</h4>
+    <p>
+        The grid topology transformation process involves several key steps:
+    </p>
+    <ol>
+        <li>Converting nodes and lines data into a unified component format</li>
+        <li>Extracting network properties using NetworkX graph analysis</li>
+        <li>Calculating node centrality to identify critical components</li>
+        <li>Computing edge centrality to understand line importance</li>
+        <li>Determining component connectivity and redundancy factors</li>
+        <li>Computing age-based failure factors for components</li>
+        <li>Creating geospatial references for each component</li>
+    </ol>
+    
+    <h4>9.2.3. Weather Data Transformation</h4>
+    <p>
+        Weather data transformation includes:
+    </p>
+    <ol>
+        <li>Standardizing timestamp formats</li>
+        <li>Extracting temporal features (month, day, hour, season)</li>
+        <li>Computing derived weather metrics (heat index, wind chill)</li>
+        <li>Identifying extreme weather events</li>
+        <li>Calculating rolling window statistics</li>
+        <li>Imputing missing values using appropriate strategies</li>
+        <li>Normalizing numerical weather features</li>
+    </ol>
+    
+    <h4>9.2.4. Outage Data Transformation</h4>
+    <p>
+        Outage data transformation includes:
+    </p>
+    <ol>
+        <li>Standardizing timestamp formats</li>
+        <li>Computing outage duration metrics</li>
+        <li>Categorizing outages by cause and severity</li>
+        <li>Linking outages to specific grid components</li>
+        <li>Calculating temporal features (time of day, day of week)</li>
+        <li>Identifying cascading outage patterns</li>
+        <li>Computing outage impact metrics</li>
+    </ol>
+    
+    <h4>9.2.5. Example: Grid Topology Transformation</h4>
+    <pre><code>import pandas as pd
+import json
+from gfmf.data_management.utils.transformers import transform_grid_topology_data
+
+# Example grid topology data
+grid_data = {
+    "nodes": {
+        "node_1": {
+            "id": "node_1",
+            "type": "bus",
+            "voltage": 13.8,
+            "age": 15
+        },
+        "node_2": {
+            "id": "node_2",
+            "type": "load",
+            "voltage": 4.16,
+            "age": 8
+        },
+        "node_3": {
+            "id": "node_3",
+            "type": "generator",
+            "voltage": 13.8,
+            "age": 5
+        }
+    },
+    "lines": {
+        "line_1": {
+            "id": "line_1",
+            "from": "node_1",
+            "to": "node_2",
+            "length_km": 0.8,
+            "type": "overhead",
+            "age": 12
+        },
+        "line_2": {
+            "id": "line_2",
+            "from": "node_1",
+            "to": "node_3",
+            "length_km": 1.2,
+            "type": "overhead",
+            "age": 10
+        }
+    }
+}
+
+# Configuration for transformation
+config = {
+    "preprocessing": {
+        "standardization": True,
+        "add_derived_features": True
+    }
+}
+
+# Transform the grid topology data
+transformed_grid = transform_grid_topology_data(grid_data, config)
+
+# Display key metrics
+print(f"Total components: {len(transformed_grid)}")
+print(f"Node centrality for node_1: {transformed_grid.loc[transformed_grid['component_id'] == 'node_1', 'centrality'].values[0]}")
+print(f"Redundancy for line_2: {transformed_grid.loc[transformed_grid['component_id'] == 'line_2', 'redundancy'].values[0]}")
+</code></pre>
+
+    <h4>9.2.6. Example: Weather Data Transformation</h4>
+    <pre><code>import pandas as pd
+from gfmf.data_management.utils.transformers import transform_weather_data
+
+# Example weather data
+weather_data = pd.DataFrame({
+    'STATION': ['S1', 'S1', 'S2', 'S2'],
+    'DATE': ['2023-01-01', '2023-01-02', '2023-01-01', '2023-01-02'],
+    'LATITUDE': [37.7749, 37.7749, 34.0522, 34.0522],
+    'LONGITUDE': [-122.4194, -122.4194, -118.2437, -118.2437],
+    'PRCP': [0, 2.5, 0, 0],
+    'SNOW': [0, 0, 0, 0],
+    'TMAX': [18.3, 16.7, 25.6, 24.4],
+    'TMIN': [12.2, 11.1, 15.0, 14.4],
+    'AWND': [3.1, 4.2, 2.5, 3.0]
+})
+
+# Configuration for transformation
+config = {
+    "preprocessing": {
+        "standardize_weather": True,
+        "impute_missing_values": True,
+        "extreme_weather": {
+            "high_temp_threshold": 25.0,
+            "high_wind_threshold": 10.0,
+            "high_precip_threshold": 5.0
+        }
+    }
+}
+
+# Transform the weather data
+transformed_weather = transform_weather_data(weather_data, config)
+
+# Display derived features
+print(f"Temperature range: {transformed_weather['temp_range'].values}")
+print(f"Extreme weather days: {transformed_weather['extreme_weather_day'].sum()}")
+print(f"Seasonal features added: {', '.join(col for col in transformed_weather.columns if 'season' in col)}")
+</code></pre>
+
+    <h4>9.2.7. Example: Aligning Datasets</h4>
+    <pre><code>import pandas as pd
+from gfmf.data_management.utils.transformers import align_datasets
+
+# Assuming we have already transformed grid, weather, and outage data
+transformed_grid = # ... (from previous example)
+transformed_weather = # ... (from previous example)
+transformed_outage = # ... (processed outage data)
+
+# Configuration for alignment
+config = {
+    "alignment": {
+        "temporal_resolution": "D",  # Daily
+        "spatial_matching": "nearest",  # Match weather to closest grid component
+        "include_historic_outages": True  # Include past outage history as features
+    }
+}
+
+# Align the datasets
+aligned_data = align_datasets(transformed_grid, transformed_weather, transformed_outage, config)
+
+# Display the aligned dataset structure
+print(f"Combined dataset shape: {aligned_data.shape}")
+print(f"Features included: {', '.join(aligned_data.columns)}")
+print(f"Time period covered: {aligned_data['timestamp'].min()} to {aligned_data['timestamp'].max()}")
+</code></pre>
+
+    <h3 id="metrics">9.3. Metrics (metrics.py)</h3>
+    <p>
+        The <code>metrics.py</code> file provides functions for calculating various data quality and 
+        performance metrics. These metrics help evaluate the completeness, consistency, and reliability
+        of the data used in the Grid Failure Modeling Framework.
+    </p>
+    
+    <h4>9.3.1. Key Functions</h4>
+    
+    <div class="function-signature">calculate_data_completeness(data: pd.DataFrame) -> float</div>
+    <p>Calculates the completeness of data by measuring the percentage of non-missing values.</p>
+    <p class="parameter"><strong>data</strong>: DataFrame to evaluate</p>
+    <p class="returns">Returns: Completeness score between 0 and 1</p>
+    
+    <div class="function-signature">calculate_temporal_coverage(data: pd.DataFrame, timestamp_col: str, group_col: Optional[str] = None) -> Dict[str, Any]</div>
+    <p>Evaluates the temporal coverage of the data, identifying gaps and calculating coverage percentage.</p>
+    <p class="parameter"><strong>data</strong>: DataFrame containing temporal data</p>
+    <p class="parameter"><strong>timestamp_col</strong>: Column name containing timestamps</p>
+    <p class="parameter"><strong>group_col</strong>: Optional column name for grouping (e.g., by station)</p>
+    <p class="returns">Returns: Dictionary with temporal coverage metrics</p>
+    
+    <div class="function-signature">calculate_spatial_coverage(data: pd.DataFrame, lat_col: str, lon_col: str, reference_area: Optional[Dict[str, float]] = None) -> Dict[str, Any]</div>
+    <p>Evaluates the spatial coverage of the data across a geographic area.</p>
+    <p class="parameter"><strong>data</strong>: DataFrame containing spatial data</p>
+    <p class="parameter"><strong>lat_col</strong>: Column name containing latitude values</p>
+    <p class="parameter"><strong>lon_col</strong>: Column name containing longitude values</p>
+    <p class="parameter"><strong>reference_area</strong>: Optional dictionary defining the reference area boundaries</p>
+    <p class="returns">Returns: Dictionary with spatial coverage metrics</p>
+    
+    <div class="function-signature">detect_outliers(data: pd.DataFrame, method: str = 'iqr', threshold: float = 1.5) -> List[Dict[str, Any]]</div>
+    <p>Detects outliers in numerical data using various methods.</p>
+    <p class="parameter"><strong>data</strong>: DataFrame to check for outliers</p>
+    <p class="parameter"><strong>method</strong>: Method to use for outlier detection ('iqr', 'zscore', 'isolation_forest')</p>
+    <p class="parameter"><strong>threshold</strong>: Threshold value for outlier detection</p>
+    <p class="returns">Returns: List of dictionaries containing outlier information</p>
+    
+    <div class="function-signature">assess_temporal_consistency(data: pd.DataFrame, timestamp_col: str, group_col: Optional[str] = None, expected_frequency: str = 'D') -> Dict[str, Any]</div>
+    <p>Assesses the consistency of temporal data, checking for expected frequency and missing periods.</p>
+    <p class="parameter"><strong>data</strong>: DataFrame containing temporal data</p>
+    <p class="parameter"><strong>timestamp_col</strong>: Column name containing timestamps</p>
+    <p class="parameter"><strong>group_col</strong>: Optional column name for grouping</p>
+    <p class="parameter"><strong>expected_frequency</strong>: Expected data frequency ('D' for daily, 'H' for hourly, etc.)</p>
+    <p class="returns">Returns: Dictionary with temporal consistency metrics</p>
+    
+    <div class="function-signature">evaluate_dataset_alignment(grid_df: pd.DataFrame, weather_df: pd.DataFrame, outage_df: pd.DataFrame) -> Dict[str, float]</div>
+    <p>Evaluates how well the different datasets align in terms of temporal and spatial coverage.</p>
+    <p class="parameter"><strong>grid_df</strong>: DataFrame containing grid component data</p>
+    <p class="parameter"><strong>weather_df</strong>: DataFrame containing weather data</p>
+    <p class="parameter"><strong>outage_df</strong>: DataFrame containing outage data</p>
+    <p class="returns">Returns: Dictionary with alignment scores</p>
+    
+    <h4>9.3.2. Data Completeness Analysis</h4>
+    <p>
+        Data completeness analysis identifies missing values and calculates completeness scores:
+    </p>
+    <ul>
+        <li>Overall completeness percentage for the entire dataset</li>
+        <li>Column-wise completeness scores to identify problematic features</li>
+        <li>Visualization of missing data patterns</li>
+        <li>Recommendations for handling missing values based on patterns</li>
+    </ul>
+    
+    <h4>9.3.3. Temporal Coverage Analysis</h4>
+    <p>
+        Temporal coverage analysis examines the time periods covered by the data:
+    </p>
+    <ul>
+        <li>Start and end dates of the dataset</li>
+        <li>Identification of gaps in the time series</li>
+        <li>Calculation of coverage percentage</li>
+        <li>Analysis of periodicity and seasonality</li>
+        <li>Comparison of coverage across different groups (e.g., stations, components)</li>
+    </ul>
+    
+    <h4>9.3.4. Spatial Coverage Analysis</h4>
+    <p>
+        Spatial coverage analysis examines the geographic distribution of the data:
+    </p>
+    <ul>
+        <li>Geographic bounds of the dataset</li>
+        <li>Density of data points across the area</li>
+        <li>Identification of underrepresented regions</li>
+        <li>Calculation of coverage percentage relative to a reference area</li>
+        <li>Spatial clustering analysis</li>
+    </ul>
+    
+    <h4>9.3.5. Outlier Detection</h4>
+    <p>
+        Outlier detection identifies anomalous data points that might represent errors or unique events:
+    </p>
+    <ul>
+        <li>Multiple detection methods (IQR, Z-score, Isolation Forest)</li>
+        <li>Configurable thresholds for different sensitivity levels</li>
+        <li>Column-wise outlier detection for numerical features</li>
+        <li>Time series specific outlier detection</li>
+        <li>Recommendations for handling detected outliers</li>
+    </ul>
+    
+    <h4>9.3.6. Example: Data Completeness Analysis</h4>
+    <pre><code>import pandas as pd
+from gfmf.data_management.utils.metrics import calculate_data_completeness
+
+# Example datasets with missing values
+weather_data = pd.DataFrame({
+    'station': ['S1', 'S1', 'S2', 'S2', 'S3'],
+    'date': ['2023-01-01', '2023-01-02', '2023-01-01', '2023-01-02', '2023-01-01'],
+    'temperature': [10.5, 12.3, 15.2, None, 8.7],
+    'precipitation': [0, 5.2, None, 0, 2.1],
+    'wind_speed': [3.1, 4.2, 2.8, 3.5, None]
+})
+
+# Calculate overall completeness
+completeness = calculate_data_completeness(weather_data)
+print(f"Overall data completeness: {completeness:.2%}")
+
+# Calculate column-wise completeness
+column_completeness = {
+    col: calculate_data_completeness(weather_data[[col]])
+    for col in weather_data.columns
+}
+
+for col, score in column_completeness.items():
+    print(f"Completeness for {col}: {score:.2%}")
+
+# Create a visualization of missing values (using pandas plotting)
+import matplotlib.pyplot as plt
+plt.figure(figsize=(10, 6))
+weather_data.isna().sum().plot(kind='bar')
+plt.title('Missing Values by Column')
+plt.xlabel('Column')
+plt.ylabel('Count of Missing Values')
+plt.tight_layout()
+plt.show()
+</code></pre>
+
+    <h4>9.3.7. Example: Temporal Coverage Analysis</h4>
+    <pre><code>import pandas as pd
+from gfmf.data_management.utils.metrics import calculate_temporal_coverage
+
+# Example weather dataset with time gaps
+dates = pd.date_range(start='2023-01-01', end='2023-01-10', freq='D').tolist()
+# Remove some dates to create gaps
+dates.remove(pd.Timestamp('2023-01-05'))
+dates.remove(pd.Timestamp('2023-01-06'))
+
+weather_data = pd.DataFrame({
+    'station': ['S1'] * len(dates) + ['S2'] * (len(dates) - 1),
+    'timestamp': dates + dates[:-1],
+    'temperature': [10.5, 12.3, 9.8, 11.2, 13.5, 12.8, 10.9, 11.5] + 
+                  [15.2, 16.7, 14.8, 15.5, 17.2, 16.3, 15.8]
+})
+
+# Calculate temporal coverage
+temporal_coverage = calculate_temporal_coverage(
+    weather_data, 
+    timestamp_col='timestamp',
+    group_col='station'
+)
+
+# Print overall coverage
+print(f"Overall temporal coverage: {temporal_coverage['overall_coverage']:.2%}")
+
+# Print coverage by station
+for station, coverage in temporal_coverage['group_coverage'].items():
+    print(f"Coverage for station {station}: {coverage:.2%}")
+
+# Display gaps in the data
+print("\nIdentified gaps in the data:")
+for gap in temporal_coverage['gaps']:
+    print(f"Gap from {gap['start']} to {gap['end']} for {gap.get('group', 'all stations')}")
+</code></pre>
+
+    <h4>9.3.8. Example: Outlier Detection</h4>
+    <pre><code>import pandas as pd
+import numpy as np
+from gfmf.data_management.utils.metrics import detect_outliers
+
+# Create a dataset with some outliers
+np.random.seed(42)
+n_samples = 100
+temperature = np.random.normal(15, 3, n_samples)
+# Add some outliers
+temperature[10] = 35.0  # Hot outlier
+temperature[50] = -5.0  # Cold outlier
+
+precipitation = np.random.exponential(2, n_samples)
+# Add some outliers
+precipitation[30] = 50.0  # Heavy rain outlier
+
+wind_speed = np.random.normal(5, 1.5, n_samples)
+# Add some outliers
+wind_speed[70] = 25.0  # High wind outlier
+
+weather_data = pd.DataFrame({
+    'date': pd.date_range(start='2023-01-01', periods=n_samples, freq='D'),
+    'temperature': temperature,
+    'precipitation': precipitation,
+    'wind_speed': wind_speed
+})
+
+# Detect outliers using IQR method
+iqr_outliers = detect_outliers(weather_data, method='iqr', threshold=1.5)
+print(f"Found {len(iqr_outliers)} outliers using IQR method")
+
+# Print details of the first few outliers
+for i, outlier in enumerate(iqr_outliers[:3]):
+    print(f"Outlier {i+1}:")
+    print(f"  Column: {outlier['column']}")
+    print(f"  Index: {outlier['index']}")
+    print(f"  Value: {outlier['value']}")
+    print(f"  Z-score: {outlier['zscore']:.2f}")
+
+# Detect outliers using Z-score method
+zscore_outliers = detect_outliers(weather_data, method='zscore', threshold=3.0)
+print(f"\nFound {len(zscore_outliers)} outliers using Z-score method")
+
+# Visualize the outliers (temperature example)
+import matplotlib.pyplot as plt
+plt.figure(figsize=(12, 6))
+plt.scatter(weather_data.index, weather_data['temperature'], c='blue', alpha=0.5)
+
+# Highlight the outliers
+temp_outliers = [o for o in iqr_outliers if o['column'] == 'temperature']
+outlier_indices = [o['index'] for o in temp_outliers]
+plt.scatter(outlier_indices, weather_data.loc[outlier_indices, 'temperature'], 
+            c='red', s=100, label='Outliers')
+
+plt.title('Temperature Data with Outliers Highlighted')
+plt.xlabel('Sample Index')
+plt.ylabel('Temperature (°C)')
+plt.legend()
+plt.grid(True, linestyle='--', alpha=0.7)
+plt.tight_layout()
+plt.show()
+</code></pre>
+
+    <h3 id="data-loader">9.4. Data Loader (data_loader.py)</h3>
+    <p>
+        The <code>data_loader.py</code> file contains classes for loading different types of data from various sources. 
+        It serves as the entry point for bringing data into the Grid Failure Modeling Framework, providing standardized 
+        interfaces for accessing grid topology, weather, and outage data.
+    </p>
+    
+    <h4>9.4.1. Class Hierarchy</h4>
+    <p>
+        The file implements a hierarchy of loader classes:
+    </p>
+    <ul>
+        <li><code>DataLoader</code>: Base class that provides a unified interface for loading all data types</li>
+        <li><code>GridTopologyLoader</code>: Specialized class for loading grid topology data</li>
+        <li><code>WeatherDataLoader</code>: Specialized class for loading weather data</li>
+        <li><code>OutageDataLoader</code>: Specialized class for loading outage data</li>
+    </ul>
+    
+    <h4>9.4.2. DataLoader Class</h4>
+    <div class="function-signature">class DataLoader(config: Dict[str, Any])</div>
+    <p>Base data loader class for loading data of all types.</p>
+    <p>Key methods:</p>
+    
+    <div class="function-signature">load_all(data_types: Optional[List[str]] = None) -> Dict[str, Any]</div>
+    <p>Load all specified data types.</p>
+    <p class="parameter"><strong>data_types</strong>: List of data types to load. Options: 'grid', 'weather', 'outage'. If None, load all types.</p>
+    <p class="returns">Returns: Dictionary containing loaded data</p>
+    
+    <h4>9.4.3. GridTopologyLoader Class</h4>
+    <div class="function-signature">class GridTopologyLoader(config: Dict[str, Any])</div>
+    <p>Loader for grid topology data.</p>
+    <p>Key methods:</p>
+    
+    <div class="function-signature">load(file_path: Optional[str] = None) -> Dict[str, Any]</div>
+    <p>Load grid topology data from files or create a fallback if needed.</p>
+    <p class="parameter"><strong>file_path</strong>: Optional direct path to the file. If None, use the configured path.</p>
+    <p class="returns">Returns: Dictionary containing loaded grid topology data</p>
+    
+    <div class="function-signature">load_ieee123_fallback() -> Dict[str, Any]</div>
+    <p>Load IEEE 123 bus test case as a fallback when no other data is available.</p>
+    <p class="returns">Returns: Dictionary containing IEEE 123 bus test case data</p>
+    
+    <h4>9.4.4. WeatherDataLoader Class</h4>
+    <div class="function-signature">class WeatherDataLoader(config: Dict[str, Any])</div>
+    <p>Loader for weather data from various sources.</p>
+    <p>Key methods:</p>
+    
+    <div class="function-signature">load(file_path: Optional[str] = None) -> pd.DataFrame</div>
+    <p>Load weather data from various file formats.</p>
+    <p class="parameter"><strong>file_path</strong>: Optional direct path to the file. If None, use the configured path.</p>
+    <p class="returns">Returns: DataFrame containing loaded weather data</p>
+    
+    <div class="function-signature">load_noaa_data(file_path: str) -> pd.DataFrame</div>
+    <p>Load NOAA weather data from CSV files.</p>
+    <p class="parameter"><strong>file_path</strong>: Path to the NOAA weather data file.</p>
+    <p class="returns">Returns: DataFrame containing NOAA weather data</p>
+    
+    <h4>9.4.5. OutageDataLoader Class</h4>
+    <div class="function-signature">class OutageDataLoader(config: Dict[str, Any])</div>
+    <p>Loader for outage data from various sources.</p>
+    <p>Key methods:</p>
+    
+    <div class="function-signature">load(file_path: Optional[str] = None) -> pd.DataFrame</div>
+    <p>Load outage data from various file formats.</p>
+    <p class="parameter"><strong>file_path</strong>: Optional direct path to the file. If None, use the configured path.</p>
+    <p class="returns">Returns: DataFrame containing loaded outage data</p>
+    
+    <div class="function-signature">load_eaglei_data(file_path: str) -> pd.DataFrame</div>
+    <p>Load EagleI outage data from CSV files.</p>
+    <p class="parameter"><strong>file_path</strong>: Path to the EagleI outage data file.</p>
+    <p class="returns">Returns: DataFrame containing EagleI outage data</p>
+    
+    <h4>9.4.6. Data Loading Process</h4>
+    <p>
+        The data loading process typically follows these steps:
+    </p>
+    <ol>
+        <li>Determine the file path(s) to load data from based on the configuration</li>
+        <li>Select appropriate loader based on data type and file format</li>
+        <li>Read the data from the file(s) into memory</li>
+        <li>Perform initial data validation to ensure it meets basic requirements</li>
+        <li>Convert the data into a standardized format (e.g., DataFrames for tabular data)</li>
+        <li>Apply any immediate transformations needed for consistency</li>
+        <li>Return the loaded data in a standardized structure</li>
+    </ol>
+    
+    <h4>9.4.7. Example: Basic Data Loading</h4>
+    <pre><code>from gfmf.data_management.data_loader import DataLoader
+
+# Configuration dictionary
+config = {
+    'data_paths': {
+        'base_path': '/path/to/data',
+        'grid_path': 'grid/ieee123.json',
+        'weather_path': 'weather/noaa_2023.csv',
+        'outage_path': 'outage/eaglei_2023.csv'
+    },
+    'data_loading': {
+        'weather_sample_limit': 10000,
+        'validate_data': True
+    }
+}
+
+# Initialize the DataLoader
+loader = DataLoader(config)
+
+# Load all data types
+all_data = loader.load_all()
+print(f"Loaded data types: {list(all_data.keys())}")
+
+# Access specific data
+grid_data = all_data['grid']
+print(f"Grid data has {len(grid_data['nodes'])} nodes and {len(grid_data['lines'])} lines")
+
+weather_data = all_data['weather']
+print(f"Weather data has {len(weather_data)} records")
+
+outage_data = all_data['outage']
+print(f"Outage data has {len(outage_data)} records")
+
+# Load only specific data types
+grid_only = loader.load_all(['grid'])
+print(f"Loaded only grid data: {list(grid_only.keys())}")
+</code></pre>
+    
+    <h4>9.4.8. Example: Loading Grid Topology Data</h4>
+    <pre><code>from gfmf.data_management.data_loader import GridTopologyLoader
+
+# Configuration dictionary
+config = {
+    'data_paths': {
+        'base_path': '/path/to/data',
+        'grid_path': 'grid'
+    }
+}
+
+# Initialize the GridTopologyLoader
+grid_loader = GridTopologyLoader(config)
+
+# Load grid topology data from default path
+grid_data = grid_loader.load()
+print(f"Loaded grid data from: {grid_data.get('source_file', 'unknown')}")
+
+# Check if nodes and lines are available
+if 'nodes' in grid_data and 'lines' in grid_data:
+    nodes_df = grid_data['nodes']
+    lines_df = grid_data['lines']
+    
+    print(f"Grid topology has {len(nodes_df)} nodes and {len(lines_df)} lines")
+    
+    # Display node types
+    node_types = nodes_df['type'].value_counts()
+    print("Node types distribution:")
+    for node_type, count in node_types.items():
+        print(f"  {node_type}: {count}")
+    
+    # Display line types
+    if 'type' in lines_df.columns:
+        line_types = lines_df['type'].value_counts()
+        print("Line types distribution:")
+        for line_type, count in line_types.items():
+            print(f"  {line_type}: {count}")
+else:
+    print("No valid grid topology data found, loading fallback")
+    fallback_data = grid_loader.load_ieee123_fallback()
+    print(f"Loaded IEEE 123 fallback with {len(fallback_data['nodes'])} nodes")
+</code></pre>
+
+    <h4>9.4.9. Example: Loading Weather Data</h4>
+    <pre><code>from gfmf.data_management.data_loader import WeatherDataLoader
+import matplotlib.pyplot as plt
+
+# Configuration dictionary
+config = {
+    'data_paths': {
+        'base_path': '/path/to/data',
+        'weather_path': 'weather'
+    },
+    'data_loading': {
+        'weather_sample_limit': 5000  # Limit for demonstration
+    }
+}
+
+# Initialize the WeatherDataLoader
+weather_loader = WeatherDataLoader(config)
+
+# Load weather data
+weather_data = weather_loader.load()
+print(f"Loaded {len(weather_data)} weather records")
+
+# Check for available weather variables
+weather_vars = [col for col in weather_data.columns if col not in 
+                ['STATION', 'DATE', 'LATITUDE', 'LONGITUDE']]
+print(f"Available weather variables: {weather_vars}")
+
+# Display basic statistics for temperature
+if 'TMAX' in weather_data.columns and 'TMIN' in weather_data.columns:
+    print("\nTemperature Statistics:")
+    print(f"Max temperature range: {weather_data['TMAX'].min():.1f} to {weather_data['TMAX'].max():.1f}°C")
+    print(f"Min temperature range: {weather_data['TMIN'].min():.1f} to {weather_data['TMIN'].max():.1f}°C")
+    
+    # Create a simple visualization
+    plt.figure(figsize=(12, 6))
+    
+    # Convert DATE to datetime if needed
+    if not pd.api.types.is_datetime64_dtype(weather_data['DATE']):
+        weather_data['DATE'] = pd.to_datetime(weather_data['DATE'])
+    
+    # Get a single station for demonstration
+    station_id = weather_data['STATION'].unique()[0]
+    station_data = weather_data[weather_data['STATION'] == station_id].sort_values('DATE')
+    
+    plt.plot(station_data['DATE'], station_data['TMAX'], 'r-', label='Max Temp')
+    plt.plot(station_data['DATE'], station_data['TMIN'], 'b-', label='Min Temp')
+    
+    plt.title(f'Temperature Data for Station {station_id}')
+    plt.xlabel('Date')
+    plt.ylabel('Temperature (°C)')
+    plt.legend()
+    plt.grid(True, linestyle='--', alpha=0.7)
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    plt.show()
+</code></pre>
+
+    <h4>9.4.10. Example: Loading Outage Data</h4>
+    <pre><code>from gfmf.data_management.data_loader import OutageDataLoader
+import matplotlib.pyplot as plt
+
+# Configuration dictionary
+config = {
+    'data_paths': {
+        'base_path': '/path/to/data',
+        'outage_path': 'outage'
+    }
+}
+
+# Initialize the OutageDataLoader
+outage_loader = OutageDataLoader(config)
+
+# Load outage data
+outage_data = outage_loader.load()
+print(f"Loaded {len(outage_data)} outage records")
+
+# Check data format (merged or aggregated)
+if all(col in outage_data.columns for col in ['fips', 'state', 'county', 'start_time', 'duration']):
+    print("Data is in merged format (detailed outage events)")
+    
+    # Convert start_time to datetime if needed
+    if not pd.api.types.is_datetime64_dtype(outage_data['start_time']):
+        outage_data['start_time'] = pd.to_datetime(outage_data['start_time'])
+    
+    # Display outage causes if available
+    if 'cause' in outage_data.columns:
+        causes = outage_data['cause'].value_counts()
+        print("\nOutage causes distribution:")
+        for cause, count in causes.items():
+            print(f"  {cause}: {count}")
+    
+    # Create a visualization of outages over time
+    plt.figure(figsize=(12, 6))
+    
+    # Group by date and count outages
+    outage_data['date'] = outage_data['start_time'].dt.date
+    outages_by_date = outage_data.groupby('date').size()
+    
+    plt.bar(outages_by_date.index, outages_by_date.values)
+    plt.title('Outages by Date')
+    plt.xlabel('Date')
+    plt.ylabel('Number of Outages')
+    plt.xticks(rotation=45)
+    plt.grid(True, axis='y', linestyle='--', alpha=0.7)
+    plt.tight_layout()
+    plt.show()
+    
+elif all(col in outage_data.columns for col in ['state', 'year', 'month', 'outage_count']):
+    print("Data is in aggregated format (monthly outage summaries)")
+    
+    # Display state-wise outage totals
+    state_totals = outage_data.groupby('state')['outage_count'].sum().sort_values(ascending=False)
+    print("\nOutage counts by state (top 5):")
+    for state, count in state_totals.head(5).items():
+        print(f"  {state}: {count}")
+</code></pre>
+
+    <h3 id="preprocessor">9.5. Data Preprocessor (preprocessor.py)</h3>
+    <p>
+        The <code>preprocessor.py</code> file contains the <code>DataPreprocessor</code> class, which is responsible 
+        for preprocessing and feature engineering. It transforms raw data into a format suitable for analysis
+        and model training.
+    </p>
+    
+    <h4>9.5.1. DataPreprocessor Class</h4>
+    <div class="function-signature">class DataPreprocessor(config: Dict[str, Any])</div>
+    <p>Preprocessor for all data types in the Grid Failure Modeling Framework.</p>
+    <p>Key methods:</p>
+    
+    <div class="function-signature">preprocess(raw_data: Dict[str, Any], save_path: Optional[str] = None) -> Dict[str, Any]</div>
+    <p>Preprocess all data types in the raw data dictionary.</p>
+    <p class="parameter"><strong>raw_data</strong>: Dictionary containing raw data loaded by DataLoader</p>
+    <p class="parameter"><strong>save_path</strong>: Optional path to save processed data</p>
+    <p class="returns">Returns: Dictionary containing processed data</p>
+    
+    <div class="function-signature">_preprocess_grid_data(grid_data: Dict[str, Any]) -> pd.DataFrame</div>
+    <p>Preprocess grid topology data and extract features.</p>
+    <p class="parameter"><strong>grid_data</strong>: Dictionary containing grid topology data</p>
+    <p class="returns">Returns: DataFrame with preprocessed grid data</p>
+    
+    <div class="function-signature">_preprocess_weather_data(weather_data: pd.DataFrame) -> pd.DataFrame</div>
+    <p>Preprocess weather data and engineer relevant features.</p>
+    <p class="parameter"><strong>weather_data</strong>: DataFrame containing weather data</p>
+    <p class="returns">Returns: DataFrame with preprocessed weather data</p>
+    
+    <div class="function-signature">_preprocess_outage_data(outage_data: pd.DataFrame) -> pd.DataFrame</div>
+    <p>Preprocess outage data and extract features.</p>
+    <p class="parameter"><strong>outage_data</strong>: DataFrame containing outage data</p>
+    <p class="returns">Returns: DataFrame with preprocessed outage data</p>
+    
+    <div class="function-signature">_create_combined_dataset(grid_data: pd.DataFrame, weather_data: pd.DataFrame, outage_data: pd.DataFrame) -> pd.DataFrame</div>
+    <p>Create a combined dataset from the preprocessed grid, weather, and outage data.</p>
+    <p class="parameter"><strong>grid_data</strong>: DataFrame with preprocessed grid data</p>
+    <p class="parameter"><strong>weather_data</strong>: DataFrame with preprocessed weather data</p>
+    <p class="parameter"><strong>outage_data</strong>: DataFrame with preprocessed outage data</p>
+    <p class="returns">Returns: DataFrame with combined data</p>
+    
+    <h4>9.5.2. Preprocessing Workflow</h4>
+    <p>
+        The preprocessing workflow consists of several steps:
+    </p>
+    <ol>
+        <li>Cleaning raw data (handling missing values, fixing data types)</li>
+        <li>Standardizing formats (e.g., datetime formats, geographic coordinates)</li>
+        <li>Applying transformations (e.g., normalization, encoding categorical variables)</li>
+        <li>Engineering features (e.g., deriving new features from existing ones)</li>
+        <li>Handling outliers (detection and management)</li>
+        <li>Aligning different data types temporally and spatially</li>
+        <li>Creating a combined dataset that integrates all data types</li>
+    </ol>
+    
+    <div class="diagram-container">
+        <div class="mermaid">
+            flowchart TD
+                A[Raw Data] --> B[Data Cleaning]
+                B --> C[Standardization]
+                C --> D[Feature Engineering]
+                D --> E[Outlier Handling]
+                E --> F[Data Alignment]
+                F --> G[Combined Dataset]
+                
+                subgraph Preprocessing Steps
+                B
+                C
+                D
+                E
+                F
+                end
+        </div>
+    </div>
+    
+    <h4>9.5.3. Grid Data Preprocessing</h4>
+    <p>
+        Grid topology data preprocessing includes:
+    </p>
+    <ul>
+        <li>Standardizing node and line data formats</li>
+        <li>Computing network metrics (centrality, degree, connectivity)</li>
+        <li>Deriving distance-based features (nearest neighbor distance, spatial clustering)</li>
+        <li>Creating vulnerability indicators based on component properties</li>
+        <li>Normalizing numerical features (age, capacity, voltage)</li>
+    </ul>
+    
+    <h4>9.5.4. Weather Data Preprocessing</h4>
+    <p>
+        Weather data preprocessing includes:
+    </p>
+    <ul>
+        <li>Standardizing timestamp formats</li>
+        <li>Handling missing values using appropriate strategies (interpolation, average values)</li>
+        <li>Creating derived weather features (heat index, wind chill, severity indicators)</li>
+        <li>Computing temporal features (season, day of week, hour of day)</li>
+        <li>Normalizing numerical features (temperature, precipitation, wind speed)</li>
+        <li>Spatial interpolation to estimate weather at grid component locations</li>
+    </ul>
+    
+    <h4>9.5.5. Outage Data Preprocessing</h4>
+    <p>
+        Outage data preprocessing includes:
+    </p>
+    <ul>
+        <li>Standardizing timestamp and duration formats</li>
+        <li>Categorizing outages by cause and severity</li>
+        <li>Linking outages to specific grid components based on location</li>
+        <li>Computing temporal outage patterns (frequency, seasonality)</li>
+        <li>Calculating outage impact metrics (customers affected, duration)</li>
+        <li>Creating outage history features for each component</li>
+    </ul>
+    
+    <h4>9.5.6. Example: Basic Data Preprocessing</h4>
+    <pre><code>from gfmf.data_management import DataLoader, DataPreprocessor
+
+# Configuration dictionary
+config = {
+    'data_paths': {
+        'base_path': '/path/to/data',
+        'grid_path': 'grid/ieee123.json',
+        'weather_path': 'weather/noaa_2023.csv',
+        'outage_path': 'outage/eaglei_2023.csv',
+        'processed_path': 'processed'
+    },
+    'preprocessing': {
+        'missing_strategy': 'interpolate',
+        'standardization': True,
+        'outlier_handling': 'clip',
+        'outlier_threshold': 3.0
+    }
+}
+
+# Initialize the DataLoader and DataPreprocessor
+loader = DataLoader(config)
+preprocessor = DataPreprocessor(config)
+
+# Load raw data
+raw_data = loader.load_all()
+
+# Preprocess the data
+processed_data = preprocessor.preprocess(raw_data)
+
+# Access the preprocessed data
+grid_processed = processed_data['grid']
+weather_processed = processed_data['weather']
+outage_processed = processed_data['outage']
+combined_data = processed_data['combined']
+
+# Print some statistics about the processed data
+print(f"Processed grid data: {len(grid_processed)} components")
+print(f"Processed weather data: {len(weather_processed)} records")
+print(f"Processed outage data: {len(outage_processed)} records")
+print(f"Combined dataset: {len(combined_data)} records with {combined_data.shape[1]} features")
+
+# Save the processed data
+import os
+save_dir = os.path.join(config['data_paths']['base_path'], config['data_paths']['processed_path'])
+os.makedirs(save_dir, exist_ok=True)
+
+for data_type, data in processed_data.items():
+    save_path = os.path.join(save_dir, f"{data_type}_processed.csv")
+    data.to_csv(save_path, index=False)
+    print(f"Saved {data_type} data to {save_path}")
+</code></pre>
+    
+    <h4>9.5.7. Example: Handling Missing Values</h4>
+    <pre><code>import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from gfmf.data_management.preprocessor import DataPreprocessor
+
+# Example weather data with missing values
+dates = pd.date_range(start='2023-01-01', end='2023-01-31', freq='D')
+weather_data = pd.DataFrame({
+    'timestamp': dates,
+    'temperature': [15 + 5*np.sin(i/3) + np.random.normal(0, 1) for i in range(len(dates))],
+    'precipitation': [np.random.exponential(2) for _ in range(len(dates))],
+    'wind_speed': [5 + 2*np.cos(i/5) + np.random.normal(0, 0.5) for i in range(len(dates))]
+})
+
+# Introduce missing values
+missing_indices = np.random.choice(len(weather_data), size=5, replace=False)
+weather_data.loc[missing_indices, 'temperature'] = np.nan
+
+missing_indices = np.random.choice(len(weather_data), size=7, replace=False)
+weather_data.loc[missing_indices, 'precipitation'] = np.nan
+
+missing_indices = np.random.choice(len(weather_data), size=3, replace=False)
+weather_data.loc[missing_indices, 'wind_speed'] = np.nan
+
+# Configuration for preprocessing
+config = {
+    'preprocessing': {
+        'missing_strategy': 'interpolate',
+        'standardization': True
+    }
+}
+
+# Initialize the DataPreprocessor
+preprocessor = DataPreprocessor(config)
+
+# Preprocess the weather data
+raw_data = {'weather': weather_data}
+processed_data = preprocessor.preprocess(raw_data)
+processed_weather = processed_data['weather']
+
+# Visualize the original and processed data
+fig, axs = plt.subplots(3, 1, figsize=(12, 10), sharex=True)
+
+# Temperature
+axs[0].plot(weather_data['timestamp'], weather_data['temperature'], 'bo-', label='Original (with gaps)', alpha=0.7)
+axs[0].plot(processed_weather['timestamp'], processed_weather['temperature'], 'ro-', label='After preprocessing', alpha=0.7)
+axs[0].set_title('Temperature Data')
+axs[0].set_ylabel('Temperature (°C)')
+axs[0].legend()
+axs[0].grid(True, linestyle='--', alpha=0.7)
+
+# Precipitation
+axs[1].plot(weather_data['timestamp'], weather_data['precipitation'], 'bo-', label='Original (with gaps)', alpha=0.7)
+axs[1].plot(processed_weather['timestamp'], processed_weather['precipitation'], 'ro-', label='After preprocessing', alpha=0.7)
+axs[1].set_title('Precipitation Data')
+axs[1].set_ylabel('Precipitation (mm)')
+axs[1].legend()
+axs[1].grid(True, linestyle='--', alpha=0.7)
+
+# Wind Speed
+axs[2].plot(weather_data['timestamp'], weather_data['wind_speed'], 'bo-', label='Original (with gaps)', alpha=0.7)
+axs[2].plot(processed_weather['timestamp'], processed_weather['wind_speed'], 'ro-', label='After preprocessing', alpha=0.7)
+axs[2].set_title('Wind Speed Data')
+axs[2].set_xlabel('Date')
+axs[2].set_ylabel('Wind Speed (m/s)')
+axs[2].legend()
+axs[2].grid(True, linestyle='--', alpha=0.7)
+
+plt.tight_layout()
+plt.show()
+
+# Print statistics about the missing values
+print("Missing values before preprocessing:")
+print(weather_data.isna().sum())
+
+print("\nMissing values after preprocessing:")
+print(processed_weather.isna().sum())
+</code></pre>
+
+    <h4>9.5.8. Example: Feature Engineering</h4>
+    <pre><code>import pandas as pd
+import numpy as np
+from gfmf.data_management.preprocessor import DataPreprocessor
+
+# Example weather data
+dates = pd.date_range(start='2023-01-01', end='2023-12-31', freq='D')
+weather_data = pd.DataFrame({
+    'timestamp': dates,
+    'station_id': ['S1'] * len(dates),
+    'temperature': [15 + 10*np.sin(2*np.pi*i/365) + np.random.normal(0, 2) for i in range(len(dates))],
+    'precipitation': [np.random.exponential(2) for _ in range(len(dates))],
+    'wind_speed': [5 + 3*np.cos(2*np.pi*i/365) + np.random.normal(0, 1) for i in range(len(dates))],
+    'humidity': [60 + 20*np.sin(2*np.pi*i/365) + np.random.normal(0, 5) for i in range(len(dates))]
+})
+
+# Configuration for preprocessing with feature engineering enabled
+config = {
+    'preprocessing': {
+        'feature_engineering': True,
+        'temporal_features': True,
+        'derived_weather_metrics': True,
+        'rolling_windows': [3, 7, 30]  # Days
+    }
+}
+
+# Initialize the DataPreprocessor
+preprocessor = DataPreprocessor(config)
+
+# Preprocess the weather data with feature engineering
+raw_data = {'weather': weather_data}
+processed_data = preprocessor.preprocess(raw_data)
+processed_weather = processed_data['weather']
+
+# Display the new engineered features
+original_columns = set(weather_data.columns)
+engineered_columns = set(processed_weather.columns) - original_columns
+
+print(f"Original features: {', '.join(original_columns)}")
+print(f"Engineered features: {', '.join(engineered_columns)}")
+
+# Select and display a subset of the data with engineered features
+subset = processed_weather.iloc[:5, :].copy()
+subset = subset[['timestamp'] + list(engineered_columns)[:10]]  # First 10 engineered features
+print("\nSample of engineered features:")
+print(subset)
+
+# Analyze correlations between original and engineered features
+corr_matrix = processed_weather.corr()
+
+# Find top correlations with temperature
+temp_corr = corr_matrix['temperature'].sort_values(ascending=False)
+print("\nTop 5 features correlated with temperature:")
+print(temp_corr.head(6))  # 6 to include temperature itself
+
+# Find top correlations with precipitation
+precip_corr = corr_matrix['precipitation'].sort_values(ascending=False)
+print("\nTop 5 features correlated with precipitation:")
+print(precip_corr.head(6))  # 6 to include precipitation itself
+</code></pre>
+
+    <h3 id="synthetic-generator">9.6. Synthetic Data Generation (synthetic_generator.py)</h3>
+    <p>
+        The <code>synthetic_generator.py</code> file contains the <code>SyntheticGenerator</code> class, which is responsible 
+        for generating realistic synthetic data for the Grid Failure Modeling Framework. This class is particularly 
+        valuable when real-world data is limited, unavailable, or when specific test scenarios need to be simulated.
+    </p>
+    
+    <h4>9.6.1. SyntheticGenerator Class</h4>
+    <div class="function-signature">class SyntheticGenerator(config: Dict[str, Any])</div>
+    <p>Generator for synthetic data in the Grid Failure Modeling Framework.</p>
+    
+    <p>The <code>SyntheticGenerator</code> class can generate four types of synthetic data:</p>
+    <ul>
+        <li><strong>Grid Topology Data:</strong> Simulated power grid networks with nodes (buses, loads, generators) and lines (overhead, underground)</li>
+        <li><strong>Weather Data:</strong> Time series of weather conditions (temperature, precipitation, wind speed, etc.)</li>
+        <li><strong>Outage Data:</strong> Power outage events with timing, duration, cause, and impact information</li>
+        <li><strong>Combined Dataset:</strong> An integrated dataset that aligns grid, weather, and outage data temporally and spatially</li>
+    </ul>
+    
+    <h4>9.6.2. Key Methods</h4>
+    
+    <div class="function-signature">generate_all(sample_data: Optional[Dict[str, Any]] = None, save_path: Optional[str] = None) -> Dict[str, Any]</div>
+    <p>Generates all types of synthetic data in a coordinated manner.</p>
+    <p class="parameter"><strong>sample_data</strong>: Optional dictionary containing sample data to base generation on</p>
+    <p class="parameter"><strong>save_path</strong>: Optional path to save synthetic data</p>
+    <p class="returns">Returns: Dictionary containing synthetic grid, weather, outage, and combined data</p>
+    
+    <div class="function-signature">generate_grid_topology(sample_grid: Optional[pd.DataFrame] = None, num_nodes: Optional[int] = None, num_lines: Optional[int] = None, topology_type: str = 'mesh') -> pd.DataFrame</div>
+    <p>Generates synthetic grid topology data with interconnected nodes and lines.</p>
+    <p class="parameter"><strong>sample_grid</strong>: Optional sample grid data to base generation on</p>
+    <p class="parameter"><strong>num_nodes</strong>: Number of nodes to generate (default from config or 100)</p>
+    <p class="parameter"><strong>num_lines</strong>: Number of lines to generate (default is derived from nodes)</p>
+    <p class="parameter"><strong>topology_type</strong>: Type of topology to generate ('mesh', 'ring', 'radial')</p>
+    <p class="returns">Returns: DataFrame containing synthetic grid topology data</p>
+    
+    <div class="function-signature">generate_weather_data(sample_weather: Optional[pd.DataFrame] = None, grid_data: Optional[pd.DataFrame] = None, num_stations: Optional[int] = None, start_date: Optional[str] = None, end_date: Optional[str] = None, frequency: str = 'D') -> pd.DataFrame</div>
+    <p>Generates synthetic weather data with realistic seasonal patterns and spatial distribution.</p>
+    <p class="parameter"><strong>sample_weather</strong>: Optional sample weather data to base generation on</p>
+    <p class="parameter"><strong>grid_data</strong>: Optional grid data to align weather stations with grid components</p>
+    <p class="parameter"><strong>num_stations</strong>: Number of weather stations to generate (default from config)</p>
+    <p class="parameter"><strong>start_date</strong>: Start date for weather data (default is from config or 1 year ago)</p>
+    <p class="parameter"><strong>end_date</strong>: End date for weather data (default is from config or current date)</p>
+    <p class="parameter"><strong>frequency</strong>: Frequency of weather data ('D' for daily, 'H' for hourly)</p>
+    <p class="returns">Returns: DataFrame containing synthetic weather data</p>
+    
+    <div class="function-signature">generate_outage_data(sample_outage: Optional[pd.DataFrame] = None, grid_data: Optional[pd.DataFrame] = None, weather_data: Optional[pd.DataFrame] = None, num_outages: Optional[int] = None, baseline_rate: float = 0.01) -> pd.DataFrame</div>
+    <p>Generates synthetic outage data with correlations to weather conditions and grid properties.</p>
+    <p class="parameter"><strong>sample_outage</strong>: Optional sample outage data to base generation on</p>
+    <p class="parameter"><strong>grid_data</strong>: Grid data to associate outages with components</p>
+    <p class="parameter"><strong>weather_data</strong>: Weather data to correlate outages with conditions</p>
+    <p class="parameter"><strong>num_outages</strong>: Number of outages to generate (default is calculated from baseline rate)</p>
+    <p class="parameter"><strong>baseline_rate</strong>: Baseline annual outage rate per component</p>
+    <p class="returns">Returns: DataFrame containing synthetic outage data</p>
+    
+    <div class="function-signature">generate_combined_data(grid_data: pd.DataFrame, weather_data: pd.DataFrame, outage_data: pd.DataFrame) -> pd.DataFrame</div>
+    <p>Generates a combined dataset that aligns grid, weather, and outage data temporally and spatially.</p>
+    <p class="parameter"><strong>grid_data</strong>: DataFrame containing grid component data</p>
+    <p class="parameter"><strong>weather_data</strong>: DataFrame containing weather data</p>
+    <p class="parameter"><strong>outage_data</strong>: DataFrame containing outage data</p>
+    <p class="returns">Returns: Combined dataset with aligned timestamps and spatial relationships</p>
+
+    <h4>9.6.3. Grid Topology Generation</h4>
+    <p>
+        The grid topology generation process creates realistic power grid networks with the following features:
+    </p>
+    <ul>
+        <li>Support for different network topologies: mesh, ring, and radial</li>
+        <li>Realistic node types: buses, loads, and generators</li>
+        <li>Component properties: voltage levels, age, capacity, geographic coordinates</li>
+        <li>Network metrics: degree, centrality, vulnerability indicators</li>
+        <li>Connected graphs ensuring all components are reachable</li>
+    </ul>
+    
+    <p>
+        The generation process uses NetworkX to create the underlying graph structure and then assigns realistic 
+        attributes to each component. The methodology ensures that the resulting grid follows realistic power 
+        system patterns, such as appropriate voltage levels and geographic distribution.
+    </p>
+    
+    <h4>9.6.4. Weather Data Generation</h4>
+    <p>
+        The weather data generation creates time series of weather conditions with the following characteristics:
+    </p>
+    <ul>
+        <li>Realistic seasonal patterns based on latitude and time of year</li>
+        <li>Daily temperature cycles for hourly data</li>
+        <li>Spatial variation based on geographic location</li>
+        <li>Correlated weather variables (temperature, precipitation, wind speed, humidity, pressure)</li>
+        <li>Extreme weather events: heat waves, cold snaps, storms</li>
+        <li>Derived features: season, month, hour, temperature change</li>
+    </ul>
+    
+    <p>
+        The generation process models weather as a combination of:
+    </p>
+    <ol>
+        <li>Base conditions dependent on latitude</li>
+        <li>Seasonal variations following sinusoidal patterns</li>
+        <li>Daily variations (for hourly data)</li>
+        <li>Random fluctuations from normal distributions</li>
+        <li>Special conditions like storms and heat waves</li>
+    </ol>
+
+    <h4>9.6.5. Outage Data Generation</h4>
+    <p>
+        The outage data generation creates realistic power outage events with:
+    </p>
+    <ul>
+        <li>Correlations to weather conditions (extreme heat, cold, wind, precipitation)</li>
+        <li>Component-specific failure rates based on age and centrality</li>
+        <li>Temporal patterns: more failures during peak load hours</li>
+        <li>Duration distributions based on outage type and cause</li>
+        <li>Impact metrics (affected customers) based on component importance</li>
+        <li>Cascading failure patterns: outages triggering subsequent outages</li>
+    </ul>
+    
+    <p>
+        Outages are generated in two categories:
+    </p>
+    <ol>
+        <li><strong>Regular Outages (70%):</strong> Equipment failures unrelated to weather</li>
+        <li><strong>Weather-Related Outages (30%):</strong> Failures correlated with extreme weather conditions</li>
+    </ol>
+    
+    <h4>9.6.6. Combined Dataset Generation</h4>
+    <p>
+        The combined dataset aligns grid, weather, and outage data to create an integrated view with:
+    </p>
+    <ul>
+        <li>Temporal alignment: each data point corresponds to a specific timestamp</li>
+        <li>Spatial alignment: weather conditions mapped to nearest grid components</li>
+        <li>Outage prediction features: time-to-failure metrics</li>
+        <li>Derived temporal features: month, hour, day of week, weekend indicators</li>
+    </ul>
+    
+    <p>
+        This combined dataset is particularly valuable for training machine learning models for 
+        outage prediction and grid reliability analysis.
+    </p>
+    
+    <h4>9.6.7. Example: Basic Synthetic Data Generation</h4>
+    <pre><code>from gfmf.data_management import SyntheticGenerator
+
+# Configuration dictionary
+config = {
+    'data_paths': {
+        'base_path': '/path/to/data',
+        'synthetic_path': 'data/synthetic'
+    },
+    'synthetic_generation': {
+        'seed': 42,  # Random seed for reproducibility
+        'num_nodes': 50,
+        'weather': {
+            'num_stations': 5,
+            'start_date': '2023-01-01',
+            'end_date': '2023-12-31'
+        }
+    }
+}
+
+# Initialize the SyntheticGenerator
+generator = SyntheticGenerator(config)
+
+# Generate all types of synthetic data
+synthetic_data = generator.generate_all(save_path='data/synthetic')
+
+# Access the generated data
+grid_data = synthetic_data['grid']
+weather_data = synthetic_data['weather']
+outage_data = synthetic_data['outage']
+combined_data = synthetic_data['combined']
+
+# Print some statistics
+print(f"Generated {len(grid_data)} grid components")
+print(f"Generated {len(weather_data)} weather records")
+print(f"Generated {len(outage_data)} outage events")
+print(f"Combined dataset has {len(combined_data)} records")</code></pre>
+    
+    <h4>9.6.8. Example: Customized Grid Topology Generation</h4>
+    <pre><code>from gfmf.data_management import SyntheticGenerator
+import matplotlib.pyplot as plt
+import networkx as nx
+import pandas as pd
+
+# Initialize the generator with minimal config
+generator = SyntheticGenerator({'synthetic_generation': {'seed': 123}})
+
+# Generate different grid topologies
+mesh_grid = generator.generate_grid_topology(num_nodes=30, num_lines=45, topology_type='mesh')
+ring_grid = generator.generate_grid_topology(num_nodes=30, num_lines=30, topology_type='ring')
+radial_grid = generator.generate_grid_topology(num_nodes=30, num_lines=29, topology_type='radial')
+
+# Create NetworkX graphs for visualization
+def create_graph_from_grid_data(grid_df):
+    G = nx.Graph()
+    
+    # Get nodes and lines
+    nodes = grid_df[grid_df['component_type'] == 'node']
+    lines = grid_df[grid_df['component_type'] == 'line']
+    
+    # Add nodes
+    for _, node in nodes.iterrows():
+        G.add_node(node['component_id'], 
+                  type=node['specific_type'],
+                  pos=(node['location_x'], node['location_y']))
+    
+    # Add edges
+    for _, line in lines.iterrows():
+        if pd.notna(line['from']) and pd.notna(line['to']):
+            G.add_edge(line['from'], line['to'], type=line['specific_type'])
+    
+    return G
+
+# Create graphs
+mesh_graph = create_graph_from_grid_data(mesh_grid)
+ring_graph = create_graph_from_grid_data(ring_grid)
+radial_graph = create_graph_from_grid_data(radial_grid)
+
+# Visualize the topologies
+fig, axes = plt.subplots(1, 3, figsize=(18, 6))
+
+# Get node positions
+mesh_pos = nx.spring_layout(mesh_graph, seed=123)
+ring_pos = nx.circular_layout(ring_graph)
+radial_pos = nx.spring_layout(radial_graph, seed=123)
+
+# Plot graphs
+nx.draw(mesh_graph, mesh_pos, ax=axes[0], node_size=50, node_color='blue', edge_color='gray')
+axes[0].set_title('Mesh Topology')
+
+nx.draw(ring_graph, ring_pos, ax=axes[1], node_size=50, node_color='green', edge_color='gray')
+axes[1].set_title('Ring Topology')
+
+nx.draw(radial_graph, radial_pos, ax=axes[2], node_size=50, node_color='red', edge_color='gray')
+axes[2].set_title('Radial Topology')
+
+plt.tight_layout()
+plt.show()
+
+# Print some statistics about each topology
+for name, grid in [('Mesh', mesh_grid), ('Ring', ring_grid), ('Radial', radial_grid)]:
+    nodes = grid[grid['component_type'] == 'node']
+    lines = grid[grid['component_type'] == 'line']
+    
+    print(f"\n{name} Topology:")
+    print(f"  Nodes: {len(nodes)}")
+    print(f"  Lines: {len(lines)}")
+    print(f"  Average node degree: {nodes['degree'].mean():.2f}")
+    print(f"  Max centrality: {grid['centrality'].max():.4f}")
+    print(f"  Min centrality: {grid['centrality'].min():.4f}")
+    print(f"  Average vulnerability: {grid['vulnerability'].mean():.4f}")</code></pre>
+    
+    <h4>9.6.9. Example: Outage Analysis and Visualization</h4>
+    <pre><code>from gfmf.data_management import SyntheticGenerator
+import matplotlib.pyplot as plt
+import pandas as pd
+import seaborn as sns
+
+# Initialize the generator with default config
+generator = SyntheticGenerator({})
+
+# Generate a grid, weather data, and outage data
+grid_data = generator.generate_grid_topology(num_nodes=100, num_lines=150)
+weather_data = generator.generate_weather_data(
+    grid_data=grid_data,
+    num_stations=10,
+    start_date='2023-01-01',
+    end_date='2023-12-31'
+)
+outage_data = generator.generate_outage_data(
+    grid_data=grid_data,
+    weather_data=weather_data,
+    num_outages=200
+)
+
+# Convert timestamps to datetime if needed
+outage_data['start_time'] = pd.to_datetime(outage_data['start_time'])
+
+# Analyze outage causes
+cause_counts = outage_data['cause'].value_counts()
+
+# Analyze outage duration by cause
+outage_duration_by_cause = outage_data.groupby('cause')['duration'].agg(['mean', 'median', 'min', 'max'])
+
+# Analyze weather-related vs non-weather-related outages
+weather_related = outage_data['is_weather_related'].value_counts()
+
+# Analyze outages by month
+outage_data['month'] = outage_data['start_time'].dt.month
+outages_by_month = outage_data.groupby('month').size()
+
+# Analyze outages by hour of day
+outage_data['hour'] = outage_data['start_time'].dt.hour
+outages_by_hour = outage_data.groupby('hour').size()
+
+# Analyze impact by component type
+impact_by_type = outage_data.groupby('component_type')['impact'].agg(['mean', 'median', 'min', 'max'])
+
+# Create visualizations
+fig, axes = plt.subplots(2, 2, figsize=(15, 12))
+
+# Outage causes
+axes[0, 0].bar(cause_counts.index, cause_counts.values)
+axes[0, 0].set_title('Outage Causes')
+axes[0, 0].set_xlabel('Cause')
+axes[0, 0].set_ylabel('Count')
+axes[0, 0].tick_params(axis='x', rotation=45)
+
+# Weather vs non-weather related
+axes[0, 1].pie(weather_related.values, labels=['Non-weather', 'Weather'] if weather_related.index[0] == False else ['Weather', 'Non-weather'],
+              autopct='%1.1f%%', startangle=90, colors=['lightblue', 'orange'])
+axes[0, 1].set_title('Weather vs. Non-Weather Related Outages')
+
+# Outages by month
+axes[1, 0].bar(outages_by_month.index, outages_by_month.values)
+axes[1, 0].set_title('Outages by Month')
+axes[1, 0].set_xlabel('Month')
+axes[1, 0].set_ylabel('Count')
+axes[1, 0].set_xticks(range(1, 13))
+
+# Outages by hour
+axes[1, 1].bar(outages_by_hour.index, outages_by_hour.values)
+axes[1, 1].set_title('Outages by Hour of Day')
+axes[1, 1].set_xlabel('Hour')
+axes[1, 1].set_ylabel('Count')
+axes[1, 1].set_xticks(range(0, 24, 2))
+
+plt.tight_layout()
+plt.show()
+
+# Print summary statistics
+print("Outage Summary Statistics:")
+print(f"Total outages: {len(outage_data)}")
+print(f"Weather-related outages: {outage_data['is_weather_related'].sum()} ({outage_data['is_weather_related'].mean()*100:.1f}%)")
+print(f"Cascading outages: {outage_data['cascading'].sum()} ({outage_data['cascading'].mean()*100:.1f}%)")
+print(f"Average outage duration: {outage_data['duration'].mean():.2f} hours")
+print(f"Average outage impact: {outage_data['impact'].mean():.2f} customers")</code></pre>
+
+    <script>
+        // Initialize Mermaid diagrams
+        mermaid.init(undefined, document.querySelectorAll('.mermaid'));
+    </script>
+</body>
+</html> 

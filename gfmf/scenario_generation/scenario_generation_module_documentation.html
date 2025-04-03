@@ -1,0 +1,1537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scenario Generation Module Documentation - Grid Failure Modeling Framework</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2, h3, h4 {
+            color: #2c3e50;
+        }
+        h1 {
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            border-bottom: 1px solid #bdc3c7;
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
+        pre {
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            padding: 15px;
+            overflow-x: auto;
+        }
+        code {
+            font-family: Consolas, Monaco, 'Andale Mono', monospace;
+            background-color: #f4f4f4;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+        }
+        th, td {
+            text-align: left;
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .workflow-container {
+            margin: 30px 0;
+            text-align: center;
+        }
+        .workflow {
+            max-width: 100%;
+        }
+        .note {
+            background-color: #e7f4ff;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .warning {
+            background-color: #fff5e6;
+            border-left: 4px solid #e67e22;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .function-signature {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .parameter {
+            margin-left: 20px;
+            margin-bottom: 5px;
+        }
+        .returns {
+            margin-top: 10px;
+            font-style: italic;
+        }
+        .directory-structure {
+            font-family: monospace;
+            white-space: pre;
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            padding: 15px;
+            overflow-x: auto;
+        }
+        .command {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px;
+            border-radius: 3px;
+            margin: 10px 0;
+        }
+        .diagram-container {
+            width: 100%;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        .mermaid {
+            margin: 0 auto;
+        }
+        .error {
+            background-color: #ffebee;
+            color: #c62828;
+            padding: 15px;
+            border-left: 4px solid #c62828;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+        .custom-diagram-container {
+            position: relative;
+            width: 100%;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        .module-title {
+            position: absolute;
+            top: 10px;
+            right: 30px;
+            background-color: #e8f5e9;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: #333;
+            z-index: 10;
+            border: 1px solid #2e7d32;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11.6.0/dist/mermaid.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'default',
+                securityLevel: 'loose',
+                fontFamily: 'Arial, sans-serif',
+                fontSize: 16
+            });
+            
+            // Error handling
+            mermaid.parseError = function(err, hash) {
+                console.error("Mermaid error:", err);
+                // Replace diagram with error message for users
+                const diagrams = document.getElementsByClassName('mermaid');
+                for (let i = 0; i < diagrams.length; i++) {
+                    if (diagrams[i].innerHTML.includes(hash.str)) {
+                        diagrams[i].innerHTML = `<div class="error">Diagram rendering error: ${err}</div>`;
+                    }
+                }
+            };
+        });
+    </script>
+</head>
+<body>
+    <h1>Scenario Generation Module Documentation</h1>
+    <p>
+        The Scenario Generation Module is the fourth module of the Grid Failure Modeling Framework (GFMF).
+        It builds upon the output from the Data Management Module, Vulnerability Analysis Module, and
+        Failure Prediction Module to create realistic grid failure scenarios for planning and testing.
+        This module helps utilities, grid operators, and emergency management teams prepare for potential
+        failure events by generating varied scenarios under normal operating conditions,
+        extreme weather events, and compound extreme events.
+    </p>
+
+    <h2>Table of Contents</h2>
+    <ol>
+        <li><a href="#directory-structure">Directory Structure</a></li>
+        <li><a href="#workflow">Workflow Diagram</a></li>
+        <li><a href="#components">Module Components</a></li>
+        <li><a href="#files">File Descriptions</a></li>
+        <li><a href="#classes">Key Classes and Functions</a></li>
+        <li><a href="#execution">Execution Commands</a></li>
+        <li><a href="#configuration">Configuration</a></li>
+        <li><a href="#detailed-components">Detailed Component Documentation</a></li>
+        <li><a href="#algorithms">Algorithm Selection Rationale</a></li>
+    </ol>
+
+    <h2 id="directory-structure">1. Directory Structure</h2>
+    <div class="directory-structure">
+gfmf/
+└── scenario_generation/
+    ├── __init__.py                     # Module initialization
+    ├── scenario_generation_module.py   # Main module class and integration
+    ├── models/
+    │   ├── __init__.py                 # Models package initialization
+    │   ├── base_scenario_generator.py  # Base class for scenario generators
+    │   ├── scenario_generator.py       # Interface for scenario generators 
+    │   ├── normal_scenario_generator.py # Normal operating conditions scenarios
+    │   ├── extreme_scenario_generator.py # Extreme weather event scenarios
+    │   ├── compound_scenario_generator.py # Compound extreme event scenarios
+    │   ├── cascading_failure_model.py  # Models how failures cascade through the grid
+    │   └── scenario_validator.py       # Validates generated scenarios
+    ├── utils/
+    │   ├── __init__.py                 # Utils initialization
+    │   ├── data_loader.py              # Loads data from previous modules
+    │   ├── model_utils.py              # Utility functions for models
+    │   ├── export.py                   # Exports scenarios to various formats
+    │   └── visualization.py            # Visualization utilities
+    └── config/
+        └── default_config.yaml         # Default configuration
+    </div>
+
+    <h2 id="workflow">2. Workflow Diagram</h2>
+
+    <div class="custom-diagram-container">
+        <div class="module-title">Scenario Generation Module</div>
+        <div class="mermaid">
+%%{init: {'theme': 'default', 'themeVariables': { 'fontSize': '16px'}}}%%
+flowchart TD
+    subgraph Input["Input"]
+        A["Failure Probabilities"] --> D
+        B["Component Data"] --> D
+        C["Environmental Models"] --> D
+        E["Extreme Event Models"] --> D
+    end
+    
+    subgraph SGM[" "]
+        D["Data Integration & Validation"] --> F
+        D --> G
+        D --> H
+        F["Normal Scenario Generator"] --> I
+        G["Extreme Event Scenario Generator"] --> I
+        H["Compound Scenario Generator"] --> I
+        I["Scenario Consolidation"] --> J
+        J["Cascading Failure Modeling"] --> K
+        K["Scenario Validation"]
+    end
+    
+    subgraph Output["Output"]
+        K --> L["Normal Operating Scenarios"]
+        K --> M["Extreme Event Scenarios"]
+        K --> N["Compound Event Scenarios"]
+        K --> O["Cascade Models & Impact Analysis"]
+        O --> P["Scenario Visualizations & Reports"]
+    end
+    
+    classDef inputStyle fill:#e1f5fe,stroke:#01579b;
+    classDef moduleStyle fill:#e8f5e9,stroke:#2e7d32;
+    classDef outputStyle fill:#fff3e0,stroke:#e65100;
+    
+    class Input inputStyle;
+    class SGM moduleStyle;
+    class Output outputStyle;
+        </div>
+    </div>
+
+    <p>The workflow of the Scenario Generation Module consists of these key steps:</p>
+    <ol>
+        <li><strong>Data Integration & Validation</strong>: Load and validate data from previous modules, including component data, failure probabilities, environmental models, and extreme event models</li>
+        <li><strong>Normal Scenario Generation</strong>: Create scenarios representing grid failures under normal operating conditions, based on baseline failure probabilities</li>
+        <li><strong>Extreme Event Scenario Generation</strong>: Create scenarios representing failures during extreme weather events (high temperature, low temperature, high wind, precipitation)</li>
+        <li><strong>Compound Scenario Generation</strong>: Create scenarios representing failures during compound extreme events (combinations of multiple extreme conditions)</li>
+        <li><strong>Scenario Consolidation</strong>: Aggregate all generated scenarios and prepare them for cascade modeling</li>
+        <li><strong>Cascading Failure Modeling</strong>: Model how initial component failures cascade through the grid network, causing additional failures</li>
+        <li><strong>Scenario Validation</strong>: Validate generated scenarios against historical data for realism, diversity, and statistical consistency</li>
+        <li><strong>Output Generation</strong>: Produce final scenarios, cascade models, visualizations, and reports for planning and analysis</li>
+    </ol>
+
+    <h2 id="components">3. Module Components</h2>
+    
+    <p>The Scenario Generation Module consists of several interconnected components:</p>
+
+    <h3>3.1. Scenario Generators</h3>
+    <p>
+        The module uses three types of scenario generators, each specializing in a different type of grid failure condition:
+    </p>
+    
+    <div class="diagram-container">
+        <div class="mermaid">
+%%{init: {'theme': 'default', 'themeVariables': { 'fontSize': '16px'}}}%%
+classDiagram
+    BaseScenarioGenerator <|-- NormalScenarioGenerator
+    BaseScenarioGenerator <|-- ExtremeEventScenarioGenerator
+    BaseScenarioGenerator <|-- CompoundScenarioGenerator
+    
+    class BaseScenarioGenerator {
+        +generate_scenario_id()
+        +_select_components_to_fail()
+        +_generate_failure_times()
+        +_determine_failure_causes()
+        +_create_scenario_metadata()
+        +generate_scenarios()
+    }
+    
+    class NormalScenarioGenerator {
+        +_generate_normal_weather_conditions()
+        +generate_scenarios()
+    }
+    
+    class ExtremeEventScenarioGenerator {
+        +_generate_extreme_weather_conditions()
+        +_apply_extreme_event_impacts()
+        +generate_scenarios()
+    }
+    
+    class CompoundScenarioGenerator {
+        +_combine_extreme_scenarios()
+        +_generate_compound_weather_conditions()
+        +generate_scenarios()
+    }
+        </div>
+    </div>
+    
+    <ul>
+        <li><strong>Normal Scenario Generator</strong>: Creates scenarios under normal operating conditions, where component failures occur primarily due to equipment aging, random failures, and baseline environmental conditions.</li>
+        <li><strong>Extreme Event Scenario Generator</strong>: Creates scenarios during extreme weather events (high temperature, low temperature, high wind, or heavy precipitation), where failure rates increase due to environmental stress.</li>
+        <li><strong>Compound Scenario Generator</strong>: Creates scenarios during compound extreme events (combinations of multiple extreme conditions), where cascading failures are more likely due to multiple stressors.</li>
+    </ul>
+
+    <h3>3.2. Cascading Failure Model</h3>
+    <p>
+        The Cascading Failure Model analyzes how initial component failures can propagate through the grid network, causing additional failures. It creates a network representation of the grid and applies specialized algorithms to model the spread of failures.
+    </p>
+    
+    <div class="diagram-container">
+        <div class="mermaid">
+%%{init: {'theme': 'default', 'themeVariables': { 'fontSize': '16px'}}}%%
+flowchart TD
+    A["Build Network Model"] --> B["Apply Initial Failures"]
+    B --> C["Check Load Redistribution"]
+    C --> D{"Overloaded Components?"}
+    D -->|Yes| E["Add New Failures"]
+    E --> C
+    D -->|No| F["Record Cascade Results"]
+    
+    style A fill:#d4f1f9,stroke:#05386b
+    style B fill:#d4f1f9,stroke:#05386b
+    style C fill:#d4f1f9,stroke:#05386b
+    style D fill:#ffe6cc,stroke:#d79b00
+    style E fill:#f8cecc,stroke:#b85450
+    style F fill:#d5e8d4,stroke:#82b366
+        </div>
+    </div>
+    
+    <p>
+        The cascading failure process:
+    </p>
+    <ol>
+        <li>Build a network model of the grid with nodes (components) and edges (connections)</li>
+        <li>Apply initial component failures from each scenario</li>
+        <li>Calculate load redistribution to remaining components</li>
+        <li>Identify components exceeding capacity thresholds</li>
+        <li>Add new failures for overloaded components</li>
+        <li>Continue iteratively until no new failures occur or maximum steps reached</li>
+        <li>Record the cascade path, timeline, and impact metrics</li>
+    </ol>
+
+    <h3>3.3. Scenario Validator</h3>
+    <p>
+        The Scenario Validator ensures generated scenarios are realistic, diverse, and statistically consistent with historical data. It performs multiple validation checks and assigns quality scores to each scenario.
+    </p>
+    
+    <div class="diagram-container">
+        <div class="mermaid">
+%%{init: {'theme': 'default', 'themeVariables': { 'fontSize': '16px'}}}%%
+flowchart LR
+    A["Compare with Historical Patterns"] --> D
+    B["Analyze Statistical Distribution"] --> D
+    C["Check Physical Constraints"] --> D
+    D{"Validation Metrics"}
+    D --> E["Realism Score"]
+    D --> F["Diversity Score"]
+    D --> G["Consistency Score"]
+    E & F & G --> H["Overall Quality Score"]
+    
+    style A fill:#e1f5fe,stroke:#0288d1
+    style B fill:#e1f5fe,stroke:#0288d1
+    style C fill:#e1f5fe,stroke:#0288d1
+    style D fill:#e8f5e9,stroke:#4caf50
+    style E fill:#fff8e1,stroke:#ffa000
+    style F fill:#fff8e1,stroke:#ffa000
+    style G fill:#fff8e1,stroke:#ffa000
+    style H fill:#f3e5f5,stroke:#9c27b0
+        </div>
+    </div>
+    
+    <p>
+        Validation metrics include:
+    </p>
+    <ul>
+        <li><strong>Realism Score</strong>: Measures alignment with historical failure patterns</li>
+        <li><strong>Diversity Score</strong>: Ensures scenarios cover a wide range of possible conditions</li>
+        <li><strong>Consistency Score</strong>: Validates internal consistency of scenario elements</li>
+        <li><strong>Overall Quality Score</strong>: Weighted combination of individual metrics</li>
+    </ul>
+
+    <h2 id="files">4. File Descriptions</h2>
+    
+    <h3>4.1. Module Core</h3>
+    <table>
+        <tr>
+            <th>File</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td><code>__init__.py</code></td>
+            <td>Initializes the Scenario Generation Module and exposes the main <code>ScenarioGenerationModule</code> class. Contains module-level docstrings and imports.</td>
+        </tr>
+        <tr>
+            <td><code>scenario_generation_module.py</code></td>
+            <td>Implements the main <code>ScenarioGenerationModule</code> class that orchestrates the entire scenario generation process. Handles data integration, scenario generation, cascade modeling, validation, and result compilation.</td>
+        </tr>
+    </table>
+    
+    <h3>4.2. Models</h3>
+    <table>
+        <tr>
+            <th>File</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td><code>base_scenario_generator.py</code></td>
+            <td>Defines the <code>BaseScenarioGenerator</code> abstract base class with common functionality for all scenario generators, including methods to select components, generate failure times, and determine failure causes.</td>
+        </tr>
+        <tr>
+            <td><code>scenario_generator.py</code></td>
+            <td>Contains imports and re-exports of the different scenario generator classes, providing a clean interface for importing.</td>
+        </tr>
+        <tr>
+            <td><code>normal_scenario_generator.py</code></td>
+            <td>Implements <code>NormalScenarioGenerator</code> for creating scenarios under normal operating conditions based on baseline component failure probabilities.</td>
+        </tr>
+        <tr>
+            <td><code>extreme_scenario_generator.py</code></td>
+            <td>Implements <code>ExtremeEventScenarioGenerator</code> for creating scenarios during high temperature, low temperature, high wind, and precipitation events.</td>
+        </tr>
+        <tr>
+            <td><code>compound_scenario_generator.py</code></td>
+            <td>Implements <code>CompoundScenarioGenerator</code> for creating scenarios with multiple simultaneous extreme events (e.g., high temperature + high wind).</td>
+        </tr>
+        <tr>
+            <td><code>cascading_failure_model.py</code></td>
+            <td>Implements <code>CascadingFailureModel</code> to analyze how initial component failures propagate through the grid network, using graph theory and power flow algorithms.</td>
+        </tr>
+        <tr>
+            <td><code>scenario_validator.py</code></td>
+            <td>Implements <code>ScenarioValidator</code> to evaluate generated scenarios against criteria such as realism, diversity, and consistency with historical data.</td>
+        </tr>
+    </table>
+    
+    <h3>4.3. Utilities</h3>
+    <table>
+        <tr>
+            <th>File</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td><code>data_loader.py</code></td>
+            <td>Implements <code>FailurePredictionDataLoader</code> to load data from the Failure Prediction Module and preprocess it for scenario generation.</td>
+        </tr>
+        <tr>
+            <td><code>model_utils.py</code></td>
+            <td>Contains utility functions for model operations, including configuration loading, logging setup, and data transformation.</td>
+        </tr>
+        <tr>
+            <td><code>export.py</code></td>
+            <td>Provides functions to export generated scenarios in various formats (CSV, JSON, etc.) and to create standardized scenario reports.</td>
+        </tr>
+        <tr>
+            <td><code>visualization.py</code></td>
+            <td>Contains visualization functions for scenarios, cascade models, and validation results using libraries like matplotlib, seaborn, and networkx.</td>
+        </tr>
+    </table>
+    
+    <h3>4.4. Configuration</h3>
+    <table>
+        <tr>
+            <th>File</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td><code>default_config.yaml</code></td>
+            <td>Default configuration file with settings for scenario generators, cascade modeling, validation, and output paths. Used when a custom configuration is not provided.</td>
+        </tr>
+    </table>
+
+    <h2 id="classes">5. Key Classes and Functions</h2>
+    
+    <h3>5.1. ScenarioGenerationModule</h3>
+    <div class="function-signature">class ScenarioGenerationModule(config_path=None)</div>
+    <p>Main class for the Scenario Generation Module, orchestrating all aspects of scenario generation.</p>
+    
+    <h4>Key Methods:</h4>
+    <ul>
+        <li>
+            <div class="function-signature">__init__(config_path=None)</div>
+            <p>Initialize the module with the given configuration path or default configuration.</p>
+            <div class="parameter"><strong>config_path</strong> (str, optional): Path to the configuration file.</div>
+        </li>
+        <li>
+            <div class="function-signature">generate_scenarios(use_synthetic=False, input_data=None)</div>
+            <p>Generate grid failure scenarios based on failure prediction models.</p>
+            <div class="parameter"><strong>use_synthetic</strong> (bool): If True, use synthetic data instead of loading from failure prediction outputs.</div>
+            <div class="parameter"><strong>input_data</strong> (dict, optional): Dictionary containing input data. If None, data is loaded from failure prediction outputs.</div>
+            <div class="returns">dict: Dictionary containing all generated scenarios and validation results.</div>
+        </li>
+        <li>
+            <div class="function-signature">_validate_input_data(input_data)</div>
+            <p>Validate input data from the failure prediction module.</p>
+            <div class="parameter"><strong>input_data</strong> (dict): Dictionary containing input data.</div>
+        </li>
+        <li>
+            <div class="function-signature">_generate_default_probabilities(components)</div>
+            <p>Generate default failure probabilities if not provided from failure prediction.</p>
+            <div class="parameter"><strong>components</strong> (DataFrame): DataFrame containing component information.</div>
+            <div class="returns">dict: Dictionary mapping component IDs to failure probabilities.</div>
+        </li>
+        <li>
+            <div class="function-signature">_save_scenarios(normal_scenarios, extreme_scenarios)</div>
+            <p>Save generated scenarios to output files.</p>
+            <div class="parameter"><strong>normal_scenarios</strong> (list): List of normal operating condition scenarios.</div>
+            <div class="parameter"><strong>extreme_scenarios</strong> (dict): Dictionary mapping event types to lists of extreme event scenarios.</div>
+        </li>
+        <li>
+            <div class="function-signature">_save_compiled_results(results)</div>
+            <p>Save compiled results including scenarios, cascade models, and validation results.</p>
+            <div class="parameter"><strong>results</strong> (dict): Dictionary containing all generation results.</div>
+        </li>
+        <li>
+            <div class="function-signature">load_scenario_generation_outputs(base_path='data/scenario_generation/')</div>
+            <p>Static method to load previously generated scenario outputs.</p>
+            <div class="parameter"><strong>base_path</strong> (str): Base path for scenario generation outputs.</div>
+            <div class="returns">dict: Dictionary containing loaded scenario generation outputs.</div>
+        </li>
+    </ul>
+    
+    <h3>5.2. BaseScenarioGenerator</h3>
+    <div class="function-signature">class BaseScenarioGenerator(config=None)</div>
+    <p>Base class for all scenario generators, providing common functionality.</p>
+    
+    <h4>Key Methods:</h4>
+    <ul>
+        <li>
+            <div class="function-signature">generate_scenario_id(prefix="scenario")</div>
+            <p>Generate a unique scenario ID with timestamp and UUID.</p>
+            <div class="parameter"><strong>prefix</strong> (str): Prefix for the scenario ID.</div>
+            <div class="returns">str: Unique scenario ID.</div>
+        </li>
+        <li>
+            <div class="function-signature">_select_components_to_fail(components, failure_probabilities, count=None, max_percentage=0.1)</div>
+            <p>Select components that will fail in a scenario based on failure probabilities.</p>
+            <div class="parameter"><strong>components</strong> (DataFrame): DataFrame containing component information.</div>
+            <div class="parameter"><strong>failure_probabilities</strong> (dict): Dictionary mapping component IDs to failure probabilities.</div>
+            <div class="parameter"><strong>count</strong> (int, optional): Number of components to select. If None, uses failure probabilities.</div>
+            <div class="parameter"><strong>max_percentage</strong> (float): Maximum percentage of components that can fail.</div>
+            <div class="returns">list: List of component IDs that will fail.</div>
+        </li>
+        <li>
+            <div class="function-signature">_generate_failure_times(num_failures, time_window=24.0)</div>
+            <p>Generate timestamps for component failures within a time window.</p>
+            <div class="parameter"><strong>num_failures</strong> (int): Number of failures to generate times for.</div>
+            <div class="parameter"><strong>time_window</strong> (float): Time window in hours.</div>
+            <div class="returns">list: List of failure times (hours from start).</div>
+        </li>
+        <li>
+            <div class="function-signature">_determine_failure_causes(component_ids, components_df, scenario_type='normal')</div>
+            <p>Determine the causes of failures for each component.</p>
+            <div class="parameter"><strong>component_ids</strong> (list): List of component IDs that failed.</div>
+            <div class="parameter"><strong>components_df</strong> (DataFrame): DataFrame containing component information.</div>
+            <div class="parameter"><strong>scenario_type</strong> (str): Type of scenario ('normal', 'high_temperature', etc.).</div>
+            <div class="returns">dict: Dictionary mapping component IDs to failure causes.</div>
+        </li>
+        <li>
+            <div class="function-signature">_create_scenario_metadata(generation_method, condition_type)</div>
+            <p>Create metadata for a generated scenario.</p>
+            <div class="parameter"><strong>generation_method</strong> (str): Method used to generate the scenario.</div>
+            <div class="parameter"><strong>condition_type</strong> (str): Type of condition (normal, extreme, compound).</div>
+            <div class="returns">dict: Scenario metadata.</div>
+        </li>
+    </ul>
+    
+    <h3>5.3. CascadingFailureModel</h3>
+    <div class="function-signature">class CascadingFailureModel(config=None)</div>
+    <p>Models the cascade of failures through the grid network.</p>
+    
+    <h4>Key Methods:</h4>
+    <ul>
+        <li>
+            <div class="function-signature">model_cascading_failures(input_data, scenarios)</div>
+            <p>Model cascading failures for all scenarios.</p>
+            <div class="parameter"><strong>input_data</strong> (dict): Dictionary containing input data.</div>
+            <div class="parameter"><strong>scenarios</strong> (dict): Dictionary mapping scenario types to lists of scenarios.</div>
+            <div class="returns">dict: Dictionary containing cascade results for all scenarios.</div>
+        </li>
+        <li>
+            <div class="function-signature">_build_network_model(components)</div>
+            <p>Build a network model of the grid.</p>
+            <div class="parameter"><strong>components</strong> (DataFrame): DataFrame containing component information.</div>
+            <div class="returns">nx.Graph: NetworkX graph representing the grid.</div>
+        </li>
+        <li>
+            <div class="function-signature">_build_propagation_models(network_model, scenarios)</div>
+            <p>Build propagation models for different scenario types.</p>
+            <div class="parameter"><strong>network_model</strong> (nx.Graph): NetworkX graph representing the grid.</div>
+            <div class="parameter"><strong>scenarios</strong> (dict): Dictionary mapping scenario types to lists of scenarios.</div>
+            <div class="returns">dict: Dictionary mapping scenario types to propagation models.</div>
+        </li>
+        <li>
+            <div class="function-signature">_model_scenario_cascade(scenario, network_model, propagation_model)</div>
+            <p>Model the cascade of failures for a single scenario.</p>
+            <div class="parameter"><strong>scenario</strong> (dict): Scenario dictionary.</div>
+            <div class="parameter"><strong>network_model</strong> (nx.Graph): NetworkX graph representing the grid.</div>
+            <div class="parameter"><strong>propagation_model</strong> (dict): Propagation model for the scenario type.</div>
+            <div class="returns">dict: Cascade results for the scenario.</div>
+        </li>
+    </ul>
+    
+    <h3>5.4. ScenarioValidator</h3>
+    <div class="function-signature">class ScenarioValidator(config=None)</div>
+    <p>Validates generated scenarios against historical data and other criteria.</p>
+    
+    <h4>Key Methods:</h4>
+    <ul>
+        <li>
+            <div class="function-signature">validate_scenarios(scenarios, historical_data=None)</div>
+            <p>Validate generated scenarios.</p>
+            <div class="parameter"><strong>scenarios</strong> (dict): Dictionary mapping scenario types to lists of scenarios.</div>
+            <div class="parameter"><strong>historical_data</strong> (DataFrame, optional): Historical outage data for comparison.</div>
+            <div class="returns">dict: Dictionary containing validation results for all scenarios.</div>
+        </li>
+        <li>
+            <div class="function-signature">_evaluate_realism(scenario, historical_data)</div>
+            <p>Evaluate how realistic a scenario is compared to historical data.</p>
+            <div class="parameter"><strong>scenario</strong> (dict): Scenario dictionary.</div>
+            <div class="parameter"><strong>historical_data</strong> (DataFrame): Historical outage data.</div>
+            <div class="returns">float: Realism score between 0 and 1.</div>
+        </li>
+        <li>
+            <div class="function-signature">_evaluate_diversity(scenario, other_scenarios)</div>
+            <p>Evaluate how diverse a scenario is compared to other scenarios.</p>
+            <div class="parameter"><strong>scenario</strong> (dict): Scenario dictionary.</div>
+            <div class="parameter"><strong>other_scenarios</strong> (list): List of other scenario dictionaries.</div>
+            <div class="returns">float: Diversity score between 0 and 1.</div>
+        </li>
+        <li>
+            <div class="function-signature">_evaluate_consistency(scenario)</div>
+            <p>Evaluate the internal consistency of a scenario.</p>
+            <div class="parameter"><strong>scenario</strong> (dict): Scenario dictionary.</div>
+            <div class="returns">float: Consistency score between 0 and 1.</div>
+        </li>
+    </ul>
+    
+    <h3>5.5. FailurePredictionDataLoader</h3>
+    <div class="function-signature">class FailurePredictionDataLoader(config=None)</div>
+    <p>Loads and processes data from the Failure Prediction Module.</p>
+    
+    <h4>Key Methods:</h4>
+    <ul>
+        <li>
+            <div class="function-signature">load_data(use_synthetic=False)</div>
+            <p>Load data from the Failure Prediction Module.</p>
+            <div class="parameter"><strong>use_synthetic</strong> (bool): If True, generate synthetic data instead of loading from files.</div>
+            <div class="returns">dict: Dictionary containing all loaded data.</div>
+        </li>
+        <li>
+            <div class="function-signature">_load_component_data()</div>
+            <p>Load component data from CSV file.</p>
+            <div class="returns">DataFrame: DataFrame containing component data.</div>
+        </li>
+        <li>
+            <div class="function-signature">_load_outage_data()</div>
+            <p>Load outage records from CSV file.</p>
+            <div class="returns">DataFrame: DataFrame containing outage records.</div>
+        </li>
+        <li>
+            <div class="function-signature">_load_failure_probabilities()</div>
+            <p>Load component failure probabilities from pickle file.</p>
+            <div class="returns">dict: Dictionary mapping component IDs to failure probabilities.</div>
+        </li>
+        <li>
+            <div class="function-signature">_generate_synthetic_prediction_data(components)</div>
+            <p>Generate synthetic prediction data if real data is not available.</p>
+            <div class="parameter"><strong>components</strong> (DataFrame): DataFrame containing component information.</div>
+            <div class="returns">dict: Dictionary containing synthetic prediction data.</div>
+        </li>
+    </ul>
+
+    <h2 id="execution">6. Execution Commands</h2>
+    
+    <h3>6.1. Basic Usage</h3>
+    <p>Here's how to use the Scenario Generation Module in your Python code:</p>
+    
+    <pre><code>from gfmf.scenario_generation import ScenarioGenerationModule
+
+# Initialize the module with default configuration
+scenario_module = ScenarioGenerationModule()
+
+# Generate scenarios
+generation_results = scenario_module.generate_scenarios()
+
+# Access the generated scenarios
+normal_scenarios = generation_results['normal_scenarios']
+extreme_scenarios = generation_results['extreme_scenarios']
+cascade_results = generation_results['cascade_results']
+validation_results = generation_results['validation_results']
+
+# Print summary
+print(f"Generated {len(normal_scenarios)} normal scenarios")
+for event_type, scenarios in extreme_scenarios.items():
+    print(f"Generated {len(scenarios)} {event_type} scenarios")
+
+# Examine a specific scenario
+example_scenario = normal_scenarios[0]
+print(f"Scenario ID: {example_scenario['scenario_id']}")
+print(f"Number of component failures: {len(example_scenario['component_failures'])}")
+print(f"Weather conditions: {example_scenario['weather_conditions']}")
+
+# Access cascade results for a specific scenario
+scenario_id = example_scenario['scenario_id']
+for scenario_type, scenario_results in cascade_results['results'].items():
+    for result in scenario_results:
+        if result['scenario_id'] == scenario_id:
+            cascade = result['cascade']
+            print(f"Cascade depth: {cascade['depth']}")
+            print(f"Total failed components: {len(cascade['failed_components'])}")
+            break</code></pre>
+    
+    <h3>6.2. Using Custom Configuration</h3>
+    <p>You can provide a custom configuration file to customize the scenario generation process:</p>
+    
+    <pre><code>from gfmf.scenario_generation import ScenarioGenerationModule
+
+# Initialize with custom configuration
+scenario_module = ScenarioGenerationModule(config_path='path/to/custom_config.yaml')
+
+# Generate scenarios with custom settings
+generation_results = scenario_module.generate_scenarios()
+
+# Continue with analysis as above...</code></pre>
+    
+    <h3>6.3. Using Synthetic Data</h3>
+    <p>If you don't have data from the Failure Prediction Module, you can generate scenarios using synthetic data:</p>
+    
+    <pre><code>from gfmf.scenario_generation import ScenarioGenerationModule
+
+# Initialize the module
+scenario_module = ScenarioGenerationModule()
+
+# Generate scenarios using synthetic data
+generation_results = scenario_module.generate_scenarios(use_synthetic=True)
+
+# Continue with analysis as above...</code></pre>
+    
+    <h3>6.4. Providing Custom Input Data</h3>
+    <p>You can also provide your own input data directly instead of loading from files:</p>
+    
+    <pre><code>import pandas as pd
+from gfmf.scenario_generation import ScenarioGenerationModule
+
+# Prepare custom input data
+custom_input = {
+    'components': pd.read_csv('path/to/my_components.csv'),
+    'failure_probabilities': {...},  # Dictionary of component_id to probability
+    'environmental_models': {...},   # Environmental correlation models
+    'extreme_event_models': {...},   # Extreme event impact models
+    'outage_records': pd.read_csv('path/to/my_outages.csv')
+}
+
+# Initialize the module
+scenario_module = ScenarioGenerationModule()
+
+# Generate scenarios with custom input data
+generation_results = scenario_module.generate_scenarios(input_data=custom_input)
+
+# Continue with analysis as above...</code></pre>
+    
+    <h3>6.5. Loading Previous Results</h3>
+    <p>You can load previously generated scenario results:</p>
+    
+    <pre><code>from gfmf.scenario_generation import ScenarioGenerationModule
+
+# Load previously generated results
+previous_results = ScenarioGenerationModule.load_scenario_generation_outputs(
+    base_path='data/scenario_generation/'
+)
+
+# Access components as with newly generated results
+normal_scenarios = previous_results['normal_scenarios']
+extreme_scenarios = previous_results['extreme_scenarios']
+cascade_results = previous_results['cascade_results']
+validation_results = previous_results['validation_results']</code></pre>
+    
+    <h3>6.6. Command-Line Execution</h3>
+    <p>You can run the Scenario Generation Module from the command line using a script like this:</p>
+    
+    <pre><code>#!/usr/bin/env python
+import argparse
+from gfmf.scenario_generation import ScenarioGenerationModule
+
+def main():
+    parser = argparse.ArgumentParser(description='Run Scenario Generation Module')
+    parser.add_argument('--config', type=str, help='Path to configuration file')
+    parser.add_argument('--synthetic', action='store_true', help='Use synthetic data')
+    parser.add_argument('--output', type=str, default='data/scenario_generation/',
+                        help='Output directory path')
+    args = parser.parse_args()
+    
+    # Initialize the module
+    scenario_module = ScenarioGenerationModule(config_path=args.config)
+    
+    # Generate scenarios
+    results = scenario_module.generate_scenarios(use_synthetic=args.synthetic)
+    
+    # Print summary
+    print(f"Generated {len(results['normal_scenarios'])} normal scenarios")
+    for event_type, scenarios in results['extreme_scenarios'].items():
+        print(f"Generated {len(scenarios)} {event_type} scenarios")
+    
+    print(f"Results saved to {args.output}")
+
+if __name__ == '__main__':
+    main()</code></pre>
+    
+    <p>Save this script as <code>run_scenario_generation.py</code> and execute it with:</p>
+    
+    <div class="command">python run_scenario_generation.py --config custom_config.yaml --output results/scenarios/</div>
+    
+    <h2 id="configuration">7. Configuration</h2>
+    
+    <p>The Scenario Generation Module uses a YAML configuration file with the following structure:</p>
+    
+    <h3>7.1. Output Paths</h3>
+    <pre><code># Output paths
+output_paths:
+  base_path: "data/scenario_generation/"</code></pre>
+    
+    <h3>7.2. Data Paths</h3>
+    <pre><code># Data paths from Failure Prediction Module
+data_paths:
+  base_path: "data/failure_prediction/"
+  probabilities_path: "data/failure_prediction/failure_probabilities.pkl"
+  time_series_path: "data/failure_prediction/time_series_forecasts.pkl"
+  extreme_event_path: "data/failure_prediction/extreme_event_impacts.pkl"
+  correlation_path: "data/failure_prediction/correlation_models.pkl"
+  components_path: "data/synthetic/synthetic_20250328_144932/synthetic_grid.csv"
+  outages_path: "data/synthetic/synthetic_20250328_144932/synthetic_outages.csv"
+  weather_path: "data/synthetic/synthetic_20250328_144932/synthetic_weather.csv"</code></pre>
+    
+    <h3>7.3. Normal Scenario Generation Parameters</h3>
+    <pre><code># Normal scenario generation parameters
+normal_scenarios:
+  count: 50                   # Number of scenarios to generate
+  normal_temp_range: [15, 30] # Normal temperature range in Celsius
+  normal_wind_range: [0, 15]  # Normal wind speed range in m/s
+  normal_precip_range: [0, 5] # Normal precipitation range in mm
+  normal_humidity_range: [30, 70] # Normal humidity range in %
+  time_related_proportion: 0.7 # Proportion of failures due to aging/time</code></pre>
+    
+    <h3>7.4. Extreme Scenario Generation Parameters</h3>
+    <pre><code># Extreme scenario generation parameters
+extreme_scenarios:
+  count_per_type: 20  # Number of scenarios per event type
+  event_types: ["high_temperature", "low_temperature", "high_wind", "precipitation"]
+  failure_multipliers:  # Multipliers for failure probabilities during extreme events
+    high_temperature: 3.0
+    low_temperature: 2.5
+    high_wind: 4.0
+    precipitation: 3.5
+  extreme_conditions:  # Weather condition ranges for each event type
+    high_temperature:
+      temperature: [35, 45]
+      humidity: [60, 95]
+      wind_speed: [0, 10]
+      precipitation: [0, 2]
+      pressure: [980, 1010]
+      is_extreme_temperature: true
+      heat_wave_day: true
+    low_temperature:
+      temperature: [-30, -5]
+      humidity: [40, 70]
+      wind_speed: [5, 15]
+      precipitation: [0, 5]
+      pressure: [990, 1030]
+      is_extreme_temperature: true
+      cold_snap_day: true
+    high_wind:
+      temperature: [5, 30]
+      humidity: [30, 80]
+      wind_speed: [35, 70]
+      precipitation: [0, 10]
+      pressure: [960, 990]
+      is_extreme_wind: true
+      storm_day: true
+    precipitation:
+      temperature: [5, 25]
+      humidity: [80, 100]
+      wind_speed: [10, 40]
+      precipitation: [30, 150]
+      pressure: [960, 990]
+      is_extreme_precipitation: true
+      storm_day: true</code></pre>
+    
+    <h3>7.5. Compound Scenario Generation Parameters</h3>
+    <pre><code># Compound scenario generation parameters
+compound_scenarios:
+  count: 30  # Number of compound scenarios to generate
+  compound_multiplier: 1.5  # Additional multiplier for compound events
+  compound_types:  # Combinations of extreme events to consider
+    - ["high_temperature", "high_wind"]
+    - ["high_wind", "precipitation"]
+    - ["low_temperature", "high_wind"]
+    - ["high_temperature", "precipitation"]</code></pre>
+    
+    <h3>7.6. Cascade Model Parameters</h3>
+    <pre><code># Cascade model parameters
+cascade_model:
+  max_cascade_steps: 10  # Maximum number of iterations in cascade modeling
+  load_redistribution_factor: 0.6  # Factor for load redistribution after failures
+  capacity_threshold: 0.9  # Threshold above which components fail due to overload</code></pre>
+    
+    <h3>7.7. Validation Parameters</h3>
+    <pre><code># Validation parameters
+validation:
+  realism_threshold: 0.7  # Minimum threshold for realism score
+  diversity_threshold: 0.6  # Minimum threshold for diversity score
+  consistency_threshold: 0.8  # Minimum threshold for consistency score</code></pre>
+
+    <h2 id="detailed-components">8. Detailed Component Documentation</h2>
+    
+    <h3>8.1. Normal Scenario Generator</h3>
+    
+    <h4>8.1.1. Overview</h4>
+    <p>
+        The Normal Scenario Generator creates scenarios under normal operating conditions, where failures are primarily caused by equipment age, random failures, and baseline environmental stress. These scenarios represent the "background" failure rate of the grid during typical operation.
+    </p>
+    
+    <h4>8.1.2. Workflow</h4>
+    <div class="diagram-container">
+        <div class="mermaid">
+%%{init: {'theme': 'default', 'themeVariables': { 'fontSize': '16px'}}}%%
+flowchart TD
+    A["Component & Failure Probability Data"] --> B["Filter & Validate Components"]
+    B --> C["Generate Normal Weather Conditions"]
+    C --> D["Select Components to Fail"]
+    D --> E["Generate Failure Times"]
+    E --> F["Determine Failure Causes"]
+    F --> G["Compile Scenario"]
+    G --> H["Add Scenario Metadata"]
+    
+    style A fill:#d4f1f9,stroke:#05386b
+    style C fill:#d5e8d4,stroke:#82b366
+    style D fill:#ffe6cc,stroke:#d79b00
+    style H fill:#f8cecc,stroke:#b85450
+        </div>
+    </div>
+    
+    <h4>8.1.3. Generation Process</h4>
+    <ol>
+        <li><strong>Weather Generation</strong>: Create realistic weather conditions within normal ranges (temperature, humidity, wind, precipitation)</li>
+        <li><strong>Component Selection</strong>: Select components to fail based on baseline failure probabilities</li>
+        <li><strong>Failure Timing</strong>: Assign failure times distributed throughout the scenario time window</li>
+        <li><strong>Cause Assignment</strong>: Assign plausible failure causes based on component types and conditions</li>
+        <li><strong>Metadata Addition</strong>: Add generation method, timestamp, and confidence scores</li>
+    </ol>
+    
+    <h4>8.1.4. Weather Condition Generation</h4>
+    <pre><code>def _generate_normal_weather_conditions(self):
+    """
+    Generate weather conditions for normal operating scenario.
+    
+    Returns:
+        dict: Dictionary of weather conditions.
+    """
+    # Get normal ranges from config or use defaults
+    temp_range = self.config.get('normal_temp_range', [15, 30])
+    wind_range = self.config.get('normal_wind_range', [0, 15])
+    precip_range = self.config.get('normal_precip_range', [0, 5])
+    humidity_range = self.config.get('normal_humidity_range', [30, 70])
+    
+    # Generate random values within normal ranges
+    temperature = np.random.uniform(temp_range[0], temp_range[1])
+    wind_speed = np.random.uniform(wind_range[0], wind_range[1])
+    precipitation = np.random.uniform(precip_range[0], precip_range[1])
+    humidity = np.random.uniform(humidity_range[0], humidity_range[1])
+    pressure = np.random.uniform(990, 1020)  # Normal atmospheric pressure range
+    
+    # Set categorical variables
+    is_extreme_temperature = False
+    is_extreme_wind = False
+    is_extreme_precipitation = False
+    heat_wave_day = False
+    cold_snap_day = False
+    storm_day = False
+    
+    # Random weather pattern
+    weather_pattern = np.random.choice([
+        'clear', 'partly_cloudy', 'cloudy', 'light_rain', 'overcast'
+    ], p=[0.3, 0.3, 0.2, 0.1, 0.1])
+    
+    return {
+        'temperature': temperature,
+        'wind_speed': wind_speed,
+        'precipitation': precipitation,
+        'humidity': humidity,
+        'pressure': pressure,
+        'is_extreme_temperature': is_extreme_temperature,
+        'is_extreme_wind': is_extreme_wind,
+        'is_extreme_precipitation': is_extreme_precipitation,
+        'heat_wave_day': heat_wave_day,
+        'cold_snap_day': cold_snap_day,
+        'storm_day': storm_day,
+        'weather_pattern': weather_pattern
+    }</code></pre>
+    
+    <h4>8.1.5. Example Usage</h4>
+    <pre><code>from gfmf.scenario_generation.models.normal_scenario_generator import NormalScenarioGenerator
+
+# Initialize with custom configuration
+normal_generator = NormalScenarioGenerator({
+    'count': 30,
+    'normal_temp_range': [10, 25],
+    'normal_wind_range': [0, 10],
+    'normal_precip_range': [0, 3],
+    'normal_humidity_range': [40, 60]
+})
+
+# Sample input data
+input_data = {
+    'components': components_df,
+    'failure_probabilities': failure_probs_dict
+}
+
+# Generate normal scenarios
+normal_scenarios = normal_generator.generate_scenarios(input_data, count=30)
+
+# Print scenario details
+for i, scenario in enumerate(normal_scenarios[:3]):
+    print(f"Scenario {i+1} ID: {scenario['scenario_id']}")
+    print(f"  Weather: {scenario['weather_conditions']['temperature']:.1f}°C, "
+          f"{scenario['weather_conditions']['wind_speed']:.1f} m/s")
+    print(f"  Failed components: {len(scenario['component_failures'])}")
+    for comp_id, details in list(scenario['component_failures'].items())[:3]:
+        print(f"    - {comp_id}: {details['failure_cause']} at {details['failure_time']:.2f}h")</code></pre>
+    
+    <h3>8.2. Extreme Event Scenario Generator</h3>
+    
+    <h4>8.2.1. Overview</h4>
+    <p>
+        The Extreme Event Scenario Generator creates scenarios under extreme weather conditions, where component failures occur at a higher rate due to environmental stress. Four types of extreme events are modeled: high temperature, low temperature, high wind, and heavy precipitation.
+    </p>
+    
+    <h4>8.2.2. Workflow</h4>
+    <div class="diagram-container">
+        <div class="mermaid">
+%%{init: {'theme': 'default', 'themeVariables': { 'fontSize': '16px'}}}%%
+flowchart TD
+    A["Component Data & Failure Probabilities"] --> B["Apply Extreme Event Models"]
+    B --> C["Generate Extreme Weather Conditions"]
+    C --> D["Adjust Failure Probabilities"]
+    D --> E["Select More Components to Fail"]
+    E --> F["Generate Clustered Failure Times"]
+    F --> G["Determine Event-specific Failure Causes"]
+    G --> H["Compile Extreme Event Scenario"]
+    
+    style A fill:#d4f1f9,stroke:#05386b
+    style B fill:#d4f1f9,stroke:#05386b
+    style C fill:#d5e8d4,stroke:#82b366
+    style D fill:#ffe6cc,stroke:#d79b00
+    style H fill:#f8cecc,stroke:#b85450
+        </div>
+    </div>
+    
+    <h4>8.2.3. Key Methods</h4>
+    <ul>
+        <li><strong>_generate_extreme_weather_conditions</strong>: Creates extreme weather parameters based on event type</li>
+        <li><strong>_apply_extreme_event_impacts</strong>: Adjusts component failure probabilities based on extreme conditions</li>
+        <li><strong>generate_scenarios</strong>: Generates scenarios for different extreme event types</li>
+    </ul>
+    
+    <h4>8.2.4. Example Usage</h4>
+    <pre><code>from gfmf.scenario_generation.models.extreme_scenario_generator import ExtremeEventScenarioGenerator
+
+# Initialize with custom configuration
+extreme_generator = ExtremeEventScenarioGenerator({
+    'count_per_type': 15,
+    'event_types': ['high_temperature', 'high_wind', 'precipitation'],
+    'failure_multipliers': {
+        'high_temperature': 2.5,
+        'high_wind': 3.5,
+        'precipitation': 3.0
+    }
+})
+
+# Generate extreme scenarios
+extreme_scenarios = extreme_generator.generate_scenarios(
+    input_data,
+    event_types=['high_temperature', 'high_wind'],
+    count_per_type=10
+)
+
+# Print summary of generated scenarios
+for event_type, scenarios in extreme_scenarios.items():
+    print(f"{event_type} scenarios: {len(scenarios)}")
+    example = scenarios[0]
+    print(f"  Example conditions: {example['weather_conditions']['temperature']:.1f}°C, "
+          f"{example['weather_conditions']['wind_speed']:.1f} m/s, "
+          f"{example['weather_conditions']['precipitation']:.1f} mm")</code></pre>
+    
+    <h3>8.3. Compound Scenario Generator</h3>
+    
+    <h4>8.3.1. Overview</h4>
+    <p>
+        The Compound Scenario Generator creates scenarios with multiple simultaneous extreme conditions, such as high temperature combined with high wind. These scenarios represent the most severe and complex failure conditions.
+    </p>
+    
+    <h4>8.3.2. Workflow</h4>
+    <div class="diagram-container">
+        <div class="mermaid">
+%%{init: {'theme': 'default', 'themeVariables': { 'fontSize': '16px'}}}%%
+flowchart TD
+    A["Existing Extreme Event Scenarios"] --> B["Select Events to Combine"]
+    B --> C["Combine Weather Conditions"]
+    C --> D["Apply Compound Event Models"]
+    D --> E["Adjust Failure Probabilities"]
+    E --> F["Select Components to Fail"]
+    F --> G["Generate Clustered Failure Times"]
+    G --> H["Compile Compound Scenario"]
+    
+    style A fill:#d4f1f9,stroke:#05386b
+    style C fill:#d5e8d4,stroke:#82b366
+    style D fill:#ffe6cc,stroke:#d79b00
+    style E fill:#ffe6cc,stroke:#d79b00
+    style H fill:#f8cecc,stroke:#b85450
+        </div>
+    </div>
+    
+    <h4>8.3.3. Key Methods</h4>
+    <ul>
+        <li><strong>_combine_extreme_scenarios</strong>: Merges properties from two extreme event scenarios</li>
+        <li><strong>_generate_compound_weather_conditions</strong>: Creates combined weather conditions for compound events</li>
+        <li><strong>generate_scenarios</strong>: Generates compound scenarios by combining extreme events</li>
+    </ul>
+    
+    <h4>8.3.4. Example Usage</h4>
+    <pre><code>from gfmf.scenario_generation.models.compound_scenario_generator import CompoundScenarioGenerator
+
+# Initialize with custom configuration
+compound_generator = CompoundScenarioGenerator({
+    'count': 20,
+    'compound_multiplier': 2.0,
+    'compound_types': [
+        ['high_temperature', 'high_wind'],
+        ['high_wind', 'precipitation']
+    ]
+})
+
+# Generate compound scenarios
+compound_scenarios = compound_generator.generate_scenarios(
+    input_data,
+    extreme_scenarios=extreme_scenarios,
+    count=15
+)
+
+# Print compound scenario details
+for i, scenario in enumerate(compound_scenarios[:3]):
+    weather = scenario['weather_conditions']
+    print(f"Compound Scenario {i+1} ID: {scenario['scenario_id']}")
+    print(f"  Conditions: {weather['temperature']:.1f}°C, {weather['wind_speed']:.1f} m/s, "
+          f"{weather['precipitation']:.1f} mm, {weather['humidity']:.1f}% humidity")
+    print(f"  Failed components: {len(scenario['component_failures'])}")
+    causes = {}
+    for comp_id, details in scenario['component_failures'].items():
+        cause = details['failure_cause']
+        causes[cause] = causes.get(cause, 0) + 1
+    print(f"  Failure causes: {causes}")</code></pre>
+    
+    <h3>8.4. Cascading Failure Model</h3>
+    
+    <h4>8.4.1. Overview</h4>
+    <p>
+        The Cascading Failure Model analyzes how initial component failures propagate through the grid network. It uses graph theory and power flow concepts to model load redistribution and identify additional components that may fail due to overloading.
+    </p>
+    
+    <h4>8.4.2. Network Building Process</h4>
+    <div class="diagram-container">
+        <div class="mermaid">
+%%{init: {'theme': 'default', 'themeVariables': { 'fontSize': '16px'}}}%%
+flowchart TD
+    A["Component Data"] --> B["Create Network Nodes"]
+    B --> C["Categorize Components by Type"]
+    C --> D["Connect Generators to Substations"]
+    D --> E["Connect Transmission Lines"]
+    E --> F["Connect Substations & Transformers"]
+    F --> G["Add Redundancy Connections"]
+    G --> H["Ensure Network Connectivity"]
+    H --> I["Calculate Edge Capacities"]
+    I --> J["Initialize Load Distribution"]
+    
+    style A fill:#d4f1f9,stroke:#05386b
+    style B fill:#d5e8d4,stroke:#82b366
+    style C fill:#d5e8d4,stroke:#82b366
+    style J fill:#f8cecc,stroke:#b85450
+        </div>
+    </div>
+    
+    <h4>8.4.3. Cascading Process</h4>
+    <div class="diagram-container">
+        <div class="mermaid">
+%%{init: {'theme': 'default', 'themeVariables': { 'fontSize': '16px'}}}%%
+flowchart TD
+    A["Initial Component Failures"] --> B["Remove Failed Components"]
+    B --> C["Recalculate Network Connectivity"]
+    C --> D["Redistribute Loads"]
+    D --> E{"Check for Overloads"}
+    E -->|"Overloads Found"| F["Add New Failures"]
+    F --> C
+    E -->|"No Overloads"| G["Record Final State"]
+    G --> H["Calculate Grid Metrics"]
+    H --> I["Generate Cascade Timeline"]
+    
+    style A fill:#d4f1f9,stroke:#05386b
+    style E fill:#ffe6cc,stroke:#d79b00
+    style F fill:#f8cecc,stroke:#b85450
+    style I fill:#d5e8d4,stroke:#82b366
+        </div>
+    </div>
+    
+    <h4>8.4.4. Key Methods</h4>
+    <pre><code>def _model_scenario_cascade(self, scenario, network_model, propagation_model):
+    """
+    Model the cascade of failures for a single scenario.
+    
+    Args:
+        scenario (dict): Scenario dictionary.
+        network_model (nx.Graph): NetworkX graph representing the grid.
+        propagation_model (dict): Propagation model for the scenario type.
+        
+    Returns:
+        dict: Cascade results for the scenario.
+    """
+    # Extract initial failures from scenario
+    initial_failures = list(scenario['component_failures'].keys())
+    
+    if not initial_failures:
+        self.logger.warning(f"No initial failures in scenario {scenario['scenario_id']}")
+        return {'depth': 0, 'failed_components': [], 'cascade_timeline': []}
+    
+    # Create a working copy of the network
+    G = network_model.copy()
+    
+    # Prepare result tracking
+    all_failed_components = set(initial_failures)
+    cascade_timeline = [{'step': 0, 'newly_failed': initial_failures, 'total_failed': len(initial_failures)}]
+    step = 0
+    
+    # Apply initial failures
+    for comp_id in initial_failures:
+        if G.has_node(comp_id):
+            G.nodes[comp_id]['failed'] = True
+    
+    # Calculate initial load distribution
+    load_distribution = self._calculate_load_distribution(G)
+    
+    # Create a subgraph with only operational components
+    operational_G = G.copy()
+    operational_G.remove_nodes_from(initial_failures)
+    
+    # Check if network is still connected
+    if not nx.is_weakly_connected(operational_G) and len(operational_G.nodes) > 0:
+        # Find disconnected components
+        components = list(nx.weakly_connected_components(operational_G))
+        self.logger.info(f"Network split into {len(components)} disconnected components")
+    
+    # Begin cascade modeling
+    new_failures = True
+    while new_failures and step < self.max_cascade_steps:
+        step += 1
+        
+        # Redistribute load to remaining components
+        load_distribution = self._redistribute_loads(
+            operational_G, 
+            load_distribution, 
+            self.load_redistribution_factor
+        )
+        
+        # Identify components exceeding capacity threshold
+        new_failures = []
+        for node, load in load_distribution.items():
+            if node in operational_G.nodes and not operational_G.nodes[node].get('failed', False):
+                capacity = operational_G.nodes[node].get('capacity', 100.0)
+                if load > capacity * self.capacity_threshold:
+                    # Component fails due to overload
+                    new_failures.append(node)
+                    self.logger.debug(f"Component {node} failed due to overload: {load:.1f}/{capacity:.1f}")
+        
+        if new_failures:
+            # Apply new failures to the graph
+            for comp_id in new_failures:
+                operational_G.nodes[comp_id]['failed'] = True
+                G.nodes[comp_id]['failed'] = True
+            
+            # Remove failed components from operational graph
+            operational_G.remove_nodes_from(new_failures)
+            
+            # Update tracking
+            all_failed_components.update(new_failures)
+            cascade_timeline.append({
+                'step': step,
+                'newly_failed': new_failures,
+                'total_failed': len(all_failed_components)
+            })
+            
+            self.logger.info(f"Cascade step {step}: {len(new_failures)} new failures, "
+                          f"total {len(all_failed_components)}")
+        else:
+            new_failures = False
+    
+    # Compile final results
+    result = {
+        'scenario_id': scenario['scenario_id'],
+        'depth': step,
+        'failed_components': list(all_failed_components),
+        'cascade_timeline': cascade_timeline,
+        'connectivity_loss': self._calculate_connectivity_loss(G, all_failed_components),
+        'load_loss': self._calculate_load_loss(G, all_failed_components, load_distribution),
+        'impact_metrics': self._calculate_impact_metrics(G, all_failed_components)
+    }
+    
+    return result</code></pre>
+    
+    <h3>8.5. Scenario Validator</h3>
+    
+    <h4>8.5.1. Overview</h4>
+    <p>
+        The Scenario Validator ensures that generated scenarios are realistic, diverse, and statistically consistent. It compares scenarios with historical data and evaluates them against multiple validation criteria.
+    </p>
+    
+    <h4>8.5.2. Validation Process</h4>
+    <div class="diagram-container">
+        <div class="mermaid">
+%%{init: {'theme': 'default', 'themeVariables': { 'fontSize': '16px'}}}%%
+flowchart TD
+    A["Generated Scenarios"] --> B["Analyze Component Distribution"]
+    A --> C["Compare with Historical Data"]
+    A --> D["Check Internal Consistency"]
+    B --> E["Calculate Diversity Score"]
+    C --> F["Calculate Realism Score"]
+    D --> G["Calculate Consistency Score"]
+    E & F & G --> H["Compute Overall Quality Score"]
+    H --> I["Flag Low-Quality Scenarios"]
+    I --> J["Generate Validation Reports"]
+    
+    style A fill:#d4f1f9,stroke:#05386b
+    style B fill:#d5e8d4,stroke:#82b366
+    style C fill:#d5e8d4,stroke:#82b366
+    style D fill:#d5e8d4,stroke:#82b366
+    style H fill:#ffe6cc,stroke:#d79b00
+    style I fill:#f8cecc,stroke:#b85450
+    style J fill:#f8cecc,stroke:#b85450
+        </div>
+    </div>
+    
+    <h4>8.5.3. Validation Metrics</h4>
+    <ul>
+        <li><strong>Realism Score</strong>: Measures how well scenarios match historical patterns</li>
+        <li><strong>Diversity Score</strong>: Measures how different scenarios are from each other</li>
+        <li><strong>Consistency Score</strong>: Measures internal consistency of scenario components</li>
+        <li><strong>Overall Quality Score</strong>: Weighted combination of individual metrics</li>
+    </ul>
+    
+    <h4>8.5.4. Example Usage</h4>
+    <pre><code>from gfmf.scenario_generation.models.scenario_validator import ScenarioValidator
+
+# Initialize validator with custom thresholds
+validator = ScenarioValidator({
+    'realism_threshold': 0.6,
+    'diversity_threshold': 0.5,
+    'consistency_threshold': 0.7
+})
+
+# Validate scenarios
+validation_results = validator.validate_scenarios(
+    all_scenarios,
+    historical_data=outage_records_df
+)
+
+# Print validation summary
+print("Validation Results:")
+for scenario_type, results in validation_results.items():
+    quality_scores = [s['overall_quality'] for s in results]
+    avg_quality = sum(quality_scores) / len(quality_scores) if quality_scores else 0
+    print(f"  {scenario_type} scenarios: {avg_quality:.2f} avg quality")
+    
+    # Count scenarios by quality tier
+    high_quality = len([s for s in results if s['overall_quality'] >= 0.8])
+    medium_quality = len([s for s in results if 0.6 <= s['overall_quality'] < 0.8])
+    low_quality = len([s for s in results if s['overall_quality'] < 0.6])
+    
+    print(f"    High quality: {high_quality}")
+    print(f"    Medium quality: {medium_quality}")
+    print(f"    Low quality: {low_quality}")</code></pre>
+
+    <h2 id="algorithms">9. Algorithm Selection Rationale</h2>
+    
+    <p>
+        The Scenario Generation Module employs several algorithmic approaches to model grid failure scenarios under different conditions. This section explains the rationale behind these algorithm choices.
+    </p>
+    
+    <h3>9.1. Probabilistic Sampling for Component Failures</h3>
+    <p>
+        For selecting which components will fail in each scenario, we use probabilistic sampling based on component-specific failure probabilities:
+    </p>
+    <ul>
+        <li><strong>Weighted Random Sampling</strong>: Components are selected with probability proportional to their failure likelihood, rather than uniform random selection. This approach was chosen because:
+            <ul>
+                <li>It realistically represents the varying vulnerability of different grid components</li>
+                <li>It maintains the statistical properties of the failure prediction models</li>
+                <li>It allows for natural variation between scenarios while preserving overall failure patterns</li>
+                <li>It integrates seamlessly with the outputs of the Failure Prediction Module</li>
+            </ul>
+        </li>
+        <li><strong>Alternative Approaches Considered</strong>:
+            <ul>
+                <li><em>Fixed Threshold Selection</em>: Selecting all components with failure probability above a threshold. Rejected because it would produce too similar scenarios without enough diversity.</li>
+                <li><em>Deterministic Selection</em>: Always selecting the highest-probability components. Rejected because it would not capture the inherent randomness in real grid failures.</li>
+                <li><em>Pure Random Selection</em>: Selecting random components regardless of failure probability. Rejected because it would ignore the valuable predictive information from earlier modules.</li>
+            </ul>
+        </li>
+    </ul>
+    
+    <h3>9.2. Graph-Based Cascade Modeling</h3>
+    <p>
+        For modeling how failures cascade through the grid, we use a graph-based approach with network flow algorithms:
+    </p>
+    <ul>
+        <li><strong>Directed Graph Representation</strong>: The power grid is modeled as a directed graph (NetworkX DiGraph) where:
+            <ul>
+                <li>Nodes represent components (generators, transformers, lines, substations)</li>
+                <li>Edges represent power flow pathways between components</li>
+                <li>Node attributes include component properties like capacity and vulnerability</li>
+                <li>Edge attributes include power flow capacity and impedance</li>
+            </ul>
+        </li>
+        <li><strong>Load Redistribution Algorithm</strong>: Uses a modified version of network flow algorithms to model how load redistributes after component failures. This approach was chosen because:
+            <ul>
+                <li>It captures the topological dependencies between grid components</li>
+                <li>It models the non-linear nature of cascading failures</li>
+                <li>It can represent both local and system-wide effects</li>
+                <li>It can be tuned with parameters like redistribution factors and capacity thresholds</li>
+            </ul>
+        </li>
+        <li><strong>Alternative Approaches Considered</strong>:
+            <ul>
+                <li><em>Pure Statistical Models</em>: Using only statistical correlations between failures. Rejected because they don't capture the physical constraints of power flow.</li>
+                <li><em>Full Power Flow Simulation</em>: Using detailed AC/DC power flow equations. Considered too computationally expensive for rapid scenario generation.</li>
+                <li><em>Agent-Based Models</em>: Modeling components as autonomous agents. Rejected due to increased complexity without clear benefits for cascade modeling.</li>
+            </ul>
+        </li>
+    </ul>
+    
+    <h3>9.3. Extreme Event Weather Generation</h3>
+    <p>
+        For generating realistic weather conditions in extreme event scenarios:
+    </p>
+    <ul>
+        <li><strong>Parameterized Stochastic Models</strong>: Weather conditions are generated using parameterized ranges for different event types, with correlated random sampling. This approach was chosen because:
+            <ul>
+                <li>It preserves the correlations between weather variables (e.g., high temperature often correlates with low precipitation)</li>
+                <li>It allows for controlled variation while maintaining realistic weather patterns</li>
+                <li>It can be easily calibrated using historical weather data</li>
+                <li>It balances realism with computational efficiency</li>
+            </ul>
+        </li>
+        <li><strong>Alternative Approaches Considered</strong>:
+            <ul>
+                <li><em>Weather Resampling</em>: Using actual historical weather events. Rejected because it would limit the diversity of scenarios.</li>
+                <li><em>Physics-Based Weather Models</em>: Using computational fluid dynamics models. Rejected as too complex and computationally intensive for this application.</li>
+                <li><em>Machine Learning Weather Generation</em>: Using GANs or VAEs to generate synthetic weather. Considered promising but requiring additional data and validation.</li>
+            </ul>
+        </li>
+    </ul>
+    
+    <h3>9.4. Statistical Validation Techniques</h3>
+    <p>
+        For validating generated scenarios against historical data:
+    </p>
+    <ul>
+        <li><strong>Multi-metric Validation Framework</strong>: Using a combination of statistical tests and similarity measures to evaluate scenarios. This approach was chosen because:
+            <ul>
+                <li>It provides a comprehensive assessment from multiple perspectives</li>
+                <li>It balances the need for realism with the need for diversity</li>
+                <li>It can detect specific issues like unrealistic failure patterns or weather conditions</li>
+                <li>It produces quantitative quality scores that can be used for scenario filtering</li>
+            </ul>
+        </li>
+        <li><strong>Alternative Approaches Considered</strong>:
+            <ul>
+                <li><em>Simple Distribution Tests</em>: Using only KS-tests or chi-squared tests. Rejected as too simplistic to capture the full range of validity concerns.</li>
+                <li><em>Domain Expert Validation</em>: Relying solely on manual review by experts. Not scalable for large numbers of scenarios.</li>
+                <li><em>Adversarial Validation</em>: Using discriminative models to identify unrealistic scenarios. Considered promising for future extensions.</li>
+            </ul>
+        </li>
+    </ul>
+    
+    <h3>9.5. Ensemble Approach Benefits</h3>
+    <p>
+        The module's overall approach combines multiple scenario generation methods (normal, extreme, compound) to provide a comprehensive set of potential grid failure scenarios:
+    </p>
+    <ul>
+        <li><strong>Comprehensive Coverage</strong>: By using multiple scenario types, we ensure coverage across the full spectrum of potential grid failure conditions</li>
+        <li><strong>Balanced Focus</strong>: The approach balances common, everyday failure scenarios with rare but high-impact extreme events</li>
+        <li><strong>Risk-Based Prioritization</strong>: The final scenario set can be prioritized based on both likelihood and potential impact</li>
+        <li><strong>Flexible Adaptation</strong>: The modular design allows for easy updates as new failure modes or extreme event types are identified</li>
+    </ul>
+    
+    <div class="note">
+        <strong>Note:</strong> This documentation provides an overview of the Scenario Generation Module.
+        For more detailed information on specific components, refer to the inline documentation in the
+        source code files.
+    </div>
+
+    <script>
+        // Initialize Mermaid diagrams
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                // Use timeout to ensure diagrams have chance to render
+                try {
+                    mermaid.init(undefined, document.querySelectorAll('.mermaid'));
+                    console.log("Mermaid diagrams initialized");
+                } catch (e) {
+                    console.error("Error initializing Mermaid diagrams:", e);
+                }
+            }, 500);
+        });
+    </script>
+</body>
+</html> 

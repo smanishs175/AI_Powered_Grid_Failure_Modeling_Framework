@@ -1,0 +1,1655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reinforcement Learning Module Documentation - Grid Failure Modeling Framework</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2, h3, h4 {
+            color: #2c3e50;
+        }
+        h1 {
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            border-bottom: 1px solid #bdc3c7;
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
+        pre {
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            padding: 15px;
+            overflow-x: auto;
+        }
+        code {
+            font-family: Consolas, Monaco, 'Andale Mono', monospace;
+            background-color: #f4f4f4;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+        }
+        th, td {
+            text-align: left;
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .workflow-container {
+            margin: 30px 0;
+            text-align: center;
+        }
+        .workflow {
+            max-width: 100%;
+        }
+        .note {
+            background-color: #e7f4ff;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .warning {
+            background-color: #fff5e6;
+            border-left: 4px solid #e67e22;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .function-signature {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .parameter {
+            margin-left: 20px;
+            margin-bottom: 5px;
+        }
+        .returns {
+            margin-top: 10px;
+            font-style: italic;
+        }
+        .directory-structure {
+            font-family: monospace;
+            white-space: pre;
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            padding: 15px;
+            overflow-x: auto;
+        }
+        .command {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px;
+            border-radius: 3px;
+            margin: 10px 0;
+        }
+        .diagram-container {
+            width: 100%;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        .mermaid {
+            margin: 0 auto;
+        }
+        .error {
+            background-color: #ffebee;
+            color: #c62828;
+            padding: 15px;
+            border-left: 4px solid #c62828;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+        .custom-diagram-container {
+            position: relative;
+            width: 100%;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        .module-title {
+            position: absolute;
+            top: 10px;
+            right: 30px;
+            background-color: #e8f5e9;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: #333;
+            z-index: 10;
+            border: 1px solid #2e7d32;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11.6.0/dist/mermaid.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'default',
+                securityLevel: 'loose',
+                fontFamily: 'Arial, sans-serif',
+                fontSize: 16
+            });
+            
+            // Error handling
+            mermaid.parseError = function(err, hash) {
+                console.error("Mermaid error:", err);
+                // Replace diagram with error message for users
+                const diagrams = document.getElementsByClassName('mermaid');
+                for (let i = 0; i < diagrams.length; i++) {
+                    if (diagrams[i].innerHTML.includes(hash.str)) {
+                        diagrams[i].innerHTML = `<div class="error">Diagram rendering error: ${err}</div>`;
+                    }
+                }
+            };
+        });
+    </script>
+</head>
+<body>
+    <h1>Reinforcement Learning Module Documentation</h1>
+    <p>
+        The Reinforcement Learning Module is the fifth module of the Grid Failure Modeling Framework (GFMF).
+        It builds upon the output from the Scenario Generation Module to develop and optimize
+        grid management policies using reinforcement learning techniques. This module helps utilities
+        and grid operators learn optimal response strategies for different failure scenarios,
+        improving grid resilience through adaptive decision-making.
+    </p>
+
+    <h2>Table of Contents</h2>
+    <ol>
+        <li><a href="#directory-structure">Directory Structure</a></li>
+        <li><a href="#workflow">Workflow Diagram</a></li>
+        <li><a href="#components">Module Components</a></li>
+        <li><a href="#files">File Descriptions</a></li>
+        <li><a href="#classes">Key Classes and Functions</a></li>
+        <li><a href="#execution">Execution Commands</a></li>
+        <li><a href="#configuration">Configuration</a></li>
+        <li><a href="#detailed-components">Detailed Component Documentation</a></li>
+        <li><a href="#algorithms">Algorithm Selection Rationale</a></li>
+    </ol>
+
+    <h2 id="directory-structure">1. Directory Structure</h2>
+    <div class="directory-structure">
+gfmf/
+└── reinforcement_learning/
+    ├── __init__.py                     # Module initialization
+    ├── reinforcement_learning_module.py  # Main module class and integration
+    ├── agents/
+    │   ├── __init__.py                 # Agent package initialization
+    │   ├── dqn_agent.py                # Deep Q-Network agent implementation
+    │   ├── ppo_agent.py                # Proximal Policy Optimization agent
+    │   ├── sac_agent.py                # Soft Actor-Critic agent
+    │   ├── td3_agent.py                # Twin Delayed DDPG agent
+    │   └── gail_agent.py               # Generative Adversarial Imitation Learning
+    ├── environment/
+    │   ├── __init__.py                 # Environment package initialization
+    │   └── grid_env.py                 # Grid environment simulation
+    ├── policies/
+    │   ├── __init__.py                 # Policies package initialization
+    │   └── policy_optimization.py      # Policy optimization utilities
+    ├── utils/
+    │   ├── __init__.py                 # Utils initialization
+    │   ├── visualization.py            # Visualization tools
+    │   ├── metrics.py                  # Performance metrics calculation
+    │   └── data_processing.py          # Data processing utilities
+    └── config/
+        └── default_config.yaml         # Default configuration
+    </div>
+
+    <h2 id="workflow">2. Workflow Diagram</h2>
+
+    <div class="custom-diagram-container">
+        <div class="module-title">Reinforcement Learning Module</div>
+        <div class="mermaid">
+%%{init: {'theme': 'default', 'themeVariables': { 'fontSize': '16px'}}}%%
+flowchart TD
+    subgraph Input["Input"]
+        A["Scenario Data"] --> D
+        B["Component Data"] --> D
+        C["Grid Topology"] --> D
+        E["Cascade Models"] --> D
+    end
+    
+    subgraph RLM[" "]
+        D["Data Processing & Environment Creation"] --> F
+        F["Initialize Grid Environment"] --> G
+        G["Agent Initialization"] --> H
+        H["Policy Training"] --> I
+        I["Policy Evaluation"] --> J
+        J["Policy Optimization"] --> K
+        K["Performance Comparison"] --> L
+        L["Policy Extraction"]
+    end
+    
+    subgraph Output["Output"]
+        L --> M["Optimized Management Policies"]
+        L --> N["Emergency Response Strategies"]
+        L --> O["Performance Metrics"]
+        L --> P["Policy Visualizations"]
+    end
+    
+    classDef inputStyle fill:#e1f5fe,stroke:#01579b;
+    classDef moduleStyle fill:#e8f5e9,stroke:#2e7d32;
+    classDef outputStyle fill:#fff3e0,stroke:#e65100;
+    
+    class Input inputStyle;
+    class RLM moduleStyle;
+    class Output outputStyle;
+        </div>
+    </div>
+
+    <p>The workflow of the Reinforcement Learning Module consists of these key steps:</p>
+    <ol>
+        <li><strong>Data Processing & Environment Creation</strong>: Load and process scenario data from the Scenario Generation Module to create a realistic grid environment for agent training.</li>
+        <li><strong>Initialize Grid Environment</strong>: Set up the simulation environment that represents the power grid with its components, failure modes, and management actions.</li>
+        <li><strong>Agent Initialization</strong>: Create various reinforcement learning agents with different algorithms (DQN, PPO, SAC, TD3, GAIL) to learn grid management policies.</li>
+        <li><strong>Policy Training</strong>: Train agents across multiple scenarios to learn optimal response strategies for different grid conditions and failure events.</li>
+        <li><strong>Policy Evaluation</strong>: Evaluate trained policies against test scenarios to measure performance metrics such as grid stability, outage prevention, and recovery time.</li>
+        <li><strong>Policy Optimization</strong>: Fine-tune policies based on evaluation feedback, adjusting hyperparameters and model architectures to improve performance.</li>
+        <li><strong>Performance Comparison</strong>: Compare different algorithms and strategies to identify the most effective approaches for different types of grid scenarios.</li>
+        <li><strong>Policy Extraction</strong>: Extract the best-performing policies into deployable formats for grid operators to use in real-world decision support systems.</li>
+    </ol>
+
+    <h2 id="components">3. Module Components</h2>
+    
+    <p>The Reinforcement Learning Module consists of several interconnected components:</p>
+
+    <h3>3.1. Grid Environment</h3>
+    <p>
+        The Grid Environment provides a simulation platform for reinforcement learning agents to interact with a virtual power grid. It models the grid components, their relationships, and the consequences of different management actions.
+    </p>
+    
+    <div class="diagram-container">
+        <div class="mermaid">
+%%{init: {'theme': 'default', 'themeVariables': { 'fontSize': '16px'}}}%%
+flowchart LR
+    A["Agent"] -->|"Action<br>(Management Decision)"| B["Grid Environment"]
+    B -->|"Observation<br>(Grid State)"| A
+    B -->|"Reward<br>(Performance Metric)"| A
+    C["Scenario Data"] -->|"Initialize"| B
+    D["Cascade Models"] -->|"Propagate Failures"| B
+    B -->|"Load Redistribution"| B
+    
+    style A fill:#d4f1f9,stroke:#05386b
+    style B fill:#d5e8d4,stroke:#82b366
+    style C fill:#ffe6cc,stroke:#d79b00
+    style D fill:#f8cecc,stroke:#b85450
+        </div>
+    </div>
+    
+    <p>
+        Key features of the Grid Environment:
+    </p>
+    <ul>
+        <li><strong>OpenAI Gym Interface</strong>: Provides a standardized interface compatible with popular RL libraries</li>
+        <li><strong>Grid Component Modeling</strong>: Simulates generators, transformers, substations, transmission lines, and other grid components</li>
+        <li><strong>Failure Dynamics</strong>: Models component failures and their propagation through the grid</li>
+        <li><strong>Action Space</strong>: Includes preventive and corrective grid management actions</li>
+        <li><strong>Observation Space</strong>: Provides agents with a comprehensive view of grid state, component health, and environmental conditions</li>
+        <li><strong>Reward Functions</strong>: Calculates rewards based on grid stability, outage prevention, and operational efficiency</li>
+    </ul>
+
+    <h3>3.2. Reinforcement Learning Agents</h3>
+    <p>
+        The module implements multiple state-of-the-art reinforcement learning algorithms, each with different strengths for tackling grid management challenges.
+    </p>
+    
+    <div class="diagram-container">
+        <div class="mermaid">
+%%{init: {'theme': 'default', 'themeVariables': { 'fontSize': '16px'}}}%%
+classDiagram
+    class BaseAgent {
+        +act(state)
+        +step(state, action, reward, next_state, done)
+        +train(env, num_episodes)
+        +evaluate(env, num_episodes)
+        +save_policy(filepath)
+        +load_policy(filepath)
+    }
+    
+    BaseAgent <|-- DQNAgent
+    BaseAgent <|-- PPOAgent
+    BaseAgent <|-- SACAgent
+    BaseAgent <|-- TD3Agent
+    BaseAgent <|-- GAILAgent
+    
+    class DQNAgent {
+        -replay_buffer
+        -q_network
+        -target_network
+        +act(state, eval_mode)
+        -_learn()
+    }
+    
+    class PPOAgent {
+        -policy_network
+        -value_network
+        -policy_optimizer
+        -value_optimizer
+        +act(state, eval_mode)
+        -_update_policy()
+    }
+    
+    class SACAgent {
+        -policy_network
+        -q_network
+        -alpha
+        +act(state, eval_mode)
+        -_update_networks()
+    }
+    
+    class TD3Agent {
+        -actor_network
+        -critic_networks
+        -target_networks
+        +act(state, eval_mode)
+        -_delayed_update()
+    }
+    
+    class GAILAgent {
+        -policy_network
+        -discriminator
+        -expert_demonstrations
+        +act(state, eval_mode)
+        -_adversarial_training()
+    }
+        </div>
+    </div>
+    
+    <ul>
+        <li><strong>DQN Agent</strong>: Uses Deep Q-Networks with prioritized experience replay and dueling architecture to learn value-based policies for discrete action spaces.</li>
+        <li><strong>PPO Agent</strong>: Implements Proximal Policy Optimization, a policy gradient method that balances exploration and exploitation while ensuring stable updates.</li>
+        <li><strong>SAC Agent</strong>: Uses Soft Actor-Critic, an off-policy algorithm that maximizes both expected reward and entropy for robust learning of continuous action policies.</li>
+        <li><strong>TD3 Agent</strong>: Implements Twin Delayed DDPG, which reduces overestimation bias in critic networks for more stable learning in continuous action spaces.</li>
+        <li><strong>GAIL Agent</strong>: Uses Generative Adversarial Imitation Learning to learn from expert demonstrations, allowing the incorporation of human operator knowledge.</li>
+    </ul>
+
+    <h3>3.3. Policy Optimization Framework</h3>
+    <p>
+        The Policy Optimization Framework manages the training, evaluation, and comparison of different reinforcement learning agents across various grid scenarios.
+    </p>
+    
+    <div class="diagram-container">
+        <div class="mermaid">
+%%{init: {'theme': 'default', 'themeVariables': { 'fontSize': '16px'}}}%%
+flowchart TD
+    A["Agent Selection"] --> B["Scenario Selection"]
+    B --> C["Training Configuration"]
+    C --> D["Agent Training"]
+    D --> E["Policy Evaluation"]
+    E --> F{"Performance<br>Satisfactory?"}
+    F -->|"No"| G["Hyperparameter Tuning"]
+    G --> D
+    F -->|"Yes"| H["Policy Comparison"]
+    H --> I["Best Policy Selection"]
+    I --> J["Policy Export"]
+    
+    style A fill:#d4f1f9,stroke:#05386b
+    style B fill:#d4f1f9,stroke:#05386b
+    style D fill:#d5e8d4,stroke:#82b366
+    style E fill:#d5e8d4,stroke:#82b366
+    style F fill:#ffe6cc,stroke:#d79b00
+    style I fill:#f8cecc,stroke:#b85450
+    style J fill:#f8cecc,stroke:#b85450
+        </div>
+    </div>
+    
+    <p>
+        Key functions of the Policy Optimization Framework:
+    </p>
+    <ul>
+        <li><strong>Training Management</strong>: Coordinates the training of multiple agents on different scenario types</li>
+        <li><strong>Performance Evaluation</strong>: Evaluates policies against test scenarios using multiple performance metrics</li>
+        <li><strong>Comparative Analysis</strong>: Compares different algorithms and hyperparameter settings to identify the most effective approaches</li>
+        <li><strong>Visualization</strong>: Generates visualizations of learning curves, performance metrics, and policy behavior</li>
+        <li><strong>Policy Export</strong>: Exports trained policies in a format that can be used by grid operators for decision support</li>
+    </ul>
+
+    <h2 id="files">4. File Descriptions</h2>
+    
+    <h3>4.1. Module Core</h3>
+    <table>
+        <tr>
+            <th>File</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td><code>__init__.py</code></td>
+            <td>Initializes the Reinforcement Learning Module and exposes the main <code>ReinforcementLearningModule</code> class. Contains module-level docstrings and imports.</td>
+        </tr>
+        <tr>
+            <td><code>reinforcement_learning_module.py</code></td>
+            <td>Implements the main <code>ReinforcementLearningModule</code> class that orchestrates the entire RL process. Handles data loading, environment creation, agent initialization, training, evaluation, and policy optimization.</td>
+        </tr>
+    </table>
+    
+    <h3>4.2. Agents</h3>
+    <table>
+        <tr>
+            <th>File</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td><code>__init__.py</code></td>
+            <td>Initializes the agents package and exposes agent classes for importing. Acts as an interface to access different agent implementations.</td>
+        </tr>
+        <tr>
+            <td><code>dqn_agent.py</code></td>
+            <td>Implements the <code>DQNAgent</code> class using Deep Q-Networks with prioritized experience replay and dueling architecture. Includes a <code>PrioritizedReplayBuffer</code> class for efficient memory replay and a <code>DuelingQNetwork</code> neural network architecture.</td>
+        </tr>
+        <tr>
+            <td><code>ppo_agent.py</code></td>
+            <td>Implements the <code>PPOAgent</code> class using Proximal Policy Optimization. Includes separate policy and value networks, clipped surrogate objective, and generalized advantage estimation.</td>
+        </tr>
+        <tr>
+            <td><code>sac_agent.py</code></td>
+            <td>Implements the <code>SACAgent</code> class using Soft Actor-Critic. Features entropy-regularized policy optimization, twin Q-networks for value estimation, and automatic temperature tuning.</td>
+        </tr>
+        <tr>
+            <td><code>td3_agent.py</code></td>
+            <td>Implements the <code>TD3Agent</code> class using Twin Delayed DDPG. Includes twin critic networks, delayed policy updates, and target policy smoothing for stable learning in continuous action spaces.</td>
+        </tr>
+        <tr>
+            <td><code>gail_agent.py</code></td>
+            <td>Implements the <code>GAILAgent</code> class using Generative Adversarial Imitation Learning. Features a generator-discriminator architecture to learn from expert demonstrations with minimal reward engineering.</td>
+        </tr>
+    </table>
+    
+    <h3>4.3. Environment</h3>
+    <table>
+        <tr>
+            <th>File</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td><code>__init__.py</code></td>
+            <td>Initializes the environment package and exposes the <code>GridEnvironment</code> class for importing.</td>
+        </tr>
+        <tr>
+            <td><code>grid_env.py</code></td>
+            <td>Implements the <code>GridEnvironment</code> class, a custom OpenAI Gym environment that simulates a power grid. Includes methods for initialization, state representation, action execution, reward calculation, and failure propagation modeling.</td>
+        </tr>
+    </table>
+    
+    <h3>4.4. Policies</h3>
+    <table>
+        <tr>
+            <th>File</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td><code>__init__.py</code></td>
+            <td>Initializes the policies package and exposes the <code>PolicyOptimizer</code> class for importing.</td>
+        </tr>
+        <tr>
+            <td><code>policy_optimization.py</code></td>
+            <td>Implements the <code>PolicyOptimizer</code> class for training, evaluating, and comparing different reinforcement learning policies across various scenarios. Includes methods for agent training, performance evaluation, comparative analysis, and visualization.</td>
+        </tr>
+    </table>
+    
+    <h3>4.5. Utilities</h3>
+    <table>
+        <tr>
+            <th>File</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td><code>__init__.py</code></td>
+            <td>Initializes the utilities package and exposes utility functions for importing.</td>
+        </tr>
+        <tr>
+            <td><code>visualization.py</code></td>
+            <td>Contains functions for visualizing RL training results, performance metrics, and policy behavior. Uses matplotlib and seaborn for generating plots and charts.</td>
+        </tr>
+        <tr>
+            <td><code>metrics.py</code></td>
+            <td>Implements functions for calculating and analyzing performance metrics of trained policies, such as stability index, outage prevention rate, and recovery efficiency.</td>
+        </tr>
+        <tr>
+            <td><code>data_processing.py</code></td>
+            <td>Provides utilities for processing and transforming data from scenario generation outputs into formats suitable for the RL environment and agents.</td>
+        </tr>
+    </table>
+    
+    <h3>4.6. Configuration</h3>
+    <table>
+        <tr>
+            <th>File</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td><code>default_config.yaml</code></td>
+            <td>Default configuration file with settings for environment, agents, training, evaluation, and logging. Used when a custom configuration is not provided.</td>
+        </tr>
+    </table>
+
+    <h2 id="classes">5. Key Classes and Functions</h2>
+    
+    <h3>5.1. ReinforcementLearningModule</h3>
+    <div class="function-signature">class ReinforcementLearningModule(config_path=None)</div>
+    <p>Main class for the Reinforcement Learning Module, orchestrating all aspects of training and evaluating RL agents for grid management.</p>
+    
+    <h4>Key Methods:</h4>
+    <ul>
+        <li>
+            <div class="function-signature">__init__(config_path=None)</div>
+            <p>Initialize the module with the given configuration path or default configuration.</p>
+            <div class="parameter"><strong>config_path</strong> (str, optional): Path to the configuration file.</div>
+        </li>
+        <li>
+            <div class="function-signature">load_scenario_data(scenario_paths=None)</div>
+            <p>Load scenario data from Module 4 outputs for environment creation.</p>
+            <div class="parameter"><strong>scenario_paths</strong> (dict, optional): Dictionary mapping scenario types to file paths.</div>
+            <div class="returns">dict: Dictionary of loaded scenarios by type.</div>
+        </li>
+        <li>
+            <div class="function-signature">initialize_environment(scenarios=None)</div>
+            <p>Initialize the Grid Environment with scenario data.</p>
+            <div class="parameter"><strong>scenarios</strong> (dict, optional): Dictionary of scenarios. If None, loads from default paths.</div>
+            <div class="returns">GridEnvironment: The initialized environment.</div>
+        </li>
+        <li>
+            <div class="function-signature">initialize_agents(agent_types=None)</div>
+            <p>Initialize RL agents according to configuration.</p>
+            <div class="parameter"><strong>agent_types</strong> (list, optional): List of agent types to initialize.</div>
+            <div class="returns">dict: Dictionary of initialized agents.</div>
+        </li>
+        <li>
+            <div class="function-signature">initialize_optimizer()</div>
+            <p>Initialize the policy optimizer for agent comparison.</p>
+            <div class="returns">PolicyOptimizer: The initialized optimizer.</div>
+        </li>
+        <li>
+            <div class="function-signature">train_and_evaluate_agents(agents=None, scenario_types=None, training_steps=100000, eval_frequency=10000)</div>
+            <p>Train and evaluate agents on different scenario types.</p>
+            <div class="parameter"><strong>agents</strong> (list, optional): List of agent names to train.</div>
+            <div class="parameter"><strong>scenario_types</strong> (list, optional): List of scenario types to train on.</div>
+            <div class="parameter"><strong>training_steps</strong> (int): Number of training steps.</div>
+            <div class="parameter"><strong>eval_frequency</strong> (int): Number of steps between evaluations.</div>
+            <div class="returns">dict: Dictionary of training and evaluation results.</div>
+        </li>
+        <li>
+            <div class="function-signature">export_policy(agent_type, output_path=None)</div>
+            <p>Export a trained policy to a file.</p>
+            <div class="parameter"><strong>agent_type</strong> (str): Type of agent to export.</div>
+            <div class="parameter"><strong>output_path</strong> (str, optional): Path to save the policy. If None, uses default path.</div>
+            <div class="returns">str: Path to the exported policy.</div>
+        </li>
+        <li>
+            <div class="function-signature">visualize_agent_comparison(results, output_dir=None)</div>
+            <p>Generate visualizations comparing agent performance.</p>
+            <div class="parameter"><strong>results</strong> (dict): Dictionary of training and evaluation results.</div>
+            <div class="parameter"><strong>output_dir</strong> (str, optional): Directory to save visualizations.</div>
+            <div class="returns">dict: Dictionary of visualization paths.</div>
+        </li>
+    </ul>
+    
+    <h3>5.2. GridEnvironment</h3>
+    <div class="function-signature">class GridEnvironment(scenarios=None, max_steps=100, reward_weights=None)</div>
+    <p>OpenAI Gym environment for power grid simulation, allowing agents to interact with a virtual grid system.</p>
+    
+    <h4>Key Methods:</h4>
+    <ul>
+        <li>
+            <div class="function-signature">__init__(scenarios=None, max_steps=100, reward_weights=None)</div>
+            <p>Initialize the grid environment.</p>
+            <div class="parameter"><strong>scenarios</strong> (dict): Dictionary of scenario data from Module 4.</div>
+            <div class="parameter"><strong>max_steps</strong> (int): Maximum number of steps per episode.</div>
+            <div class="parameter"><strong>reward_weights</strong> (dict): Weights for different reward components.</div>
+        </li>
+        <li>
+            <div class="function-signature">reset()</div>
+            <p>Reset the environment to a new episode with a randomly selected scenario.</p>
+            <div class="returns">numpy.ndarray: Initial observation of the environment.</div>
+        </li>
+        <li>
+            <div class="function-signature">step(action)</div>
+            <p>Execute an action in the environment and return the result.</p>
+            <div class="parameter"><strong>action</strong> (int): Action to execute.</div>
+            <div class="returns">tuple: (observation, reward, done, info) tuple.</div>
+        </li>
+        <li>
+            <div class="function-signature">_execute_action(action)</div>
+            <p>Execute a specific grid management action.</p>
+            <div class="parameter"><strong>action</strong> (int): Action to execute.</div>
+            <div class="returns">dict: Result of the action execution.</div>
+        </li>
+        <li>
+            <div class="function-signature">_update_grid_state()</div>
+            <p>Update the grid state after an action is executed.</p>
+            <div class="returns">dict: Updated grid state.</div>
+        </li>
+        <li>
+            <div class="function-signature">_redistribute_loads(failed_components)</div>
+            <p>Redistribute loads after component failures.</p>
+            <div class="parameter"><strong>failed_components</strong> (list): List of failed component IDs.</div>
+            <div class="returns">dict: Load redistribution results.</div>
+        </li>
+        <li>
+            <div class="function-signature">_calculate_reward(action, action_result)</div>
+            <p>Calculate the reward for an action.</p>
+            <div class="parameter"><strong>action</strong> (int): Action that was executed.</div>
+            <div class="parameter"><strong>action_result</strong> (dict): Result of the action execution.</div>
+            <div class="returns">float: Calculated reward.</div>
+        </li>
+    </ul>
+    
+    <h3>5.3. DQNAgent</h3>
+    <div class="function-signature">class DQNAgent(state_dim, action_dim, config=None)</div>
+    <p>Deep Q-Network agent implementation with prioritized experience replay and dueling networks.</p>
+    
+    <h4>Key Methods:</h4>
+    <ul>
+        <li>
+            <div class="function-signature">__init__(state_dim, action_dim, config=None)</div>
+            <p>Initialize the DQN agent with the given state and action dimensions.</p>
+            <div class="parameter"><strong>state_dim</strong> (int): Dimension of the state space.</div>
+            <div class="parameter"><strong>action_dim</strong> (int): Dimension of the action space.</div>
+            <div class="parameter"><strong>config</strong> (dict, optional): Agent configuration parameters.</div>
+        </li>
+        <li>
+            <div class="function-signature">step(state, action, reward, next_state, done)</div>
+            <p>Process a step of experience and add it to the replay buffer.</p>
+            <div class="parameter"><strong>state</strong> (numpy.ndarray): Current state.</div>
+            <div class="parameter"><strong>action</strong> (int): Action taken.</div>
+            <div class="parameter"><strong>reward</strong> (float): Reward received.</div>
+            <div class="parameter"><strong>next_state</strong> (numpy.ndarray): Next state.</div>
+            <div class="parameter"><strong>done</strong> (bool): Whether the episode is done.</div>
+        </li>
+        <li>
+            <div class="function-signature">act(state, eval_mode=False)</div>
+            <p>Select an action for the given state using epsilon-greedy policy.</p>
+            <div class="parameter"><strong>state</strong> (numpy.ndarray): Current state.</div>
+            <div class="parameter"><strong>eval_mode</strong> (bool): Whether to use evaluation mode (greedy policy).</div>
+            <div class="returns">int: Selected action.</div>
+        </li>
+        <li>
+            <div class="function-signature">_learn()</div>
+            <p>Perform a learning update using a batch from the replay buffer.</p>
+        </li>
+        <li>
+            <div class="function-signature">train(env, num_episodes=1000, max_steps=None, eval_freq=100)</div>
+            <p>Train the agent on the given environment.</p>
+            <div class="parameter"><strong>env</strong>: Environment to train on.</div>
+            <div class="parameter"><strong>num_episodes</strong> (int): Number of episodes to train for.</div>
+            <div class="parameter"><strong>max_steps</strong> (int, optional): Maximum steps per episode.</div>
+            <div class="parameter"><strong>eval_freq</strong> (int): Frequency of evaluation during training.</div>
+            <div class="returns">dict: Training metrics.</div>
+        </li>
+        <li>
+            <div class="function-signature">evaluate(env, num_episodes=10)</div>
+            <p>Evaluate the agent on the given environment.</p>
+            <div class="parameter"><strong>env</strong>: Environment to evaluate on.</div>
+            <div class="parameter"><strong>num_episodes</strong> (int): Number of episodes to evaluate for.</div>
+            <div class="returns">dict: Evaluation metrics.</div>
+        </li>
+    </ul>
+    
+    <h3>5.4. PolicyOptimizer</h3>
+    <div class="function-signature">class PolicyOptimizer(config=None)</div>
+    <p>Handles policy optimization across different scenarios and agents, facilitating training, evaluation, and comparison.</p>
+    
+    <h4>Key Methods:</h4>
+    <ul>
+        <li>
+            <div class="function-signature">__init__(config=None)</div>
+            <p>Initialize the policy optimizer with configuration parameters.</p>
+            <div class="parameter"><strong>config</strong> (dict, optional): Configuration parameters.</div>
+        </li>
+        <li>
+            <div class="function-signature">train_agent(agent, env, scenario_type, agent_name, steps=None, save_path=None)</div>
+            <p>Train an agent on a specific scenario type.</p>
+            <div class="parameter"><strong>agent</strong>: RL agent to train.</div>
+            <div class="parameter"><strong>env</strong>: Environment to train on.</div>
+            <div class="parameter"><strong>scenario_type</strong> (str): Type of scenario.</div>
+            <div class="parameter"><strong>agent_name</strong> (str): Name of the agent/algorithm.</div>
+            <div class="parameter"><strong>steps</strong> (int, optional): Number of training steps.</div>
+            <div class="parameter"><strong>save_path</strong> (str, optional): Path to save trained model.</div>
+            <div class="returns">dict: Training metrics.</div>
+        </li>
+        <li>
+            <div class="function-signature">evaluate_agent(agent, env, scenario_type, agent_name, num_episodes=None)</div>
+            <p>Evaluate an agent on a specific scenario type.</p>
+            <div class="parameter"><strong>agent</strong>: RL agent to evaluate.</div>
+            <div class="parameter"><strong>env</strong>: Environment to evaluate on.</div>
+            <div class="parameter"><strong>scenario_type</strong> (str): Type of scenario.</div>
+            <div class="parameter"><strong>agent_name</strong> (str): Name of the agent/algorithm.</div>
+            <div class="parameter"><strong>num_episodes</strong> (int, optional): Number of evaluation episodes.</div>
+            <div class="returns">dict: Evaluation metrics.</div>
+        </li>
+        <li>
+            <div class="function-signature">compare_agents(scenario_types=None, agent_names=None, metrics=None)</div>
+            <p>Compare multiple agents across different scenario types.</p>
+            <div class="parameter"><strong>scenario_types</strong> (list, optional): List of scenario types to compare.</div>
+            <div class="parameter"><strong>agent_names</strong> (list, optional): List of agent names to compare.</div>
+            <div class="parameter"><strong>metrics</strong> (list, optional): List of metrics to compare.</div>
+            <div class="returns">pandas.DataFrame: Comparison table.</div>
+        </li>
+        <li>
+            <div class="function-signature">plot_training_curves(agent_names=None, scenario_types=None, show=False, save_path=None)</div>
+            <p>Plot learning curves for different agents and scenarios.</p>
+            <div class="parameter"><strong>agent_names</strong> (list, optional): List of agent names to plot.</div>
+            <div class="parameter"><strong>scenario_types</strong> (list, optional): List of scenario types to plot.</div>
+            <div class="parameter"><strong>show</strong> (bool): Whether to display the plot.</div>
+            <div class="parameter"><strong>save_path</strong> (str, optional): Path to save the plot.</div>
+            <div class="returns">str: Path to the saved plot.</div>
+        </li>
+    </ul>
+
+    <h2 id="execution">6. Execution Commands</h2>
+    
+    <h3>6.1. Basic Usage</h3>
+    <p>Here's how to use the Reinforcement Learning Module in your Python code:</p>
+    
+    <pre><code>from gfmf.reinforcement_learning import ReinforcementLearningModule
+
+# Initialize the module with default configuration
+rl_module = ReinforcementLearningModule()
+
+# Load scenario data from Module 4
+scenarios = rl_module.load_scenario_data()
+
+# Initialize the environment and agents
+env = rl_module.initialize_environment(scenarios)
+agents = rl_module.initialize_agents(['dqn', 'ppo'])
+
+# Train and evaluate agents
+results = rl_module.train_and_evaluate_agents(
+    agents=['dqn', 'ppo'],
+    scenario_types=['normal', 'extreme'],
+    training_steps=50000,
+    eval_frequency=5000
+)
+
+# Visualize results
+rl_module.visualize_agent_comparison(results)
+
+# Export the best policy
+best_agent = 'dqn'  # Based on evaluation results
+policy_path = rl_module.export_policy(best_agent)</code></pre>
+    
+    <h3>6.2. Using Custom Configuration</h3>
+    <p>You can provide a custom configuration file to customize the reinforcement learning process:</p>
+    
+    <pre><code>from gfmf.reinforcement_learning import ReinforcementLearningModule
+
+# Initialize with custom configuration
+rl_module = ReinforcementLearningModule(config_path='path/to/custom_config.yaml')
+
+# Proceed with training as above...</code></pre>
+    
+    <h3>6.3. Using a Specific Agent</h3>
+    <p>If you want to focus on training a specific agent type:</p>
+    
+    <pre><code>from gfmf.reinforcement_learning import ReinforcementLearningModule
+
+# Initialize the module
+rl_module = ReinforcementLearningModule()
+
+# Initialize environment and a specific agent
+env = rl_module.initialize_environment()
+agents = rl_module.initialize_agents(['ppo'])  # Only PPO agent
+
+# Train and evaluate the specific agent
+results = rl_module.train_and_evaluate_agents(
+    agents=['ppo'],
+    scenario_types=['extreme'],  # Focus on extreme scenarios
+    training_steps=100000
+)
+
+# Export the trained policy
+policy_path = rl_module.export_policy('ppo')</code></pre>
+    
+    <h3>6.4. Detailed Training with Manual Agent Configuration</h3>
+    <p>For more control over the training process, you can directly work with agent and environment objects:</p>
+    
+    <pre><code>from gfmf.reinforcement_learning import ReinforcementLearningModule
+from gfmf.reinforcement_learning.agents.dqn_agent import DQNAgent
+from gfmf.reinforcement_learning.environment.grid_env import GridEnvironment
+
+# Initialize the module
+rl_module = ReinforcementLearningModule()
+
+# Load scenario data
+scenarios = rl_module.load_scenario_data()
+
+# Create environment manually
+env = GridEnvironment(
+    scenarios=scenarios,
+    max_steps=150,
+    reward_weights={
+        'stability': 1.5,
+        'outage': -1.5,
+        'load_shedding': -0.8,
+        'action': -0.05,
+        'recovery': 1.0
+    }
+)
+
+# Create agent manually with custom configuration
+dqn_config = {
+    'learning_rate': 0.0003,
+    'buffer_size': 50000,
+    'batch_size': 128,
+    'gamma': 0.99,
+    'tau': 0.001,
+    'update_every': 4,
+    'hidden_layers': [256, 128, 64]
+}
+
+agent = DQNAgent(
+    state_dim=env.observation_space.shape[0],
+    action_dim=env.action_space.n,
+    config=dqn_config
+)
+
+# Train the agent manually
+training_metrics = agent.train(
+    env,
+    num_episodes=500,
+    max_steps=150,
+    eval_freq=50
+)
+
+# Evaluate the trained agent
+eval_metrics = agent.evaluate(env, num_episodes=50)
+
+# Save the trained policy
+agent.save_policy('outputs/reinforcement_learning/custom_dqn_policy.pt')</code></pre>
+    
+    <h3>6.5. Policy Evaluation and Deployment</h3>
+    <p>To evaluate and deploy a previously trained policy:</p>
+    
+    <pre><code>from gfmf.reinforcement_learning import ReinforcementLearningModule
+
+# Initialize the module
+rl_module = ReinforcementLearningModule()
+
+# Load a previously trained policy
+agent_type = 'dqn'
+policy_path = 'outputs/reinforcement_learning/exported_policies/dqn_policy.pt'
+agent = rl_module.load_policy(policy_path, agent_type)
+
+# Initialize the environment for evaluation
+env = rl_module.initialize_environment()
+
+# Evaluate the loaded policy
+eval_results = agent.evaluate(env, num_episodes=100)
+
+# Print evaluation results
+print(f"Average reward: {eval_results['avg_reward']:.2f}")
+print(f"Outage prevention rate: {1 - eval_results['avg_outage_rate']:.2%}")
+print(f"Average stability duration: {eval_results['avg_stability']:.2f} steps")
+print(f"Average recovery time: {eval_results['avg_recovery_time']:.2f} steps")</code></pre>
+    
+    <h3>6.6. Command-Line Execution</h3>
+    <p>You can run the Reinforcement Learning Module from the command line using a script like this:</p>
+    
+    <pre><code>#!/usr/bin/env python
+import argparse
+from gfmf.reinforcement_learning import ReinforcementLearningModule
+
+def main():
+    parser = argparse.ArgumentParser(description='Run Reinforcement Learning Module')
+    parser.add_argument('--config', type=str, help='Path to configuration file')
+    parser.add_argument('--agents', nargs='+', default=['dqn'], 
+                        help='Agent types to train (dqn, ppo, sac, td3, gail)')
+    parser.add_argument('--scenarios', nargs='+', default=['normal', 'extreme', 'compound'],
+                        help='Scenario types to train on')
+    parser.add_argument('--steps', type=int, default=100000, 
+                        help='Number of training steps')
+    parser.add_argument('--output', type=str, default='outputs/reinforcement_learning/',
+                        help='Output directory path')
+    args = parser.parse_args()
+    
+    # Initialize the module
+    rl_module = ReinforcementLearningModule(config_path=args.config)
+    
+    # Train and evaluate agents
+    results = rl_module.train_and_evaluate_agents(
+        agents=args.agents,
+        scenario_types=args.scenarios,
+        training_steps=args.steps
+    )
+    
+    # Visualize results
+    rl_module.visualize_agent_comparison(results, output_dir=args.output)
+    
+    # Export policies
+    for agent_type in args.agents:
+        policy_path = rl_module.export_policy(
+            agent_type, 
+            output_path=f"{args.output}/exported_policies/{agent_type}_policy.pt"
+        )
+        print(f"Exported {agent_type} policy to {policy_path}")
+    
+    print("Reinforcement Learning Module execution completed successfully")
+
+if __name__ == '__main__':
+    main()</code></pre>
+    
+    <p>Save this script as <code>run_reinforcement_learning.py</code> and execute it with:</p>
+    
+    <div class="command">python run_reinforcement_learning.py --agents dqn ppo --scenarios extreme --steps 50000 --output results/rl/</div>
+    
+    <h2 id="configuration">7. Configuration</h2>
+    
+    <p>The Reinforcement Learning Module uses a YAML configuration file with the following structure:</p>
+    
+    <h3>7.1. Base Paths and General Settings</h3>
+    <pre><code># Base path for RL outputs
+base_path: "outputs/reinforcement_learning/"
+
+# Training parameters
+training:
+  total_steps: 100000
+  learning_rate: 0.001
+  discount_factor: 0.99
+  batch_size: 64
+  target_update_frequency: 1000
+  replay_buffer_size: 10000
+  exploration_params:
+    initial_epsilon: 1.0
+    min_epsilon: 0.1
+    decay_rate: 0.995</code></pre>
+    
+    <h3>7.2. Network Architecture</h3>
+    <pre><code># Network architecture
+network:
+  hidden_layers: [128, 64, 32]
+  activation: "relu"
+  policy_type: "mlp"
+  initialization: "xavier"
+  learning_rate_scheduler: "exponential"
+  scheduler_params:
+    decay_steps: 10000
+    decay_rate: 0.95</code></pre>
+    
+    <h3>7.3. Environment Settings</h3>
+    <pre><code># Environment settings
+environment:
+  max_steps_per_episode: 100
+  reward_weights:
+    stability: 1.0
+    outage: -1.0
+    load_shedding: -0.5
+    action: -0.1
+    recovery: 0.5
+    preventive: 0.2
+  observation_features:
+    - "component_vulnerability"
+    - "failure_probability"
+    - "environmental_risk"
+    - "component_age"
+    - "component_criticality"
+    - "grid_connectivity"
+  action_space:
+    - "load_reduction"
+    - "component_isolation"
+    - "reconfiguration"
+    - "preventive_maintenance"
+    - "emergency_response"
+    - "no_action"</code></pre>
+    
+    <h3>7.4. Agent-Specific Configurations</h3>
+    <pre><code># Agent configurations
+agents:
+  # Deep Q-Network settings
+  dqn:
+    learning_rate: 0.0005
+    gamma: 0.99
+    tau: 0.001
+    buffer_size: 100000
+    batch_size: 64
+    update_every: 4
+    use_prioritized_replay: true
+    alpha: 0.6
+    beta_start: 0.4
+    use_dueling: true
+    double_dqn: true
+    hidden_layers: [256, 128]
+  
+  # Proximal Policy Optimization settings
+  ppo:
+    learning_rate: 0.0003
+    gamma: 0.99
+    gae_lambda: 0.95
+    clip_ratio: 0.2
+    epochs: 10
+    batch_size: 64
+    entropy_coef: 0.01
+    value_coef: 0.5
+    max_grad_norm: 0.5
+    hidden_layers: [256, 128]
+  
+  # Soft Actor-Critic settings
+  sac:
+    actor_lr: 0.0003
+    critic_lr: 0.0003
+    alpha_lr: 0.0003
+    gamma: 0.99
+    tau: 0.005
+    buffer_size: 100000
+    batch_size: 256
+    hidden_layers: [256, 256]
+    automatic_entropy_tuning: true
+    target_entropy_scale: 1.0
+  
+  # Twin Delayed DDPG settings
+  td3:
+    actor_lr: 0.0003
+    critic_lr: 0.0003
+    gamma: 0.99
+    tau: 0.005
+    buffer_size: 100000
+    batch_size: 100
+    noise_scale: 0.1
+    noise_clip: 0.5
+    policy_delay: 2
+    hidden_layers: [400, 300]
+    
+  # GAIL settings
+  gail:
+    expert_data_path: "data/expert_demonstrations/expert_demos.pkl"
+    actor_lr: 0.0003
+    critic_lr: 0.0003
+    discriminator_lr: 0.0001
+    gamma: 0.99
+    gae_lambda: 0.95
+    discriminator_update_freq: 4
+    hidden_layers: [256, 128]
+    value_coef: 0.5
+    entropy_coef: 0.01</code></pre>
+    
+    <h3>7.5. Evaluation Settings</h3>
+    <pre><code># Evaluation settings
+evaluation:
+  eval_frequency: 5000
+  num_eval_episodes: 20
+  metrics:
+    - "avg_reward"
+    - "outage_rate"
+    - "load_shedding"
+    - "stability_duration"
+    - "recovery_time"
+  test_scenario_counts:
+    normal: 10
+    extreme: 5
+    compound: 5</code></pre>
+    
+    <h3>7.6. Scenario Configuration</h3>
+    <pre><code># Scenario configuration
+scenarios:
+  base_path: "data/scenario_generation/"
+  normal_scenarios_path: "generated_scenarios/normal_scenarios.pkl"
+  extreme_scenarios_path: "generated_scenarios/extreme_scenarios.pkl"
+  compound_scenarios_path: "generated_scenarios/compound_scenarios.pkl"
+  cascade_models_path: "cascade_models/propagation_models.pkl"
+  training_split: 0.8  # Percentage of scenarios to use for training vs. evaluation</code></pre>
+    
+    <h3>7.7. Logging and Visualization</h3>
+    <pre><code># Logging and visualization
+logging:
+  log_frequency: 100
+  save_model_frequency: 5000
+  tensorboard: true
+  log_level: "INFO"
+  log_file: "reinforcement_learning.log"
+  
+visualization:
+  plot_style: "seaborn-darkgrid"
+  figure_size: [12, 8]
+  dpi: 300
+  save_format: "png"
+  plot_types:
+    - "learning_curves"
+    - "reward_distribution"
+    - "outage_prevention"
+    - "recovery_efficiency"
+    - "action_distribution"
+  color_palette: "viridis"</code></pre>
+
+    <h2 id="detailed-components">8. Detailed Component Documentation</h2>
+    
+    <h3>8.1. Grid Environment</h3>
+    
+    <h4>8.1.1. Overview</h4>
+    <p>
+        The Grid Environment is the simulation platform where reinforcement learning agents interact with a virtual power grid. It models the grid components, their interactions, failure dynamics, and the effects of management actions. The environment is implemented as an OpenAI Gym environment, making it compatible with standard RL libraries.
+    </p>
+    
+    <h4>8.1.2. Workflow</h4>
+    <div class="diagram-container">
+        <div class="mermaid">
+%%{init: {'theme': 'default', 'themeVariables': { 'fontSize': '16px'}}}%%
+flowchart TD
+    A["Initialize Environment<br>with Scenario Data"] --> B["Reset Environment<br>for New Episode"]
+    B --> C["Agent Takes Action"]
+    C --> D["Execute Action<br>on Grid Components"]
+    D --> E["Update Grid State"]
+    E --> F["Check for Cascading Failures"]
+    F --> G["Calculate Reward"]
+    G --> H["Prepare Next State<br>Observation"]
+    H --> I{"Episode<br>End?"}
+    I -->|"No"| C
+    I -->|"Yes"| J["Finalize Episode<br>Statistics"]
+    
+    style A fill:#d4f1f9,stroke:#05386b
+    style B fill:#d4f1f9,stroke:#05386b
+    style C fill:#d5e8d4,stroke:#82b366
+    style D fill:#d5e8d4,stroke:#82b366
+    style F fill:#ffe6cc,stroke:#d79b00
+    style G fill:#ffe6cc,stroke:#d79b00
+    style I fill:#ffe6cc,stroke:#d79b00
+    style J fill:#f8cecc,stroke:#b85450
+        </div>
+    </div>
+    
+    <h4>8.1.3. State Space</h4>
+    <p>
+        The state space consists of a vector representation of the grid state, including:
+    </p>
+    <ul>
+        <li><strong>Component Status</strong>: Binary indicators of whether each component is operational</li>
+        <li><strong>Component Load</strong>: Current load levels as a percentage of capacity</li>
+        <li><strong>Failure Probabilities</strong>: Estimated probability of failure for each component</li>
+        <li><strong>Environmental Conditions</strong>: Weather parameters affecting the grid (temperature, wind, precipitation)</li>
+        <li><strong>Time Features</strong>: Time since episode start and temporal patterns</li>
+        <li><strong>Grid Topology Metrics</strong>: Connectivity measures and critical path information</li>
+    </ul>
+    
+    <h4>8.1.4. Action Space</h4>
+    <p>
+        The action space consists of discrete grid management actions:
+    </p>
+    <ul>
+        <li><strong>Load Balancing</strong>: Redistribute load between grid components</li>
+        <li><strong>Component Isolation</strong>: Isolate a component to prevent cascading failures</li>
+        <li><strong>Grid Reconfiguration</strong>: Change grid topology to create alternative paths</li>
+        <li><strong>Emergency Repair</strong>: Repair a failed component with priority</li>
+        <li><strong>Preventive Maintenance</strong>: Reduce failure probability of a vulnerable component</li>
+        <li><strong>No Action</strong>: Do nothing for the current step</li>
+    </ul>
+    
+    <h4>8.1.5. Key Implementation Code</h4>
+    <pre><code>def step(self, action):
+    """
+    Execute an action in the environment and return the result.
+    
+    Args:
+        action (int): Action to execute
+        
+    Returns:
+        tuple: (observation, reward, done, info) tuple
+    """
+    # Validate action
+    assert self.action_space.contains(action), f"Invalid action: {action}"
+    
+    # Execute the action and get result
+    action_result = self._execute_action(action)
+    
+    # Update environment state
+    self._update_grid_state()
+    
+    # Check for cascading failures
+    if self.cascade_models and random.random() < self.cascade_probability:
+        cascade_result = self._simulate_cascade()
+        self.cascade_history.append(cascade_result)
+        
+        # Update failed components from cascade
+        for component_id in cascade_result['newly_failed']:
+            if component_id not in self.failed_components:
+                self.failed_components.add(component_id)
+                self.failure_causes[component_id] = 'cascade'
+    
+    # Calculate reward
+    reward = self._calculate_reward(action, action_result)
+    
+    # Prepare observation
+    observation = self._get_observation()
+    
+    # Check if episode is done
+    self.current_step += 1
+    done = (self.current_step >= self.max_steps or 
+            len(self.failed_components) / len(self.components) > self.max_failure_percentage)
+    
+    # Prepare info dictionary
+    info = {
+        'grid_state': self.grid_state,
+        'failed_components': list(self.failed_components),
+        'outage': action_result.get('new_outages', 0),
+        'load_shedding': action_result.get('load_shedding', 0),
+        'stability': int(len(self.failed_components) == 0),
+        'recovery_step': action_result.get('recovery_step', 0)
+    }
+    
+    return observation, reward, done, info</code></pre>
+    
+    <h4>8.1.6. Example Usage</h4>
+    <pre><code>from gfmf.reinforcement_learning.environment.grid_env import GridEnvironment
+
+# Load scenario data from Module 4
+scenarios = {
+    'normal': normal_scenarios,
+    'extreme': extreme_scenarios,
+    'compound': compound_scenarios,
+    'cascade_models': cascade_models
+}
+
+# Configure the environment
+env_config = {
+    'max_steps': 100,
+    'reward_weights': {
+        'stability': 1.0,
+        'outage': -1.0,
+        'load_shedding': -0.5,
+        'action': -0.1,
+        'recovery': 0.5,
+        'preventive': 0.2
+    }
+}
+
+# Create the environment
+env = GridEnvironment(scenarios=scenarios, **env_config)
+
+# Run a test episode
+state = env.reset()
+done = False
+total_reward = 0
+
+while not done:
+    # Take a random action for testing
+    action = env.action_space.sample()
+    next_state, reward, done, info = env.step(action)
+    
+    print(f"Step: {env.current_step}, Action: {action}, Reward: {reward:.2f}")
+    print(f"Failed components: {len(info['failed_components'])}")
+    
+    state = next_state
+    total_reward += reward
+
+print(f"Episode finished with total reward: {total_reward:.2f}")</code></pre>
+    
+    <h3>8.2. DQN Agent</h3>
+    
+    <h4>8.2.1. Overview</h4>
+    <p>
+        The DQN Agent implements a Deep Q-Network with several enhancements: prioritized experience replay for efficient memory-based learning, dueling network architecture to better estimate state values and advantages, and double DQN to reduce overestimation bias. This agent is particularly effective for discrete action spaces like the grid management actions.
+    </p>
+    
+    <h4>8.2.2. Workflow</h4>
+    <div class="diagram-container">
+        <div class="mermaid">
+%%{init: {'theme': 'default', 'themeVariables': { 'fontSize': '16px'}}}%%
+flowchart TD
+    A["Environment State"] --> B["Neural Network<br>Q-Value Prediction"]
+    B --> C{"Action<br>Selection"}
+    C -->|"Exploration<br>(Random)"| D["Selected Action"]
+    C -->|"Exploitation<br>(Max Q-Value)"| D
+    D --> E["Environment<br>Step"]
+    E --> F["Store Experience<br>in Replay Buffer"]
+    F --> G{"Buffer Size ><br>Batch Size?"}
+    G -->|"Yes"| H["Sample Batch<br>Based on Priority"]
+    G -->|"No"| J["Continue<br>Collecting<br>Experience"]
+    H --> I["Calculate TD Error<br>and Update Network"]
+    I --> K["Update Experience<br>Priorities"]
+    K --> L{"Update<br>Target Network?"}
+    L -->|"Yes"| M["Soft Update<br>Target Network"]
+    L -->|"No"| J
+    J --> A
+    
+    style A fill:#d4f1f9,stroke:#05386b
+    style B fill:#d5e8d4,stroke:#82b366
+    style C fill:#d5e8d4,stroke:#82b366
+    style E fill:#ffe6cc,stroke:#d79b00
+    style H fill:#f8cecc,stroke:#b85450
+    style I fill:#f8cecc,stroke:#b85450
+    style K fill:#f8cecc,stroke:#b85450
+        </div>
+    </div>
+    
+    <h4>8.2.3. Key Components</h4>
+    <ul>
+        <li><strong>DuelingQNetwork</strong>: Neural network with separate value and advantage streams for better Q-value estimation</li>
+        <li><strong>PrioritizedReplayBuffer</strong>: Memory buffer that samples experiences based on their TD error magnitude</li>
+        <li><strong>Double DQN</strong>: Uses the local network for action selection and target network for value estimation to reduce overestimation</li>
+        <li><strong>Epsilon-Greedy Policy</strong>: Balances exploration and exploitation with a gradually decaying epsilon value</li>
+    </ul>
+    
+    <h4>8.2.4. Network Architecture</h4>
+    <pre><code>class DuelingQNetwork(nn.Module):
+    """
+    Dueling Q-Network Architecture.
+    
+    Separates state value and advantage functions for better learning.
+    """
+    
+    def __init__(self, state_dim, action_dim, hidden_layers=(128, 64, 32)):
+        """
+        Initialize the Q-Network.
+        
+        Args:
+            state_dim (int): Dimension of the state space
+            action_dim (int): Dimension of the action space
+            hidden_layers (tuple): Sizes of hidden layers
+        """
+        super(DuelingQNetwork, self).__init__()
+        
+        # Feature extraction layers
+        self.feature_layer = nn.Sequential(
+            nn.Linear(state_dim, hidden_layers[0]),
+            nn.ReLU(),
+            nn.Linear(hidden_layers[0], hidden_layers[1]),
+            nn.ReLU()
+        )
+        
+        # Value stream
+        self.value_stream = nn.Sequential(
+            nn.Linear(hidden_layers[1], hidden_layers[2]),
+            nn.ReLU(),
+            nn.Linear(hidden_layers[2], 1)
+        )
+        
+        # Advantage stream
+        self.advantage_stream = nn.Sequential(
+            nn.Linear(hidden_layers[1], hidden_layers[2]),
+            nn.ReLU(),
+            nn.Linear(hidden_layers[2], action_dim)
+        )
+    
+    def forward(self, state):
+        """
+        Forward pass through the network.
+        
+        Args:
+            state: Input state tensor
+            
+        Returns:
+            torch.Tensor: Q-values for each action
+        """
+        features = self.feature_layer(state)
+        
+        value = self.value_stream(features)
+        advantages = self.advantage_stream(features)
+        
+        # Combine value and advantages using dueling architecture formula
+        q_values = value + (advantages - advantages.mean(dim=1, keepdim=True))
+        
+        return q_values</code></pre>
+    
+    <h4>8.2.5. Example Usage</h4>
+    <pre><code>from gfmf.reinforcement_learning.agents.dqn_agent import DQNAgent
+from gfmf.reinforcement_learning.environment.grid_env import GridEnvironment
+
+# Create environment
+env = GridEnvironment(scenarios=scenarios)
+
+# Get state and action dimensions
+state_dim = env.observation_space.shape[0]
+action_dim = env.action_space.n
+
+# Configure DQN agent
+dqn_config = {
+    'learning_rate': 0.0005,
+    'gamma': 0.99,
+    'tau': 0.001,
+    'buffer_size': 100000,
+    'batch_size': 64,
+    'update_every': 4,
+    'use_prioritized_replay': True,
+    'alpha': 0.6,
+    'beta_start': 0.4,
+    'use_dueling': True,
+    'double_dqn': True,
+    'hidden_layers': [256, 128]
+}
+
+# Create DQN agent
+dqn_agent = DQNAgent(state_dim, action_dim, config=dqn_config)
+
+# Train the agent
+training_results = dqn_agent.train(
+    env, 
+    num_episodes=500, 
+    max_steps=100,
+    eval_freq=50
+)
+
+# Save the trained policy
+dqn_agent.save_policy('outputs/reinforcement_learning/dqn_policy.pt')
+
+# Evaluate the trained agent
+eval_results = dqn_agent.evaluate(env, num_episodes=50)
+print(f"Average reward: {eval_results['avg_reward']:.2f}")
+print(f"Average outage rate: {eval_results['avg_outage_rate']:.2f}")</code></pre>
+    
+    <h3>8.3. PPO Agent</h3>
+    
+    <h4>8.3.1. Overview</h4>
+    <p>
+        The PPO (Proximal Policy Optimization) Agent implements a policy gradient method that uses a clipped surrogate objective to ensure stable updates. It maintains separate policy and value networks, and uses Generalized Advantage Estimation for more accurate policy updates. PPO is known for its sample efficiency and stable learning process.
+    </p>
+    
+    <h4>8.3.2. Workflow</h4>
+    <div class="diagram-container">
+        <div class="mermaid">
+%%{init: {'theme': 'default', 'themeVariables': { 'fontSize': '16px'}}}%%
+flowchart TD
+    A["Environment State"] --> B["Policy Network<br>Action Distribution"]
+    B --> C["Sample Action<br>from Distribution"]
+    C --> D["Environment<br>Step"]
+    D --> E["Compute Advantage<br>using Value Network"]
+    E --> F["Store in<br>Trajectory Buffer"]
+    F --> G{"Buffer Full?"}
+    G -->|"No"| A
+    G -->|"Yes"| H["Calculate<br>Surrogate Loss"]
+    H --> I["Clip Loss to<br>Maintain Proximity"]
+    I --> J["Calculate Value Loss<br>and Entropy Bonus"]
+    J --> K["Combined Policy Update"]
+    K --> L["Clear Buffer"]
+    L --> A
+    
+    style A fill:#d4f1f9,stroke:#05386b
+    style B fill:#d5e8d4,stroke:#82b366
+    style C fill:#d5e8d4,stroke:#82b366
+    style E fill:#ffe6cc,stroke:#d79b00
+    style H fill:#f8cecc,stroke:#b85450
+    style I fill:#f8cecc,stroke:#b85450
+    style J fill:#f8cecc,stroke:#b85450
+    style K fill:#f8cecc,stroke:#b85450
+        </div>
+    </div>
+    
+    <h4>8.3.3. Key Components</h4>
+    <ul>
+        <li><strong>Policy Network</strong>: Neural network that outputs action probabilities given a state</li>
+        <li><strong>Value Network</strong>: Neural network that estimates the value function</li>
+        <li><strong>Clipped Surrogate Objective</strong>: Prevents too large policy updates, which is essential for maintaining reliability in grid management policies where catastrophic performance drops are unacceptable.</li>
+        <li><strong>Generalized Advantage Estimation (GAE)</strong>: Provides more accurate advantage estimates for policy updates</li>
+        <li><strong>Entropy Bonus</strong>: Encourages exploration by rewarding higher entropy in the policy distribution</li>
+    </ul>
+    
+    <h3>8.4. SAC Agent</h3>
+    
+    <h4>8.4.1. Overview</h4>
+    <p>
+        The SAC (Soft Actor-Critic) Agent implements an off-policy algorithm that maximizes both the expected return and the entropy of the policy. It uses twin Q-networks to reduce overestimation bias and automatically tunes the temperature parameter that controls the tradeoff between exploration and exploitation.
+    </p>
+    
+    <h4>8.4.2. Key Features</h4>
+    <ul>
+        <li><strong>Maximum Entropy Policy</strong>: Balances expected reward with exploration to find robust solutions</li>
+        <li><strong>Twin Q-Networks</strong>: Two critics to reduce overestimation bias</li>
+        <li><strong>Automatic Entropy Tuning</strong>: Self-adjusts the exploration-exploitation balance</li>
+        <li><strong>Off-Policy Learning</strong>: Can learn from previously collected experiences</li>
+    </ul>
+    
+    <h3>8.5. TD3 Agent</h3>
+    
+    <h4>8.5.1. Overview</h4>
+    <p>
+        The TD3 (Twin Delayed DDPG) Agent implements an advanced actor-critic algorithm for continuous action spaces. It features twin critic networks to reduce overestimation bias, delayed policy updates, and target policy smoothing to provide more stable learning.
+    </p>
+    
+    <h4>8.5.2. Key Features</h4>
+    <ul>
+        <li><strong>Twin Critics</strong>: Two critic networks to reduce overestimation bias</li>
+        <li><strong>Delayed Policy Updates</strong>: Policy is updated less frequently than critics for stability</li>
+        <li><strong>Target Policy Smoothing</strong>: Adds noise to target actions to prevent overfitting to narrow peaks</li>
+        <li><strong>Deterministic Policy</strong>: Outputs a specific action rather than a distribution</li>
+    </ul>
+    
+    <h3>8.6. GAIL Agent</h3>
+    
+    <h4>8.6.1. Overview</h4>
+    <p>
+        The GAIL (Generative Adversarial Imitation Learning) Agent implements a method for learning policies from expert demonstrations using a generative adversarial approach. It uses a discriminator to distinguish between expert and agent behaviors, and a generator (policy) that tries to mimic expert behaviors to fool the discriminator.
+    </p>
+    
+    <h4>8.6.2. Key Features</h4>
+    <ul>
+        <li><strong>Discriminator Network</strong>: Distinguishes between expert and agent behaviors</li>
+        <li><strong>Generator/Policy Network</strong>: Tries to mimic expert behaviors</li>
+        <li><strong>Expert Demonstrations</strong>: Uses data from human operators or other sources</li>
+        <li><strong>Adversarial Training</strong>: Policy and discriminator are trained in an adversarial manner</li>
+    </ul>
+
+    <h2 id="algorithms">9. Algorithm Selection Rationale</h2>
+    
+    <p>
+        The Reinforcement Learning Module implements multiple state-of-the-art algorithms to address the complex challenges of grid failure management. This section explains the rationale behind these algorithm choices and why they are particularly suited for this domain.
+    </p>
+    
+    <h3>9.1. Why Deep Reinforcement Learning?</h3>
+    <p>
+        Deep reinforcement learning was selected as the primary approach for grid management policy optimization for several key reasons:
+    </p>
+    <ul>
+        <li><strong>Handling Complex State Spaces</strong>: Power grids have high-dimensional state spaces representing component status, load distributions, and environmental conditions. Deep neural networks can effectively process and extract patterns from such complex data.</li>
+        <li><strong>Sequential Decision Making</strong>: Grid management involves making sequences of decisions over time, with actions having both immediate and long-term consequences. RL is specifically designed to optimize such sequential decision processes.</li>
+        <li><strong>Learning Without Perfect Models</strong>: The exact dynamics of grid failures, especially cascading failures, are difficult to model precisely. RL can learn effective policies directly from experience without requiring perfect models of the environment dynamics.</li>
+        <li><strong>Ability to Balance Multiple Objectives</strong>: Grid management involves balancing competing objectives such as maintaining service, preventing failures, and minimizing operational costs. RL can learn policies that effectively trade off these different objectives.</li>
+        <li><strong>Adaptability</strong>: RL agents can adapt to changing conditions and novel situations, making them suitable for handling the diverse failure scenarios that may occur in power grids.</li>
+    </ul>
+    
+    <h3>9.2. Algorithm Selection Criteria</h3>
+    <p>
+        The specific algorithms implemented in the module were selected based on the following criteria:
+    </p>
+    <ul>
+        <li><strong>Sample Efficiency</strong>: Given the computational cost of simulating grid scenarios, algorithms that can learn efficiently from limited experience are preferred.</li>
+        <li><strong>Stability</strong>: Grid management requires reliable policies, so algorithms with stable learning properties are essential.</li>
+        <li><strong>Exploration-Exploitation Balance</strong>: Effective exploration is crucial for discovering robust grid management strategies while still exploiting known good actions.</li>
+        <li><strong>Handling Partial Observability</strong>: In real grid environments, not all state information may be available, so algorithms that can handle partial observability are valuable.</li>
+        <li><strong>Policy Representational Power</strong>: The complexity of optimal grid management policies requires algorithms with sufficient representational capacity.</li>
+    </ul>
+    
+    <h3>9.3. DQN: Value-Based Learning for Discrete Actions</h3>
+    <p>
+        The DQN (Deep Q-Network) algorithm was chosen because:
+    </p>
+    <ul>
+        <li><strong>Effectiveness for Discrete Actions</strong>: Grid management often involves selecting from a discrete set of actions (e.g., isolate component A, reduce load on component B), which aligns perfectly with DQN's strengths in discrete action spaces.</li>
+        <li><strong>Enhanced with Modern Improvements</strong>: Our implementation includes key improvements over vanilla DQN:
+            <ul>
+                <li><em>Prioritized Experience Replay</em>: More effective learning by focusing on the most informative experiences, crucial for rare but critical grid failure scenarios.</li>
+                <li><em>Dueling Network Architecture</em>: Better value estimation by separately representing state value and advantage, helping distinguish the value of different grid management strategies.</li>
+                <li><em>Double DQN</em>: Reduces overestimation bias, preventing the agent from being overly optimistic about recovery actions that may not be effective.</li>
+            </ul>
+        </li>
+        <li><strong>Alternative Considered: DQN without Enhancements</strong>: Standard DQN was considered but rejected because the enhanced version consistently showed better performance in experiments, especially for preventing catastrophic grid failures.</li>
+    </ul>
+    
+    <h3>9.4. PPO: Stable Policy Gradient Learning</h3>
+    <p>
+        The PPO (Proximal Policy Optimization) algorithm was selected because:
+    </p>
+    <ul>
+        <li><strong>Sample Efficiency with Stability</strong>: PPO strikes an excellent balance between sample efficiency and training stability, crucial for learning from computationally expensive grid simulations.</li>
+        <li><strong>Clipped Surrogate Objective</strong>: Prevents too large policy updates, which is essential for maintaining reliability in grid management policies where catastrophic performance drops are unacceptable.</li>
+        <li><strong>Compatible with Continuous and Discrete Actions</strong>: Can handle both discrete actions (e.g., switch operations) and potentially continuous actions (e.g., load reduction percentages).</li>
+        <li><strong>Alternative Considered: TRPO</strong>: Trust Region Policy Optimization was considered but rejected in favor of PPO due to PPO's simpler implementation and comparable performance with lower computational overhead.</li>
+    </ul>
+    
+    <h3>9.5. SAC: Maximum Entropy Policy Learning</h3>
+    <p>
+        The SAC (Soft Actor-Critic) algorithm was included because:
+    </p>
+    <ul>
+        <li><strong>Maximum Entropy Objective</strong>: Encourages exploration while maximizing expected return, leading to more robust policies that can handle unexpected grid conditions.</li>
+        <li><strong>Off-Policy Learning</strong>: Can efficiently reuse past experiences, making it data-efficient for learning from diverse grid failure scenarios.</li>
+        <li><strong>Automatic Temperature Tuning</strong>: Self-adjusts the exploration-exploitation trade-off, adapting to different phases of training and different scenario complexities.</li>
+        <li><strong>Alternative Considered: DDPG</strong>: Deep Deterministic Policy Gradient was considered but found to be less stable and more prone to converging to local optima in grid management tasks.</li>
+    </ul>
+    
+    <h3>9.6. TD3: Addressing Function Approximation Error</h3>
+    <p>
+        The TD3 (Twin Delayed DDPG) algorithm was selected because:
+    </p>
+    <ul>
+        <li><strong>Twin Critics for Reduced Overestimation</strong>: Using the minimum of two critics helps prevent overestimation bias, which is crucial for realistic assessment of grid management actions.</li>
+        <li><strong>Delayed Policy Updates</strong>: Improves stability by updating the policy less frequently than the critics, preventing premature convergence to suboptimal policies.</li>
+        <li><strong>Target Policy Smoothing</strong>: Adds noise to target actions to prevent the algorithm from exploiting narrow peaks in the value function, leading to more robust policies.</li>
+        <li><strong>Alternative Considered: Standard Actor-Critic</strong>: Standard actor-critic methods were tested but found to be less stable for complex grid scenarios with delayed consequences.</li>
+    </ul>
+    
+    <h3>9.7. GAIL: Learning from Expert Demonstrations</h3>
+    <p>
+        The GAIL (Generative Adversarial Imitation Learning) algorithm was included because:
+    </p>
+    <ul>
+        <li><strong>Leveraging Human Expertise</strong>: Can incorporate knowledge from experienced grid operators by learning from their demonstrations, bridging the gap between purely data-driven approaches and human expertise.</li>
+        <li><strong>No Need for Explicit Reward Engineering</strong>: Instead of designing complex reward functions for grid management, GAIL can learn directly from expert behavior.</li>
+        <li><strong>Adversarial Framework</strong>: The generator-discriminator architecture provides a powerful framework for matching the distribution of expert actions in different grid states.</li>
+        <li><strong>Alternative Considered: Behavioral Cloning</strong>: Simple behavioral cloning was considered but found to suffer from compounding errors and inability to recover from states not seen in the demonstrations.</li>
+    </ul>
+    
+    <h3>9.8. Ensemble Approach Benefits</h3>
+    <p>
+        Rather than selecting a single "best" algorithm, the module implements multiple algorithms because:
+    </p>
+    <ul>
+        <li><strong>Different Strengths</strong>: Each algorithm has different strengths and weaknesses for various grid management scenarios and objectives.</li>
+        <li><strong>Algorithm Portfolio</strong>: Having multiple algorithms allows selecting the most appropriate one based on specific requirements (e.g., discrete vs. continuous actions, sample efficiency vs. ultimate performance).</li>
+        <li><strong>Baseline for Comparison</strong>: Implementing multiple algorithms provides internal benchmarks for evaluating performance.</li>
+        <li><strong>Policy Ensembling</strong>: In critical applications, predictions from multiple algorithms can be combined for more robust decision-making.</li>
+    </ul>
+    
+    <div class="note">
+        <strong>Note:</strong> This documentation provides an overview of the Reinforcement Learning Module.
+        For more detailed information on specific components and algorithms, refer to the inline documentation in the
+        source code files and the references cited therein.
+    </div>
+
+    <script>
+        // Initialize Mermaid diagrams
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                // Use timeout to ensure diagrams have chance to render
+                try {
+                    mermaid.init(undefined, document.querySelectorAll('.mermaid'));
+                    console.log("Mermaid diagrams initialized");
+                } catch (e) {
+                    console.error("Error initializing Mermaid diagrams:", e);
+                }
+            }, 500);
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,1694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualization and Reporting Module Documentation - Grid Failure Modeling Framework</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2, h3, h4 {
+            color: #2c3e50;
+        }
+        h1 {
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            border-bottom: 1px solid #bdc3c7;
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
+        pre {
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            padding: 15px;
+            overflow-x: auto;
+        }
+        code {
+            font-family: Consolas, Monaco, 'Andale Mono', monospace;
+            background-color: #f4f4f4;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+        }
+        th, td {
+            text-align: left;
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .workflow-container {
+            margin: 30px 0;
+            text-align: center;
+        }
+        .workflow {
+            max-width: 100%;
+        }
+        .note {
+            background-color: #e7f4ff;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .warning {
+            background-color: #fff5e6;
+            border-left: 4px solid #e67e22;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .function-signature {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .parameter {
+            margin-left: 20px;
+            margin-bottom: 5px;
+        }
+        .returns {
+            margin-top: 10px;
+            font-style: italic;
+        }
+        .directory-structure {
+            font-family: monospace;
+            white-space: pre;
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            padding: 15px;
+            overflow-x: auto;
+        }
+        .command {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px;
+            border-radius: 3px;
+            margin: 10px 0;
+        }
+        .diagram-container {
+            width: 100%;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        .mermaid {
+            margin: 0 auto;
+        }
+        .error {
+            background-color: #ffebee;
+            color: #c62828;
+            padding: 15px;
+            border-left: 4px solid #c62828;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+        .custom-diagram-container {
+            position: relative;
+            width: 100%;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        .module-title {
+            position: absolute;
+            top: 10px;
+            right: 30px;
+            background-color: #e8f5e9;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: #333;
+            z-index: 10;
+            border: 1px solid #2e7d32;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11.6.0/dist/mermaid.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'default',
+                securityLevel: 'loose',
+                fontFamily: 'Arial, sans-serif',
+                fontSize: 16
+            });
+            
+            // Error handling
+            mermaid.parseError = function(err, hash) {
+                console.error("Mermaid error:", err);
+                // Replace diagram with error message for users
+                const diagrams = document.getElementsByClassName('mermaid');
+                for (let i = 0; i < diagrams.length; i++) {
+                    if (diagrams[i].innerHTML.includes(hash.str)) {
+                        diagrams[i].innerHTML = `<div class="error">Diagram rendering error: ${err}</div>`;
+                    }
+                }
+            };
+        });
+    </script>
+</head>
+<body>
+    <h1>Visualization and Reporting Module Documentation</h1>
+    
+    <p>This module provides visualization and reporting capabilities for the Grid Failure Modeling Framework (GFMF), enabling users to create interactive visualizations, dashboards, and automated reports from grid data, vulnerability analysis, failure predictions, and scenario generation results.</p>
+    
+    <h2>Table of Contents</h2>
+    <ol>
+        <li><a href="#directory">Directory Structure</a></li>
+        <li><a href="#workflow">Workflow Diagram</a></li>
+        <li><a href="#components">Module Components</a></li>
+        <li><a href="#files">File Descriptions</a></li>
+        <li><a href="#classes">Key Classes and Functions</a></li>
+        <li><a href="#execution">Execution Commands</a></li>
+        <li><a href="#configuration">Configuration</a></li>
+        <li><a href="#detailed-components">Detailed Component Documentation</a></li>
+        <li><a href="#visualization-rationale">Visualization Selection Rationale</a></li>
+    </ol>
+    
+    <h2 id="directory">1. Directory Structure</h2>
+    <div class="directory-structure">
+gfmf/
+└── visualization_reporting/
+    ├── __init__.py                       # Module initialization and exports
+    ├── visualization_reporting_module.py # Main module interface
+    ├── grid_visualization.py             # Grid topology and vulnerability visualization
+    ├── performance_visualization.py      # Model and agent performance visualization
+    ├── dashboard.py                      # Interactive dashboard creation
+    ├── report_generator.py               # Automated report generation
+    ├── README.md                         # Module documentation
+    ├── assets/                           # Static assets for visualizations
+    │   ├── logo.py                       # Logo generation utilities
+    │   └── logo.txt                      # ASCII logo representation
+    └── templates/                        # Templates for report generation
+        └── reports/                      # Report templates
+            ├── daily_summary.html        # Daily summary report template
+            ├── vulnerability_assessment.html # Vulnerability report template
+            └── policy_evaluation.html    # Policy evaluation report template
+    </div>
+
+    <h2 id="workflow">2. Workflow Diagram</h2>
+
+    <div class="custom-diagram-container">
+        <div class="module-title">Visualization Reporting Module</div>
+        <div class="mermaid">
+%%{init: {'theme': 'default', 'themeVariables': { 'fontSize': '16px'}}}%%
+flowchart TD
+    subgraph Input["Input Data from GFMF Modules"]
+        A1["Data Management<br>Module 1"] --> D1["Grid Topology"]
+        A1 --> D2["Weather Data"]
+        A1 --> D3["Outage Data"]
+        A2["Vulnerability Analysis<br>Module 2"] --> D4["Component<br>Vulnerability Scores"]
+        A2 --> D5["Environmental<br>Threat Profiles"]
+        A3["Failure Prediction<br>Module 3"] --> D6["Failure<br>Probabilities"]
+        A3 --> D7["Correlation Models"]
+        A4["Scenario Generation<br>Module 4"] --> D8["Generated<br>Scenarios"]
+        A4 --> D9["Cascade Models"]
+        A5["Reinforcement Learning<br>Module 5"] --> D10["Agent Performance<br>Metrics"]
+        A5 --> D11["Policy<br>Recommendations"]
+    end
+    
+    subgraph VRM["Visualization Reporting Module"]
+        E1["Data Integration<br>& Processing"]
+        
+        subgraph Visualization["Visualization Components"]
+            V1["Grid<br>Visualization"]
+            V2["Performance<br>Visualization"]
+            V3["Interactive<br>Dashboards"]
+        end
+        
+        subgraph Reporting["Reporting Components"]
+            R1["Report<br>Generator"]
+            R2["Report<br>Templates"]
+            R3["Export<br>Options"]
+        end
+        
+        E1 --> V1
+        E1 --> V2
+        E1 --> V3
+        
+        V1 --> R1
+        V2 --> R1
+        V3 --> R1
+        
+        R1 --- R2
+        R1 --- R3
+    end
+    
+    subgraph Output["Outputs"]
+        O1["Grid Vulnerability<br>Visualizations"]
+        O2["Performance Metric<br>Visualizations"]
+        O3["Interactive<br>Operational Dashboards"]
+        O4["Automated<br>Reports"]
+    end
+    
+    D1 & D2 & D3 & D4 & D5 & D6 & D7 & D8 & D9 & D10 & D11 --> E1
+    
+    V1 --> O1
+    V2 --> O2
+    V3 --> O3
+    R1 --> O4
+    
+    classDef inputStyle fill:#e1f5fe,stroke:#01579b;
+    classDef moduleStyle fill:#e8f5e9,stroke:#2e7d32;
+    classDef outputStyle fill:#fff3e0,stroke:#e65100;
+    classDef vizStyle fill:#f3e5f5,stroke:#6a1b9a;
+    classDef repStyle fill:#e8eaf6,stroke:#283593;
+    
+    class Input inputStyle;
+    class VRM moduleStyle;
+    class Output outputStyle;
+    class Visualization vizStyle;
+    class Reporting repStyle;
+        </div>
+    </div>
+
+    <p>The workflow of the Visualization Reporting Module consists of these key steps:</p>
+    <ol>
+        <li><strong>Data Integration</strong>: The module receives data from all previous modules in the GFMF pipeline, including grid topology, vulnerability scores, failure predictions, scenarios, and policy recommendations.</li>
+        <li><strong>Grid Visualization</strong>: Creates visual representations of the grid including network diagrams, heatmaps, and geographic visualizations with overlay capabilities for weather data and failure probabilities.</li>
+        <li><strong>Performance Visualization</strong>: Generates visualizations of model performance metrics, including ROC curves, confusion matrices, learning curves, and comparative analyses.</li>
+        <li><strong>Interactive Dashboard Creation</strong>: Builds interactive dashboards for real-time monitoring of grid status, vulnerability assessment, and policy recommendations using a web-based interface.</li>
+        <li><strong>Report Generation</strong>: Creates automated reports combining visualizations and analysis into structured formats such as HTML and PDF, using customizable templates.</li>
+        <li><strong>Export and Distribution</strong>: Provides various export options for visualizations and reports to facilitate sharing of insights and decision support information.</li>
+    </ol>
+    
+    <h3>Integration with Other GFMF Modules</h3>
+    <p>
+        The Visualization Reporting Module integrates with all previous modules in the GFMF framework:
+    </p>
+    <ul>
+        <li><strong>Data Management Module (Module 1)</strong>: Utilizes processed grid topology, weather data, and outage records as the foundation for visualizations.</li>
+        <li><strong>Vulnerability Analysis Module (Module 2)</strong>: Visualizes component vulnerability scores and environmental threat assessments to highlight risk areas.</li>
+        <li><strong>Failure Prediction Module (Module 3)</strong>: Presents failure probability predictions and correlation models to show potential failure points and their relationships.</li>
+        <li><strong>Scenario Generation Module (Module 4)</strong>: Depicts generated scenarios and cascade models to illustrate potential failure propagation patterns.</li>
+        <li><strong>Reinforcement Learning Module (Module 5)</strong>: Displays agent performance metrics and policy recommendations to support operational decision-making.</li>
+    </ul>
+    
+    <h2 id="components">3. Module Components</h2>
+    
+    <p>The Visualization Reporting Module consists of four primary components, each responsible for a specific aspect of visualization and reporting:</p>
+    
+    <h3>3.1. Grid Visualization</h3>
+    <p>
+        The Grid Visualization component creates static and interactive visualizations of the power grid topology, 
+        component vulnerability, and operational status.
+    </p>
+    
+    <div class="diagram-container">
+        <div class="mermaid">
+%%{init: {'theme': 'default', 'themeVariables': { 'fontSize': '16px'}}}%%
+classDiagram
+    class GridVisualization {
+        +node_size
+        +font_size
+        +dpi
+        +color_scheme
+        +map_style
+        +create_vulnerability_map()
+        +get_vulnerability_data()
+        +plot_vulnerability_map()
+        -_load_grid_data()
+        -_load_vulnerability_data()
+        -_load_weather_data()
+        -_create_network_visualization()
+        -_create_heatmap_visualization()
+        -_create_geographic_visualization()
+        -_plot_network_graph()
+    }
+    
+    GridVisualization --> "creates" NetworkMap
+    GridVisualization --> "creates" HeatMap
+    GridVisualization --> "creates" GeographicMap
+    
+    class NetworkMap {
+        +nodes
+        +edges
+        +vulnerability_overlay
+        +weather_overlay
+    }
+    
+    class HeatMap {
+        +region_grid
+        +vulnerability_intensity
+        +weather_overlay
+    }
+    
+    class GeographicMap {
+        +geo_coordinates
+        +component_markers
+        +vulnerability_zones
+        +weather_layers
+    }
+        </div>
+    </div>
+    
+    <p><strong>Key Features:</strong></p>
+    <ul>
+        <li><strong>Network Visualizations</strong>: Graph-based representations of grid topology with color-coded vulnerability indicators</li>
+        <li><strong>Heatmaps</strong>: Intensity maps showing vulnerability concentrations across geographic areas</li>
+        <li><strong>Geographic Visualizations</strong>: Geo-referenced maps with component locations and status indicators</li>
+        <li><strong>Weather Overlays</strong>: Integration of weather data to correlate environmental conditions with vulnerabilities</li>
+        <li><strong>Interactive Elements</strong>: Zoom, filter, and hover capabilities for detailed information access</li>
+    </ul>
+    
+    <h3>3.2. Performance Visualization</h3>
+    <p>
+        The Performance Visualization component creates visualizations of model performance metrics 
+        and agent learning curves to evaluate the effectiveness of prediction models and RL agents.
+    </p>
+    
+    <div class="diagram-container">
+        <div class="mermaid">
+%%{init: {'theme': 'default', 'themeVariables': { 'fontSize': '16px'}}}%%
+classDiagram
+    class PerformanceVisualization {
+        +fig_size
+        +dpi
+        +style
+        +palette
+        +create_visualizations()
+        +get_performance_data()
+        +get_agent_learning_data()
+        +plot_performance_comparison()
+        +plot_learning_curves()
+        -_load_performance_data()
+        -_load_agent_learning_data()
+        -_load_prediction_performance_data()
+        -_create_roc_curve_visualization()
+        -_create_confusion_matrix_visualization()
+        -_create_learning_curves_visualization()
+        -_create_comparative_bar_chart()
+        -_create_combined_comparison()
+    }
+    
+    PerformanceVisualization --> "creates" ROCCurve
+    PerformanceVisualization --> "creates" ConfusionMatrix
+    PerformanceVisualization --> "creates" LearningCurves
+    PerformanceVisualization --> "creates" ComparativeCharts
+    
+    class ROCCurve {
+        +true_positive_rate
+        +false_positive_rate
+        +auc_score
+    }
+    
+    class ConfusionMatrix {
+        +true_positives
+        +false_positives
+        +true_negatives
+        +false_negatives
+        +accuracy
+        +precision
+        +recall
+    }
+    
+    class LearningCurves {
+        +episodes
+        +rewards
+        +losses
+        +agent_comparison
+    }
+    
+    class ComparativeCharts {
+        +metrics
+        +agents
+        +scenarios
+        +bar_charts
+        +radar_charts
+    }
+        </div>
+    </div>
+    
+    <p><strong>Key Features:</strong></p>
+    <ul>
+        <li><strong>ROC Curves</strong>: Visualizes the trade-off between true positive rate and false positive rate for binary classifiers</li>
+        <li><strong>Confusion Matrices</strong>: Displays prediction accuracy statistics for classification models</li>
+        <li><strong>Learning Curves</strong>: Shows progression of RL agent performance during training</li>
+        <li><strong>Comparative Charts</strong>: Bar charts, radar charts, and line plots for comparing different models and agents</li>
+        <li><strong>Statistical Visualizations</strong>: Distributions, boxplots, and violin plots for performance metric analysis</li>
+    </ul>
+    
+    <h3>3.3. Dashboard</h3>
+    <p>
+        The Dashboard component creates interactive web-based dashboards for real-time monitoring 
+        of grid status, vulnerability assessment, and policy recommendations.
+    </p>
+    
+    <div class="diagram-container">
+        <div class="mermaid">
+%%{init: {'theme': 'default', 'themeVariables': { 'fontSize': '16px'}}}%%
+classDiagram
+    class Dashboard {
+        +port
+        +theme
+        +refresh_interval
+        +default_layout
+        +max_items_per_page
+        +active_dashboards
+        +launch()
+        -_create_dashboard_layout()
+        -_add_data_update_callbacks()
+        -_create_grid_status_panel()
+        -_create_vulnerability_map_panel()
+        -_create_component_risk_panel()
+        -_create_threat_assessment_panel()
+        -_create_outage_metrics_panel()
+        -_create_weather_alerts_panel()
+        -_create_policy_recommendations_panel()
+        -_create_resource_allocation_panel()
+        -_create_action_priority_panel()
+    }
+    
+    Dashboard --> "creates" OperationalDashboard
+    Dashboard --> "creates" VulnerabilityDashboard
+    Dashboard --> "creates" PolicyDashboard
+    
+    class OperationalDashboard {
+        +grid_status
+        +outage_metrics
+        +weather_alerts
+        +auto_refresh
+    }
+    
+    class VulnerabilityDashboard {
+        +vulnerability_map
+        +component_risk
+        +threat_assessment
+        +auto_refresh
+    }
+    
+    class PolicyDashboard {
+        +policy_recommendations
+        +resource_allocation
+        +action_priority
+        +auto_refresh
+    }
+        </div>
+    </div>
+    
+    <p><strong>Key Features:</strong></p>
+    <ul>
+        <li><strong>Interactive Panels</strong>: Customizable dashboard panels for different visualization types</li>
+        <li><strong>Real-time Updates</strong>: Automatic refresh capabilities to reflect the latest data</li>
+        <li><strong>Multiple Dashboard Types</strong>: Specialized dashboards for operations, vulnerability assessment, and policy recommendations</li>
+        <li><strong>Filtering Capabilities</strong>: User controls for filtering data and customizing views</li>
+        <li><strong>Export Functions</strong>: Options to export visualizations and data from dashboard panels</li>
+    </ul>
+    
+    <h3>3.4. Report Generator</h3>
+    <p>
+        The Report Generator component creates automated reports that combine visualizations, 
+        data tables, and narrative analysis into structured documents for stakeholders.
+    </p>
+    
+    <div class="diagram-container">
+        <div class="mermaid">
+%%{init: {'theme': 'default', 'themeVariables': { 'fontSize': '16px'}}}%%
+classDiagram
+    class ReportGenerator {
+        +template_dir
+        +default_format
+        +logo_path
+        +company_name
+        +default_sections
+        +template_env
+        +generate_report()
+        -_setup_template_environment()
+        -_add_default_templates()
+        -_generate_daily_summary()
+        -_generate_vulnerability_assessment()
+        -_generate_policy_evaluation()
+        -_generate_placeholder_image()
+        -_generate_html_report()
+        -_generate_pdf_report()
+    }
+    
+    ReportGenerator --> "creates" DailySummaryReport
+    ReportGenerator --> "creates" VulnerabilityReport
+    ReportGenerator --> "creates" PolicyReport
+    ReportGenerator --> "uses" ReportTemplates
+    
+    class DailySummaryReport {
+        +summary_section
+        +grid_status_section
+        +metrics_section
+        +visualizations
+    }
+    
+    class VulnerabilityReport {
+        +executive_summary
+        +vulnerability_maps
+        +component_risk_section
+        +threat_assessment_section
+        +recommendations
+    }
+    
+    class PolicyReport {
+        +policy_evaluation
+        +agent_performance
+        +action_recommendations
+        +resource_allocation
+        +implementation_timeline
+    }
+    
+    class ReportTemplates {
+        +html_templates
+        +sections
+        +styling
+    }
+        </div>
+    </div>
+    
+    <p><strong>Key Features:</strong></p>
+    <ul>
+        <li><strong>Template-Based Generation</strong>: Uses customizable templates for consistent report formatting</li>
+        <li><strong>Multiple Report Types</strong>: Specialized report templates for daily summaries, vulnerability assessments, and policy evaluations</li>
+        <li><strong>Dynamic Content</strong>: Automated inclusion of relevant visualizations, tables, and metrics</li>
+        <li><strong>Multiple Output Formats</strong>: Support for HTML and PDF output formats</li>
+        <li><strong>Scheduled Generation</strong>: Capability for automatic report generation on schedules</li>
+    </ul>
+    
+    <h3>3.5. Module Integration</h3>
+    <p>
+        The VisualizationReportingModule class serves as the main interface, integrating all 
+        the above components and providing a unified API for the module's functionality.
+    </p>
+    
+    <div class="diagram-container">
+        <div class="mermaid">
+%%{init: {'theme': 'default', 'themeVariables': { 'fontSize': '16px'}}}%%
+classDiagram
+    class VisualizationReportingModule {
+        +config
+        +grid_viz
+        +performance_viz
+        +dashboard
+        +report_generator
+        +output_dir
+        +__init__(config_path)
+        +create_vulnerability_map()
+        +create_performance_visualizations()
+        +launch_dashboard()
+        +generate_report()
+        +create_combined_visualization()
+        -_load_config()
+    }
+    
+    VisualizationReportingModule *-- GridVisualization
+    VisualizationReportingModule *-- PerformanceVisualization
+    VisualizationReportingModule *-- Dashboard
+    VisualizationReportingModule *-- ReportGenerator
+    
+    class GridVisualization {
+        +create_vulnerability_map()
+    }
+    
+    class PerformanceVisualization {
+        +create_visualizations()
+    }
+    
+    class Dashboard {
+        +launch()
+    }
+    
+    class ReportGenerator {
+        +generate_report()
+    }
+        </div>
+    </div>
+    
+    <p>
+        The VisualizationReportingModule orchestrates the interactions between all components, 
+        handling configuration loading, resource management, and providing a simplified API 
+        for users to access the full range of visualization and reporting capabilities.
+    </p>
+    
+    <h2 id="files">4. File Descriptions</h2>
+    
+    <h3>4.1. Module Core</h3>
+    <table>
+        <tr>
+            <th>File</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td><code>__init__.py</code></td>
+            <td>Initializes the Visualization Reporting Module and exposes the main classes for importing. Defines the module-level docstring and exports the key classes: VisualizationReportingModule, GridVisualization, PerformanceVisualization, Dashboard, and ReportGenerator.</td>
+        </tr>
+        <tr>
+            <td><code>visualization_reporting_module.py</code></td>
+            <td>Contains the main VisualizationReportingModule class that integrates all visualization components into a cohesive API. This file handles configuration loading, component initialization, and provides methods for creating visualizations, launching dashboards, and generating reports.</td>
+        </tr>
+        <tr>
+            <td><code>README.md</code></td>
+            <td>Contains markdown documentation for the module, including an overview, component descriptions, key features, integration details, usage examples, configuration format, dependencies, and testing instructions.</td>
+        </tr>
+    </table>
+    
+    <h3>4.2. Visualization Components</h3>
+    <table>
+        <tr>
+            <th>File</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td><code>grid_visualization.py</code></td>
+            <td>Implements the GridVisualization class for creating grid topology and vulnerability visualizations. Contains methods for generating network diagrams, heatmaps, and geographic visualizations with overlays for weather data and failure probabilities.</td>
+        </tr>
+        <tr>
+            <td><code>performance_visualization.py</code></td>
+            <td>Implements the PerformanceVisualization class for creating visualizations of model and agent performance metrics. Contains methods for generating ROC curves, confusion matrices, learning curves, and comparative performance charts.</td>
+        </tr>
+        <tr>
+            <td><code>dashboard.py</code></td>
+            <td>Implements the Dashboard class for creating interactive web-based dashboards. Uses Dash and Plotly to create real-time monitoring interfaces with configurable panels, automatic refresh capabilities, and interactive controls.</td>
+        </tr>
+        <tr>
+            <td><code>report_generator.py</code></td>
+            <td>Implements the ReportGenerator class for creating automated reports. Uses Jinja2 templates to combine visualizations, data tables, and narrative content into structured HTML and PDF documents.</td>
+        </tr>
+    </table>
+    
+    <h3>4.3. Templates</h3>
+    <table>
+        <tr>
+            <th>File</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td><code>templates/reports/daily_summary.html</code></td>
+            <td>HTML template for daily summary reports. Contains placeholders for executive summary, grid status overview, key metrics, and visualizations with appropriate formatting and styling.</td>
+        </tr>
+        <tr>
+            <td><code>templates/reports/vulnerability_assessment.html</code></td>
+            <td>HTML template for vulnerability assessment reports. Contains sections for executive summary, detailed vulnerability analysis, component risk assessments, threat profiles, and recommendations.</td>
+        </tr>
+        <tr>
+            <td><code>templates/reports/policy_evaluation.html</code></td>
+            <td>HTML template for policy evaluation reports. Contains sections for policy performance evaluation, agent comparison, action recommendations, resource allocation strategies, and implementation timelines.</td>
+        </tr>
+    </table>
+    
+    <h3>4.4. Assets</h3>
+    <table>
+        <tr>
+            <th>File</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td><code>assets/logo.py</code></td>
+            <td>Utility script for generating and manipulating logo images for reports and dashboards. Contains functions for resizing, colorizing, and embedding logos in various output formats.</td>
+        </tr>
+        <tr>
+            <td><code>assets/logo.txt</code></td>
+            <td>ASCII representation of the Grid Failure Modeling Framework logo used for console outputs and plain text reports.</td>
+        </tr>
+    </table>
+    
+    <h3>4.5. Module Organization</h3>
+    <p>The files in the Visualization Reporting Module are organized according to their functional role:</p>
+    <ul>
+        <li><strong>Core Files</strong>: __init__.py, visualization_reporting_module.py, and README.md establish the module interface and documentation.</li>
+        <li><strong>Component Files</strong>: Each major component (grid_visualization.py, performance_visualization.py, dashboard.py, report_generator.py) is implemented in its own file to maintain separation of concerns.</li>
+        <li><strong>Template Files</strong>: HTML templates for different report types are stored in the templates/reports/ directory for easy customization.</li>
+        <li><strong>Asset Files</strong>: Static assets like logos and styling resources are stored in the assets/ directory.</li>
+    </ul>
+    
+    <p>This organization facilitates modular development and testing, allowing components to be developed and maintained independently while still providing a cohesive API through the main module class.</p>
+    
+    <h2 id="classes">5. Key Classes and Functions</h2>
+    
+    <h3>5.1. VisualizationReportingModule</h3>
+    <div class="function-signature">class VisualizationReportingModule(config_path=None)</div>
+    <p>Main class for the Visualization and Reporting Module, integrating all visualization components and providing a unified interface.</p>
+    
+    <h4>Key Methods:</h4>
+    <ul>
+        <li>
+            <div class="function-signature">__init__(config_path=None)</div>
+            <p>Initialize the module with the given configuration path or default configuration.</p>
+            <div class="parameter"><strong>config_path</strong> (str, optional): Path to the configuration file.</div>
+        </li>
+        <li>
+            <div class="function-signature">create_vulnerability_map(map_type='heatmap', include_weather=True, show_predictions=True, output_format=None)</div>
+            <p>Create grid vulnerability visualization.</p>
+            <div class="parameter"><strong>map_type</strong> (str): Type of map ('network', 'heatmap', 'geographic').</div>
+            <div class="parameter"><strong>include_weather</strong> (bool): Whether to include weather overlays.</div>
+            <div class="parameter"><strong>show_predictions</strong> (bool): Whether to show failure predictions.</div>
+            <div class="parameter"><strong>output_format</strong> (str, optional): Output format ('png', 'svg', 'interactive').</div>
+            <div class="returns">dict: Dictionary with visualization metadata and paths.</div>
+        </li>
+        <li>
+            <div class="function-signature">create_performance_visualizations(include_models=None, metrics=None, comparison_type='line_chart', output_format=None)</div>
+            <p>Create performance visualizations for models and agents.</p>
+            <div class="parameter"><strong>include_models</strong> (list, optional): List of models to include.</div>
+            <div class="parameter"><strong>metrics</strong> (list, optional): List of metrics to visualize.</div>
+            <div class="parameter"><strong>comparison_type</strong> (str): Type of comparison visualization.</div>
+            <div class="parameter"><strong>output_format</strong> (str, optional): Output format.</div>
+            <div class="returns">dict: Dictionary with visualization metadata and paths.</div>
+        </li>
+        <li>
+            <div class="function-signature">launch_dashboard(dashboard_type='operational', auto_refresh=True, refresh_interval=None, components=None)</div>
+            <p>Launch an interactive dashboard.</p>
+            <div class="parameter"><strong>dashboard_type</strong> (str): Type of dashboard ('operational', 'vulnerability', 'policy').</div>
+            <div class="parameter"><strong>auto_refresh</strong> (bool): Whether to auto-refresh the dashboard.</div>
+            <div class="parameter"><strong>refresh_interval</strong> (int, optional): Refresh interval in seconds.</div>
+            <div class="parameter"><strong>components</strong> (list, optional): List of dashboard components to include.</div>
+            <div class="returns">dict: Dictionary with dashboard metadata and URL.</div>
+        </li>
+        <li>
+            <div class="function-signature">generate_report(report_type='daily_summary', include_sections=None, output_format=None, output_path=None)</div>
+            <p>Generate an automated report.</p>
+            <div class="parameter"><strong>report_type</strong> (str): Type of report ('daily_summary', 'vulnerability_assessment', 'policy_evaluation').</div>
+            <div class="parameter"><strong>include_sections</strong> (list, optional): List of sections to include in the report.</div>
+            <div class="parameter"><strong>output_format</strong> (str, optional): Output format ('html', 'pdf').</div>
+            <div class="parameter"><strong>output_path</strong> (str, optional): Path where the report should be saved.</div>
+            <div class="returns">dict: Dictionary with report metadata and file path.</div>
+        </li>
+        <li>
+            <div class="function-signature">create_combined_visualization(viz_types, output_path=None, output_format=None)</div>
+            <p>Create a combined visualization with multiple visualization types.</p>
+            <div class="parameter"><strong>viz_types</strong> (list): List of visualization types to include.</div>
+            <div class="parameter"><strong>output_path</strong> (str, optional): Path where to save the visualization.</div>
+            <div class="parameter"><strong>output_format</strong> (str, optional): Output format.</div>
+            <div class="returns">dict: Dictionary with visualization metadata and path.</div>
+        </li>
+    </ul>
+    
+    <h3>5.2. GridVisualization</h3>
+    <div class="function-signature">class GridVisualization(config=None)</div>
+    <p>Class for creating grid topology and vulnerability visualizations.</p>
+    
+    <h4>Key Methods:</h4>
+    <ul>
+        <li>
+            <div class="function-signature">__init__(config=None)</div>
+            <p>Initialize the GridVisualization class with configuration.</p>
+            <div class="parameter"><strong>config</strong> (dict, optional): Configuration dictionary.</div>
+        </li>
+        <li>
+            <div class="function-signature">create_vulnerability_map(map_type='network', include_weather=True, show_predictions=True, output_format='png', output_path=None)</div>
+            <p>Create a grid vulnerability map visualization.</p>
+            <div class="parameter"><strong>map_type</strong> (str): Type of map ('network', 'heatmap', 'geographic').</div>
+            <div class="parameter"><strong>include_weather</strong> (bool): Whether to include weather overlays.</div>
+            <div class="parameter"><strong>show_predictions</strong> (bool): Whether to show failure predictions.</div>
+            <div class="parameter"><strong>output_format</strong> (str): Output format ('png', 'svg', 'interactive').</div>
+            <div class="parameter"><strong>output_path</strong> (str, optional): Path where to save the visualization.</div>
+            <div class="returns">dict: Dictionary with visualization metadata and paths.</div>
+        </li>
+        <li>
+            <div class="function-signature">get_vulnerability_data()</div>
+            <p>Get vulnerability data for visualization.</p>
+            <div class="returns">dict: Dictionary with vulnerability data.</div>
+        </li>
+        <li>
+            <div class="function-signature">plot_vulnerability_map(vulnerability_data, ax=None)</div>
+            <p>Plot vulnerability map on a given axis.</p>
+            <div class="parameter"><strong>vulnerability_data</strong> (dict): Vulnerability data.</div>
+            <div class="parameter"><strong>ax</strong> (matplotlib.axes.Axes, optional): Matplotlib axis to plot on.</div>
+            <div class="returns">matplotlib.axes.Axes: The axis with the plot.</div>
+        </li>
+    </ul>
+    
+    <h3>5.3. PerformanceVisualization</h3>
+    <div class="function-signature">class PerformanceVisualization(config=None)</div>
+    <p>Class for creating performance visualizations for models and agents.</p>
+    
+    <h4>Key Methods:</h4>
+    <ul>
+        <li>
+            <div class="function-signature">__init__(config=None)</div>
+            <p>Initialize the PerformanceVisualization class with configuration.</p>
+            <div class="parameter"><strong>config</strong> (dict, optional): Configuration dictionary.</div>
+        </li>
+        <li>
+            <div class="function-signature">create_visualizations(models=None, metrics=None, comparison_type='line_chart', output_format='png', output_dir=None, filename_prefix=None)</div>
+            <p>Create performance visualizations for the specified models and metrics.</p>
+            <div class="parameter"><strong>models</strong> (list, optional): List of models to include in visualizations.</div>
+            <div class="parameter"><strong>metrics</strong> (list, optional): List of metrics to visualize.</div>
+            <div class="parameter"><strong>comparison_type</strong> (str): Type of comparison visualization.</div>
+            <div class="parameter"><strong>output_format</strong> (str): Output format for visualizations.</div>
+            <div class="parameter"><strong>output_dir</strong> (str, optional): Directory to save visualizations.</div>
+            <div class="parameter"><strong>filename_prefix</strong> (str, optional): Prefix for output filenames.</div>
+            <div class="returns">dict: Dictionary with visualization metadata and paths.</div>
+        </li>
+        <li>
+            <div class="function-signature">get_performance_data()</div>
+            <p>Get performance data for visualization.</p>
+            <div class="returns">dict: Dictionary with performance data.</div>
+        </li>
+        <li>
+            <div class="function-signature">get_agent_learning_data()</div>
+            <p>Get agent learning data for visualization.</p>
+            <div class="returns">dict: Dictionary with agent learning data.</div>
+        </li>
+        <li>
+            <div class="function-signature">plot_performance_comparison(performance_data, ax=None)</div>
+            <p>Plot performance comparison on a given axis.</p>
+            <div class="parameter"><strong>performance_data</strong> (dict): Performance data.</div>
+            <div class="parameter"><strong>ax</strong> (matplotlib.axes.Axes, optional): Matplotlib axis to plot on.</div>
+            <div class="returns">matplotlib.axes.Axes: The axis with the plot.</div>
+        </li>
+    </ul>
+    
+    <h3>5.4. Dashboard</h3>
+    <div class="function-signature">class Dashboard(config=None)</div>
+    <p>Class for creating and managing interactive dashboards.</p>
+    
+    <h4>Key Methods:</h4>
+    <ul>
+        <li>
+            <div class="function-signature">__init__(config=None)</div>
+            <p>Initialize the Dashboard class with configuration.</p>
+            <div class="parameter"><strong>config</strong> (dict, optional): Configuration dictionary.</div>
+        </li>
+        <li>
+            <div class="function-signature">launch(dashboard_type='operational', auto_refresh=True, refresh_interval=None, components=None, output_dir=None)</div>
+            <p>Launch an interactive dashboard.</p>
+            <div class="parameter"><strong>dashboard_type</strong> (str): Type of dashboard ('operational', 'vulnerability', 'policy').</div>
+            <div class="parameter"><strong>auto_refresh</strong> (bool): Whether to auto-refresh the dashboard.</div>
+            <div class="parameter"><strong>refresh_interval</strong> (int, optional): Refresh interval in seconds.</div>
+            <div class="parameter"><strong>components</strong> (list, optional): List of dashboard components to include.</div>
+            <div class="parameter"><strong>output_dir</strong> (str, optional): Directory to save dashboard configuration.</div>
+            <div class="returns">dict: Dictionary with dashboard metadata and URL.</div>
+        </li>
+    </ul>
+    
+    <h3>5.5. ReportGenerator</h3>
+    <div class="function-signature">class ReportGenerator(config=None)</div>
+    <p>Class for generating automated reports from visualization and analysis data.</p>
+    
+    <h4>Key Methods:</h4>
+    <ul>
+        <li>
+            <div class="function-signature">__init__(config=None)</div>
+            <p>Initialize the ReportGenerator class with configuration.</p>
+            <div class="parameter"><strong>config</strong> (dict, optional): Configuration dictionary.</div>
+        </li>
+        <li>
+            <div class="function-signature">generate_report(report_type='daily_summary', include_sections=None, output_format=None, output_path=None)</div>
+            <p>Generate an automated report.</p>
+            <div class="parameter"><strong>report_type</strong> (str): Type of report to generate.</div>
+            <div class="parameter"><strong>include_sections</strong> (list, optional): List of sections to include in the report.</div>
+            <div class="parameter"><strong>output_format</strong> (str, optional): Output format for the report.</div>
+            <div class="parameter"><strong>output_path</strong> (str, optional): Path where the report should be saved.</div>
+            <div class="returns">dict: Dictionary with report metadata and file path.</div>
+        </li>
+    </ul>
+    
+    <h3>5.6. Helper Functions</h3>
+    <p>The module includes various helper functions for data processing, visualization, and utility operations:</p>
+    <ul>
+        <li><strong>Data Loading Functions</strong>: Methods like <code>_load_grid_data()</code>, <code>_load_vulnerability_data()</code>, and <code>_load_performance_data()</code> retrieve and prepare data from other modules.</li>
+        <li><strong>Visualization Creation Functions</strong>: Methods like <code>_create_network_visualization()</code>, <code>_create_roc_curve_visualization()</code>, and <code>_create_learning_curves_visualization()</code> generate specific visualization types.</li>
+        <li><strong>Dashboard Panel Creation Functions</strong>: Methods like <code>_create_grid_status_panel()</code> and <code>_create_vulnerability_map_panel()</code> create individual dashboard components.</li>
+        <li><strong>Report Generation Functions</strong>: Methods like <code>_generate_daily_summary()</code> and <code>_generate_html_report()</code> create specific report types and formats.</li>
+    </ul>
+    
+    <h2 id="execution">6. Execution Commands</h2>
+    
+    <h3>6.1. Basic Usage</h3>
+    <p>Here's how to use the Visualization and Reporting Module in your Python code:</p>
+    <pre><code class="python">
+from gfmf.visualization_reporting import VisualizationReportingModule
+
+# Initialize the module with default configuration
+viz_module = VisualizationReportingModule()
+
+# Create a vulnerability map
+vulnerability_map = viz_module.create_vulnerability_map(
+    map_type='network',
+    include_weather=True,
+    show_predictions=True,
+    output_format='interactive'
+)
+
+# Access the output path
+print(f"Vulnerability map created at: {vulnerability_map['output_path']}")
+</code></pre>
+
+    <h3>6.2. Using Custom Configuration</h3>
+    <p>Initialize the module with a custom configuration file:</p>
+    <pre><code class="python">
+from gfmf.visualization_reporting import VisualizationReportingModule
+
+# Initialize with custom configuration
+viz_module = VisualizationReportingModule(config_path='path/to/custom_visualization_config.yaml')
+
+# Create performance visualizations with custom settings
+performance_viz = viz_module.create_performance_visualizations(
+    include_models=['random_forest', 'lstm', 'xgboost'],
+    metrics=['precision', 'recall', 'f1_score'],
+    comparison_type='bar_chart',
+    output_format='svg'
+)
+</code></pre>
+
+    <h3>6.3. Creating an Interactive Dashboard</h3>
+    <p>Launch an interactive dashboard for real-time monitoring:</p>
+    <pre><code class="python">
+from gfmf.visualization_reporting import VisualizationReportingModule
+
+# Initialize the module
+viz_module = VisualizationReportingModule()
+
+# Launch operational dashboard
+dashboard = viz_module.launch_dashboard(
+    dashboard_type='operational',
+    auto_refresh=True,
+    refresh_interval=60,  # Refresh every 60 seconds
+    components=['grid_status', 'vulnerability_map', 'alerts', 'weather_forecast']
+)
+
+# Print dashboard URL
+print(f"Dashboard is running at: {dashboard['url']}")
+</code></pre>
+
+    <h3>6.4. Generating Reports</h3>
+    <p>Generate automated reports with visualizations and analysis:</p>
+    <pre><code class="python">
+from gfmf.visualization_reporting import VisualizationReportingModule
+
+# Initialize the module
+viz_module = VisualizationReportingModule()
+
+# Generate a daily summary report
+report = viz_module.generate_report(
+    report_type='daily_summary',
+    include_sections=['grid_status', 'vulnerability_assessment', 'weather_impact', 'predictions'],
+    output_format='pdf',
+    output_path='reports/daily/daily_summary_2023-08-15.pdf'
+)
+
+# Print report path
+print(f"Report generated at: {report['output_path']}")
+</code></pre>
+
+    <h3>6.5. Combined Visualizations</h3>
+    <p>Create combined visualizations for comprehensive insights:</p>
+    <pre><code class="python">
+from gfmf.visualization_reporting import VisualizationReportingModule
+
+# Initialize the module
+viz_module = VisualizationReportingModule()
+
+# Create a combined visualization
+combined_viz = viz_module.create_combined_visualization(
+    viz_types=['vulnerability_map', 'performance_comparison', 'failure_probability'],
+    output_path='visualizations/combined/',
+    output_format='png'
+)
+</code></pre>
+
+    <h3>6.6. Command-Line Execution</h3>
+    <p>Run the module from command line using a Python script:</p>
+    <pre><code class="python">
+#!/usr/bin/env python
+# Script: run_visualization.py
+
+import argparse
+import sys
+from gfmf.visualization_reporting import VisualizationReportingModule
+
+def main():
+    parser = argparse.ArgumentParser(description='Run GFMF Visualization and Reporting Module')
+    parser.add_argument('--config', type=str, help='Path to configuration file')
+    parser.add_argument('--output', type=str, default='output/', help='Output directory')
+    parser.add_argument('--report-type', choices=['daily', 'vulnerability', 'policy'], 
+                        default='daily', help='Type of report to generate')
+    parser.add_argument('--format', choices=['html', 'pdf'], default='html', 
+                        help='Output format')
+    
+    args = parser.parse_args()
+    
+    # Initialize module
+    viz_module = VisualizationReportingModule(config_path=args.config)
+    
+    # Map command line args to report types
+    report_type_map = {
+        'daily': 'daily_summary',
+        'vulnerability': 'vulnerability_assessment',
+        'policy': 'policy_evaluation'
+    }
+    
+    # Generate report
+    report = viz_module.generate_report(
+        report_type=report_type_map[args.report_type],
+        output_format=args.format,
+        output_path=args.output
+    )
+    
+    print(f"Report generated at: {report['output_path']}")
+    return 0
+
+if __name__ == '__main__':
+    sys.exit(main())
+</code></pre>
+
+    <p>This script can be executed from the command line as follows:</p>
+    <pre><code class="bash">
+python run_visualization.py --config config/viz_config.yaml --output reports/ --report-type vulnerability --format pdf
+</code></pre>
+
+    <h2 id="configuration">7. Configuration</h2>
+    
+    <p>The Visualization and Reporting Module is configured using a YAML configuration file. Below is an example configuration with descriptions of each parameter.</p>
+    
+    <h3>7.1. Sample Configuration File</h3>
+    <pre><code class="yaml">
+# visualization_reporting_config.yaml
+
+# General settings
+output_paths:
+  base_path: 'results/visualization/'
+  dashboards_path: 'dashboards/'
+  reports_path: 'reports/'
+  visualizations_path: 'visualizations/'
+  
+# Input data paths
+data_paths:
+  grid_topology: 'data/processed/grid_topology.csv'
+  vulnerability_data: 'data/processed/vulnerability_scores.csv'
+  failure_predictions: 'data/predictions/failure_probabilities.csv'
+  weather_data: 'data/processed/weather_data.csv'
+  performance_metrics: 'data/evaluation/model_performance.csv'
+  rl_policy_metrics: 'data/evaluation/rl_policy_metrics.csv'
+
+# Visualization settings
+visualization:
+  color_scheme: 'viridis'  # Options: 'viridis', 'plasma', 'inferno', 'magma', 'cividis', 'custom'
+  custom_colors:
+    high_risk: '#FF0000'
+    medium_risk: '#FFFF00'
+    low_risk: '#00FF00'
+    background: '#FFFFFF'
+  
+  # Map settings
+  map:
+    base_map: 'openstreetmap'  # Options: 'openstreetmap', 'cartodb', 'stamen', 'custom_tiles'
+    zoom_level: 10
+    center_latitude: 40.7128  # Default center (New York)
+    center_longitude: -74.0060
+    
+  # Chart settings
+  charts:
+    dpi: 300
+    figure_size: [10, 8]
+    font_size: 12
+    line_width: 2
+    grid: True
+    legend_position: 'best'  # Options: 'best', 'upper right', 'upper left', 'lower left', 'lower right', 'center'
+    
+  # Grid visualization settings
+  grid_visualization:
+    node_size: 50
+    edge_width: 2
+    show_labels: True
+    label_font_size: 10
+    
+  # Performance visualization settings
+  performance_visualization:
+    plot_types:
+      - 'line_chart'
+      - 'bar_chart'
+      - 'scatter_plot'
+      - 'confusion_matrix'
+      - 'roc_curve'
+      - 'precision_recall_curve'
+    
+    metrics:
+      - 'accuracy'
+      - 'precision'
+      - 'recall'
+      - 'f1_score'
+      - 'roc_auc'
+      - 'mse'
+      - 'mae'
+      
+# Dashboard settings
+dashboard:
+  default_port: 8050
+  theme: 'light'  # Options: 'light', 'dark', 'custom'
+  refresh_interval: 60  # Seconds
+  layout: 'grid'  # Options: 'grid', 'flexible', 'tabs'
+  
+  # Component settings
+  components:
+    grid_status:
+      enabled: True
+      position: [0, 0]
+      size: [6, 4]
+    vulnerability_map:
+      enabled: True
+      position: [0, 4]
+      size: [6, 6]
+    alerts:
+      enabled: True
+      position: [6, 0]
+      size: [6, 3]
+    weather_forecast:
+      enabled: True
+      position: [6, 3]
+      size: [6, 3]
+    performance_metrics:
+      enabled: True
+      position: [6, 6]
+      size: [6, 4]
+      
+# Report settings
+reports:
+  default_format: 'html'  # Options: 'html', 'pdf'
+  company_name: 'Grid Resilience Solutions'
+  company_logo: 'assets/logo.png'
+  
+  # Template settings
+  templates:
+    daily_summary: 'templates/daily_summary.html'
+    vulnerability_assessment: 'templates/vulnerability_assessment.html'
+    policy_evaluation: 'templates/policy_evaluation.html'
+    
+  # Section settings
+  sections:
+    grid_status:
+      enabled: True
+      visualization_type: 'network'
+    vulnerability_assessment:
+      enabled: True
+      visualization_type: 'heatmap'
+    weather_impact:
+      enabled: True
+      visualization_type: 'line_chart'
+    predictions:
+      enabled: True
+      visualization_type: 'bar_chart'
+    policy_recommendations:
+      enabled: True
+      visualization_type: 'table'
+</code></pre>
+
+    <h3>7.2. Configuration Sections Explained</h3>
+    
+    <h4>7.2.1. Output Paths</h4>
+    <p>Defines the base directory and subdirectories for various outputs:</p>
+    <ul>
+        <li><strong>base_path</strong>: Root directory for all visualization outputs</li>
+        <li><strong>dashboards_path</strong>: Directory for dashboard configuration and assets</li>
+        <li><strong>reports_path</strong>: Directory for generated reports</li>
+        <li><strong>visualizations_path</strong>: Directory for standalone visualizations</li>
+    </ul>
+    
+    <h4>7.2.2. Data Paths</h4>
+    <p>Specifies paths to input data files from other modules:</p>
+    <ul>
+        <li><strong>grid_topology</strong>: Path to grid structure data</li>
+        <li><strong>vulnerability_data</strong>: Path to component vulnerability scores</li>
+        <li><strong>failure_predictions</strong>: Path to failure probability predictions</li>
+        <li><strong>weather_data</strong>: Path to processed weather data</li>
+        <li><strong>performance_metrics</strong>: Path to model performance metrics</li>
+        <li><strong>rl_policy_metrics</strong>: Path to reinforcement learning policy performance data</li>
+    </ul>
+    
+    <h4>7.2.3. Visualization Settings</h4>
+    <p>Controls the appearance and behavior of visualizations:</p>
+    <ul>
+        <li><strong>color_scheme</strong>: Default color palette for visualizations</li>
+        <li><strong>custom_colors</strong>: Custom color definitions for specific elements</li>
+        <li><strong>map</strong>: Settings for geographic maps, including base map provider and default view</li>
+        <li><strong>charts</strong>: General chart settings like resolution, size, and styling</li>
+        <li><strong>grid_visualization</strong>: Specific settings for grid network visualizations</li>
+        <li><strong>performance_visualization</strong>: Settings for performance metric visualizations, including plot types and metrics to display</li>
+    </ul>
+    
+    <h4>7.2.4. Dashboard Settings</h4>
+    <p>Configuration for interactive dashboards:</p>
+    <ul>
+        <li><strong>default_port</strong>: Port number for the dashboard server</li>
+        <li><strong>theme</strong>: Visual theme for the dashboard</li>
+        <li><strong>refresh_interval</strong>: Automatic refresh interval in seconds</li>
+        <li><strong>layout</strong>: Dashboard layout type</li>
+        <li><strong>components</strong>: Configuration for individual dashboard panels, including their enabled state, position, and size</li>
+    </ul>
+    
+    <h4>7.2.5. Report Settings</h4>
+    <p>Configuration for automated reports:</p>
+    <ul>
+        <li><strong>default_format</strong>: Default output format for reports</li>
+        <li><strong>company_name</strong>: Organization name for report branding</li>
+        <li><strong>company_logo</strong>: Path to logo image for report branding</li>
+        <li><strong>templates</strong>: Paths to HTML templates for different report types</li>
+        <li><strong>sections</strong>: Configuration for report sections, including which visualizations to use for each section</li>
+    </ul>
+    
+    <h3>7.3. Environment Variables</h3>
+    <p>The module also supports configuration through environment variables, which override the settings in the configuration file:</p>
+    <pre><code class="bash">
+# Set output base path
+export GFMF_VIZ_OUTPUT_PATH="/custom/output/path"
+
+# Set dashboard port
+export GFMF_DASHBOARD_PORT="8080"
+
+# Set report format
+export GFMF_REPORT_FORMAT="pdf"
+
+# Set visualization color scheme
+export GFMF_VIZ_COLOR_SCHEME="plasma"
+</code></pre>
+
+    <h2 id="detailed-components">8. Detailed Component Documentation</h2>
+    
+    <h3>8.1. Grid Visualization Component</h3>
+    
+    <h4>8.1.1. Overview</h4>
+    <p>The Grid Visualization component creates visual representations of the power grid, showing topology, component status, vulnerability scores, and predicted failure probabilities. It supports multiple visualization types, including network graphs, geographic maps, and heat maps.</p>
+    
+    <h4>8.1.2. Visualization Types</h4>
+    <ul>
+        <li><strong>Network Visualization</strong>: Shows the grid as a network graph with nodes (components) and edges (connections), using size, color, and labels to represent component properties and states.</li>
+        <li><strong>Geographic Visualization</strong>: Plots components on a geographic map using their latitude and longitude coordinates, useful for understanding spatial relationships and environmental factors.</li>
+        <li><strong>Heat Map Visualization</strong>: Represents vulnerability or failure probability as a color-coded heat map overlaid on a geographic or schematic representation of the grid.</li>
+    </ul>
+    
+    <h4>8.1.3. Key Features</h4>
+    <ul>
+        <li><strong>Component Status Indication</strong>: Visual indicators for operational, vulnerable, and failed components using color coding and symbols.</li>
+        <li><strong>Weather Overlay</strong>: Option to overlay weather data (e.g., temperature, precipitation, wind speed) on geographic visualizations.</li>
+        <li><strong>Temporal Animation</strong>: Ability to animate changes in the grid state over time, showing the progression of failures or vulnerability shifts.</li>
+        <li><strong>Zoom and Filter</strong>: Interactive capabilities to zoom into specific regions or filter by component type, status, or vulnerability score.</li>
+        <li><strong>Detailed Tooltips</strong>: Hover-over information providing detailed component data, current status, and prediction metrics.</li>
+    </ul>
+    
+    <h4>8.1.4. Implementation Details</h4>
+    <p>The Grid Visualization component uses the following libraries and technologies:</p>
+    <ul>
+        <li><strong>NetworkX</strong>: For creating and manipulating graph representations of the grid.</li>
+        <li><strong>Matplotlib</strong>: For static visualizations and exporting to image formats.</li>
+        <li><strong>Folium</strong>: For interactive geographic maps with overlays.</li>
+        <li><strong>Plotly</strong>: For interactive network visualizations and heat maps.</li>
+        <li><strong>Seaborn</strong>: For enhanced statistical visualizations and color palettes.</li>
+    </ul>
+    
+    <h4>8.1.5. Example Usage</h4>
+    <pre><code class="python">
+from gfmf.visualization_reporting import GridVisualization
+
+# Initialize with configuration
+grid_viz = GridVisualization(config={
+    'color_scheme': 'viridis',
+    'map': {
+        'base_map': 'openstreetmap',
+        'zoom_level': 10
+    },
+    'grid_visualization': {
+        'node_size': 50,
+        'edge_width': 2,
+        'show_labels': True
+    }
+})
+
+# Create a network visualization
+network_viz = grid_viz.create_vulnerability_map(
+    map_type='network',
+    include_weather=False,
+    show_predictions=True,
+    output_format='svg',
+    output_path='results/visualizations/network_vulnerability.svg'
+)
+
+# Create a geographic visualization with weather overlay
+geo_viz = grid_viz.create_vulnerability_map(
+    map_type='geographic',
+    include_weather=True,
+    show_predictions=True,
+    output_format='interactive',
+    output_path='results/visualizations/geographic_vulnerability.html'
+)
+</code></pre>
+
+    <h3>8.2. Performance Visualization Component</h3>
+    
+    <h4>8.2.1. Overview</h4>
+    <p>The Performance Visualization component creates visualizations to evaluate and compare the performance of prediction models and reinforcement learning policies. It helps users understand model accuracy, identify trends, and visualize improvement over time.</p>
+    
+    <h4>8.2.2. Visualization Types</h4>
+    <ul>
+        <li><strong>Line Charts</strong>: Show performance metrics over time or across different parameter settings.</li>
+        <li><strong>Bar Charts</strong>: Compare performance metrics across different models or configurations.</li>
+        <li><strong>Confusion Matrices</strong>: Visualize true positives, false positives, true negatives, and false negatives for classification models.</li>
+        <li><strong>ROC Curves</strong>: Plot the true positive rate against the false positive rate at various threshold settings.</li>
+        <li><strong>Precision-Recall Curves</strong>: Visualize the trade-off between precision and recall for different thresholds.</li>
+        <li><strong>Learning Curves</strong>: Show how model performance improves with more training data or iterations.</li>
+    </ul>
+    
+    <h4>8.2.3. Key Features</h4>
+    <ul>
+        <li><strong>Multi-model Comparison</strong>: Side-by-side or overlaid comparisons of different models' performance.</li>
+        <li><strong>Metric Selection</strong>: Flexible selection of performance metrics to visualize (accuracy, precision, recall, F1-score, etc.).</li>
+        <li><strong>Time Series Analysis</strong>: Visualization of performance changes over time, including seasonal patterns and trends.</li>
+        <li><strong>Export Options</strong>: Ability to export visualizations in various formats (PNG, SVG, PDF, interactive HTML).</li>
+        <li><strong>Customizable Appearance</strong>: Control over colors, labels, scales, and other visual elements.</li>
+    </ul>
+    
+    <h4>8.2.4. Implementation Details</h4>
+    <p>The Performance Visualization component uses the following libraries and technologies:</p>
+    <ul>
+        <li><strong>Matplotlib</strong>: For creating static visualizations of performance metrics.</li>
+        <li><strong>Seaborn</strong>: For enhanced statistical visualizations and prettier defaults.</li>
+        <li><strong>Plotly</strong>: For interactive performance visualizations with hover information.</li>
+        <li><strong>scikit-learn</strong>: For calculation of performance metrics and generation of curves.</li>
+        <li><strong>pandas</strong>: For data manipulation and preparation for visualization.</li>
+    </ul>
+    
+    <h4>8.2.5. Example Usage</h4>
+    <pre><code class="python">
+from gfmf.visualization_reporting import PerformanceVisualization
+
+# Initialize with configuration
+perf_viz = PerformanceVisualization(config={
+    'performance_visualization': {
+        'plot_types': ['line_chart', 'confusion_matrix', 'roc_curve'],
+        'metrics': ['accuracy', 'precision', 'recall', 'f1_score']
+    }
+})
+
+# Create performance visualizations for multiple models
+performance_visualizations = perf_viz.create_visualizations(
+    models=['random_forest', 'lstm', 'xgboost'],
+    metrics=['precision', 'recall', 'f1_score'],
+    comparison_type='bar_chart',
+    output_format='png',
+    output_dir='results/visualizations/performance/',
+    filename_prefix='model_comparison'
+)
+
+# Create learning curve visualization for an agent
+learning_visualizations = perf_viz.create_agent_learning_visualization(
+    agent_id='dqn_agent',
+    metrics=['reward', 'policy_loss', 'value_loss'],
+    output_format='svg',
+    output_path='results/visualizations/agent_learning_curve.svg'
+)
+</code></pre>
+
+    <h3>8.3. Dashboard Component</h3>
+    
+    <h4>8.3.1. Overview</h4>
+    <p>The Dashboard component creates interactive web-based dashboards for real-time monitoring of grid status, vulnerability assessment, and policy recommendations. It integrates various visualizations into a cohesive interface with filtering, drill-down, and customization capabilities.</p>
+    
+    <h4>8.3.2. Dashboard Types</h4>
+    <ul>
+        <li><strong>Operational Dashboard</strong>: Focuses on current grid status, alerts, and short-term predictions, designed for operators and emergency response teams.</li>
+        <li><strong>Vulnerability Assessment Dashboard</strong>: Emphasizes vulnerability scores, environmental threats, and component risk analysis, designed for planning and maintenance teams.</li>
+        <li><strong>Policy Dashboard</strong>: Highlights reinforcement learning policy recommendations, expected outcomes, and decision support information, designed for management and strategic planning.</li>
+    </ul>
+    
+    <h4>8.3.3. Key Features</h4>
+    <ul>
+        <li><strong>Real-time Updates</strong>: Automatic refresh of data and visualizations at configurable intervals.</li>
+        <li><strong>Interactive Filtering</strong>: Ability to filter data by time period, region, component type, and other criteria.</li>
+        <li><strong>Customizable Panels</strong>: Layout with resizable and movable panels for different visualizations and data displays.</li>
+        <li><strong>Alert System</strong>: Visual and textual alerts for high-risk situations, component failures, or prediction anomalies.</li>
+        <li><strong>Export Functionality</strong>: Options to export dashboard state, individual visualizations, or data tables.</li>
+        <li><strong>User Profiles</strong>: Ability to save and load different dashboard configurations for different users or purposes.</li>
+    </ul>
+    
+    <h4>8.3.4. Implementation Details</h4>
+    <p>The Dashboard component uses the following libraries and technologies:</p>
+    <ul>
+        <li><strong>Dash</strong>: For creating interactive web applications with React components.</li>
+        <li><strong>Plotly</strong>: For interactive visualizations within the dashboard.</li>
+        <li><strong>Flask</strong>: As the web server backend for the dashboard.</li>
+        <li><strong>Bootstrap</strong>: For responsive layout and styling components.</li>
+        <li><strong>Redis</strong>: For caching dashboard state and managing real-time updates.</li>
+    </ul>
+    
+    <h4>8.3.5. Example Usage</h4>
+    <pre><code class="python">
+from gfmf.visualization_reporting import Dashboard
+
+# Initialize with configuration
+dashboard = Dashboard(config={
+    'dashboard': {
+        'default_port': 8050,
+        'theme': 'light',
+        'refresh_interval': 60,
+        'layout': 'grid'
+    }
+})
+
+# Launch an operational dashboard
+operational_dashboard = dashboard.launch(
+    dashboard_type='operational',
+    auto_refresh=True,
+    refresh_interval=30,  # Refresh every 30 seconds
+    components=[
+        'grid_status', 
+        'vulnerability_map', 
+        'alerts', 
+        'weather_forecast',
+        'performance_metrics'
+    ],
+    output_dir='results/dashboards/operational/'
+)
+
+# Get the dashboard URL
+print(f"Dashboard running at: {operational_dashboard['url']}")
+</code></pre>
+
+    <h3>8.4. Report Generator Component</h3>
+    
+    <h4>8.4.1. Overview</h4>
+    <p>The Report Generator component automates the creation of reports that combine visualizations, data tables, and narrative analysis. It supports multiple report types and output formats, with customizable templates and content sections.</p>
+    
+    <h4>8.4.2. Report Types</h4>
+    <ul>
+        <li><strong>Daily Summary Report</strong>: Overview of grid status, recent failures, alerts, and short-term predictions for operational teams.</li>
+        <li><strong>Vulnerability Assessment Report</strong>: Detailed analysis of component vulnerabilities, environmental threats, and recommended maintenance actions.</li>
+        <li><strong>Policy Evaluation Report</strong>: Analysis of reinforcement learning policy performance, decision rationale, and expected outcomes for strategic planning.</li>
+        <li><strong>Custom Reports</strong>: User-defined reports with selected sections and content based on specific requirements.</li>
+    </ul>
+    
+    <h4>8.4.3. Key Features</h4>
+    <ul>
+        <li><strong>Multiple Output Formats</strong>: Generation of reports in HTML, PDF, and potentially other formats.</li>
+        <li><strong>Customizable Templates</strong>: HTML templates with placeholders for dynamic content and styling options.</li>
+        <li><strong>Automated Generation</strong>: Scheduled report generation based on time intervals or triggered by events.</li>
+        <li><strong>Interactive Elements</strong>: Interactive visualizations and data exploration capabilities in HTML reports.</li>
+        <li><strong>Narrative Generation</strong>: Automated creation of text descriptions and analysis based on data patterns.</li>
+        <li><strong>Distribution Options</strong>: Email delivery, file system storage, or integration with document management systems.</li>
+    </ul>
+    
+    <h4>8.4.4. Implementation Details</h4>
+    <p>The Report Generator component uses the following libraries and technologies:</p>
+    <ul>
+        <li><strong>Jinja2</strong>: For template rendering and dynamic content generation.</li>
+        <li><strong>WeasyPrint</strong>: For converting HTML reports to PDF format.</li>
+        <li><strong>pandas</strong>: For data preparation and table generation.</li>
+        <li><strong>Matplotlib</strong>: For static visualizations within reports.</li>
+        <li><strong>Plotly</strong>: For interactive visualizations in HTML reports.</li>
+    </ul>
+    
+    <h4>8.4.5. Example Usage</h4>
+    <pre><code class="python">
+from gfmf.visualization_reporting import ReportGenerator
+
+# Initialize with configuration
+report_gen = ReportGenerator(config={
+    'reports': {
+        'default_format': 'html',
+        'company_name': 'Grid Resilience Solutions',
+        'company_logo': 'assets/logo.png',
+        'templates': {
+            'daily_summary': 'templates/daily_summary.html',
+            'vulnerability_assessment': 'templates/vulnerability_assessment.html'
+        }
+    }
+})
+
+# Generate a daily summary report
+daily_report = report_gen.generate_report(
+    report_type='daily_summary',
+    include_sections=[
+        'grid_status', 
+        'recent_failures', 
+        'alerts', 
+        'short_term_predictions'
+    ],
+    output_format='pdf',
+    output_path='reports/daily/daily_summary_2023-08-15.pdf'
+)
+
+# Generate a vulnerability assessment report
+vulnerability_report = report_gen.generate_report(
+    report_type='vulnerability_assessment',
+    include_sections=[
+        'vulnerability_scores', 
+        'environmental_threats', 
+        'maintenance_recommendations'
+    ],
+    output_format='html',
+    output_path='reports/vulnerability/vulnerability_assessment_Q3_2023.html'
+)
+</code></pre>
+
+    <h2 id="visualization-rationale">9. Visualization Selection Rationale</h2>
+    
+    <h3>9.1. Visualization Types and Their Applications</h3>
+    
+    <p>The Visualization and Reporting Module employs different visualization types based on the data being represented and the intended audience. The selection follows these principles:</p>
+    
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Visualization Type</th>
+                <th>Best Used For</th>
+                <th>Example Application</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Network Graphs</td>
+                <td>Showing grid topology, connections, and component relationships</td>
+                <td>Visualizing cascading failure paths through the network</td>
+            </tr>
+            <tr>
+                <td>Geographic Maps</td>
+                <td>Spatial distribution of components and their relation to environmental factors</td>
+                <td>Mapping vulnerable components against weather patterns</td>
+            </tr>
+            <tr>
+                <td>Heat Maps</td>
+                <td>Representing intensity values across a 2D space</td>
+                <td>Visualizing vulnerability hotspots or failure probability distributions</td>
+            </tr>
+            <tr>
+                <td>Line Charts</td>
+                <td>Temporal trends and continuous data</td>
+                <td>Tracking performance metrics over time or model learning curves</td>
+            </tr>
+            <tr>
+                <td>Bar Charts</td>
+                <td>Categorical comparisons and discrete values</td>
+                <td>Comparing model performance across different metrics</td>
+            </tr>
+            <tr>
+                <td>Scatter Plots</td>
+                <td>Relationships between two variables</td>
+                <td>Analyzing correlation between environmental factors and failures</td>
+            </tr>
+            <tr>
+                <td>ROC & Precision-Recall Curves</td>
+                <td>Model performance across different thresholds</td>
+                <td>Evaluating failure prediction model performance</td>
+            </tr>
+            <tr>
+                <td>Confusion Matrices</td>
+                <td>Classification model performance details</td>
+                <td>Analyzing false positives and false negatives in failure predictions</td>
+            </tr>
+            <tr>
+                <td>Interactive Dashboards</td>
+                <td>Real-time monitoring and exploration</td>
+                <td>Operational monitoring of grid status and emerging threats</td>
+            </tr>
+            <tr>
+                <td>Report Narratives</td>
+                <td>Contextual analysis and recommendations</td>
+                <td>Summarizing findings and suggesting actions for stakeholders</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h3>9.2. Design Principles</h3>
+    
+    <p>The visualization design follows these key principles:</p>
+    
+    <ol>
+        <li>
+            <strong>Clarity and Simplicity</strong>: Visualizations prioritize clear communication over complexity, using appropriate aggregation and filtering to present essential information without overwhelming the viewer.
+        </li>
+        <li>
+            <strong>Consistency</strong>: Common visual elements (colors, shapes, scales) maintain consistent meanings across different visualizations to build a cohesive visual language.
+        </li>
+        <li>
+            <strong>Audience Adaptation</strong>: Visualizations are tailored to their intended audience, with operational dashboards focusing on immediate actionable insights and strategic reports offering deeper analysis.
+        </li>
+        <li>
+            <strong>Appropriate Detail Level</strong>: The level of detail scales with the viewer's needs, allowing for both high-level overview and detailed inspection through interactive elements.
+        </li>
+        <li>
+            <strong>Color Accessibility</strong>: Color schemes are selected for both aesthetic appeal and accessibility, ensuring they work for viewers with color vision deficiencies.
+        </li>
+    </ol>
+    
+    <h3>9.3. Technical Implementation Considerations</h3>
+    
+    <p>The module's visualization approach considers these technical factors:</p>
+    
+    <ul>
+        <li>
+            <strong>Performance Optimization</strong>: Large datasets are visualized efficiently using techniques like data aggregation, binning, and progressive loading to maintain responsiveness.
+        </li>
+        <li>
+            <strong>Interactivity vs. Static Output</strong>: Interactive visualizations are used for exploration and monitoring, while static outputs are generated for reports and documentation.
+        </li>
+        <li>
+            <strong>Library Selection</strong>: Visualization libraries are chosen based on their capabilities, performance characteristics, and integration potential:
+            <ul>
+                <li>Matplotlib and Seaborn for publication-quality static visualizations</li>
+                <li>Plotly and Dash for interactive visualizations and dashboards</li>
+                <li>Folium for interactive geographic maps with multiple layers</li>
+                <li>NetworkX for network graph creation and analysis</li>
+            </ul>
+        </li>
+        <li>
+            <strong>Scalability</strong>: Visualization components are designed to handle growing datasets and increasingly complex grid structures through appropriate data structures and rendering techniques.
+        </li>
+        <li>
+            <strong>Integration</strong>: Visualizations can be embedded in various contexts (dashboards, reports, external applications) through flexible output formats and API design.
+        </li>
+    </ul>
+    
+    <h3>9.4. Evaluation Metrics for Visualizations</h3>
+    
+    <p>The effectiveness of visualizations is evaluated based on:</p>
+    
+    <ul>
+        <li><strong>Accuracy</strong>: Faithful representation of the underlying data without distortion</li>
+        <li><strong>Comprehension Speed</strong>: How quickly viewers can understand the key insights</li>
+        <li><strong>Memorability</strong>: How well insights are retained after viewing</li>
+        <li><strong>Actionability</strong>: Whether the visualization leads to clear actions or decisions</li>
+        <li><strong>Engagement</strong>: Level of interaction and exploration by viewers</li>
+        <li><strong>Load Time</strong>: Technical performance metrics like rendering speed and resource usage</li>
+    </ul>
+    
+    <script>
+        // Initialize Mermaid diagrams
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                // Use timeout to ensure diagrams have chance to render
+                try {
+                    mermaid.init(undefined, document.querySelectorAll('.mermaid'));
+                    console.log("Mermaid diagrams initialized");
+                } catch (e) {
+                    console.error("Error initializing Mermaid diagrams:", e);
+                }
+            }, 500);
+        });
+    </script>
+</body>
+</html> 

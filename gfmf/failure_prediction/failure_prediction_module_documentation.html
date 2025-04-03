@@ -1,0 +1,2571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Failure Prediction Module Documentation - Grid Failure Modeling Framework</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2, h3, h4 {
+            color: #2c3e50;
+        }
+        h1 {
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            border-bottom: 1px solid #bdc3c7;
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
+        pre {
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            padding: 15px;
+            overflow-x: auto;
+        }
+        code {
+            font-family: Consolas, Monaco, 'Andale Mono', monospace;
+            background-color: #f4f4f4;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+        }
+        th, td {
+            text-align: left;
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .workflow-container {
+            margin: 30px 0;
+            text-align: center;
+        }
+        .workflow {
+            max-width: 100%;
+        }
+        .note {
+            background-color: #e7f4ff;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .warning {
+            background-color: #fff5e6;
+            border-left: 4px solid #e67e22;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .function-signature {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .parameter {
+            margin-left: 20px;
+            margin-bottom: 5px;
+        }
+        .returns {
+            margin-top: 10px;
+            font-style: italic;
+        }
+        .directory-structure {
+            font-family: monospace;
+            white-space: pre;
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            padding: 15px;
+            overflow-x: auto;
+        }
+        .command {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px;
+            border-radius: 3px;
+            margin: 10px 0;
+        }
+        .diagram-container {
+            width: 100%;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        .mermaid {
+            margin: 0 auto;
+        }
+        .error {
+            background-color: #ffebee;
+            color: #c62828;
+            padding: 15px;
+            border-left: 4px solid #c62828;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+        .custom-diagram-container {
+            position: relative;
+            width: 100%;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        .module-title {
+            position: absolute;
+            top: 10px;
+            right: 30px;
+            background-color: #e8f5e9;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: #333;
+            z-index: 10;
+            border: 1px solid #2e7d32;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11.6.0/dist/mermaid.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'default',
+                securityLevel: 'loose',
+                fontFamily: 'Arial, sans-serif',
+                fontSize: 16
+            });
+            
+            // Error handling
+            mermaid.parseError = function(err, hash) {
+                console.error("Mermaid error:", err);
+                // Replace diagram with error message for users
+                const diagrams = document.getElementsByClassName('mermaid');
+                for (let i = 0; i < diagrams.length; i++) {
+                    if (diagrams[i].innerHTML.includes(hash.str)) {
+                        diagrams[i].innerHTML = `<div class="error">Diagram rendering error: ${err}</div>`;
+                    }
+                }
+            };
+        });
+    </script>
+</head>
+<body>
+    <h1>Failure Prediction Module Documentation</h1>
+    <p>
+        The Failure Prediction Module is the third module of the Grid Failure Modeling Framework (GFMF).
+        It builds upon the data from the Data Management Module and the Vulnerability Analysis Module to
+        predict power grid component failures using advanced machine learning and time series analysis techniques.
+        This module helps operators anticipate when and where failures are likely to occur, enabling proactive
+        maintenance and improved grid resilience.
+    </p>
+
+    <h2>Table of Contents</h2>
+    <ol>
+        <li><a href="#directory-structure">Directory Structure</a></li>
+        <li><a href="#workflow">Workflow Diagram</a></li>
+        <li><a href="#components">Module Components</a></li>
+        <li><a href="#files">File Descriptions</a></li>
+        <li><a href="#classes">Key Classes and Functions</a></li>
+        <li><a href="#execution">Execution Commands</a></li>
+        <li><a href="#configuration">Configuration</a></li>
+        <li><a href="#detailed-components">Detailed Component Documentation</a></li>
+        <li><a href="#algorithms">Algorithm Selection Rationale</a></li>
+    </ol>
+
+    <h2 id="directory-structure">1. Directory Structure</h2>
+    <div class="directory-structure">
+gfmf/
+└── failure_prediction/
+    ├── __init__.py                     # Module initialization
+    ├── failure_prediction_module.py    # Main module class and integration
+    ├── neural_predictor.py             # Neural network-based prediction
+    ├── time_series_forecaster.py       # Time series forecasting
+    ├── correlation_modeler.py          # Correlation analysis
+    ├── extreme_event_modeler.py        # Extreme weather event analysis
+    ├── config/
+    │   └── default_config.yaml         # Default configuration
+    └── utils/
+        ├── __init__.py                 # Utils initialization
+        ├── model_utils.py              # Model management utilities
+        ├── evaluation_utils.py         # Model evaluation utilities
+        └── visualization.py            # Visualization utilities
+    </div>
+
+    <h2 id="workflow">2. Workflow Diagram</h2>
+
+    <div class="custom-diagram-container">
+        <div class="module-title">Failure Prediction Module</div>
+        <div class="mermaid">
+%%{init: {'theme': 'default', 'themeVariables': { 'fontSize': '16px'}}}%%
+flowchart TD
+    subgraph Input["Input"]
+        A["Grid Component Data"] --> D
+        B["Environmental Data"] --> D
+        C["Vulnerability Scores"] --> D
+    end
+    
+    subgraph FPM[" "]
+        D["Data Loading & Integration"] --> E
+        D --> F
+        D --> G
+        D --> H
+        E["Neural Predictor"] --> I
+        F["Time Series Forecaster"] --> I
+        G["Correlation Modeler"] --> I
+        H["Extreme Event Modeler"] --> I
+        I["Ensemble Prediction Integration"]
+    end
+    
+    subgraph Output["Output"]
+        I --> J["Component Failure Probabilities"]
+        I --> K["Time Series Forecasts"]
+        I --> L["Extreme Event Risk Assessment"]
+        I --> M["Risk Visualization & Reports"]
+    end
+    
+    classDef inputStyle fill:#e1f5fe,stroke:#01579b;
+    classDef moduleStyle fill:#e8f5e9,stroke:#2e7d32;
+    classDef outputStyle fill:#fff3e0,stroke:#e65100;
+    
+    class Input inputStyle;
+    class FPM moduleStyle;
+    class Output outputStyle;
+        </div>
+    </div>
+
+    <p>The workflow of the Failure Prediction Module consists of these key steps:</p>
+    <ol>
+        <li><strong>Data Loading & Integration</strong>: Load and integrate data from previous modules including grid component information, environmental data, historical failures, and vulnerability scores</li>
+        <li><strong>Neural Prediction</strong>: Use deep neural networks to predict failure probabilities based on component characteristics and environmental factors</li>
+        <li><strong>Time Series Forecasting</strong>: Apply time series analysis to predict future failure trends using historical patterns</li>
+        <li><strong>Correlation Analysis</strong>: Identify and quantify correlations between environmental factors and failures</li>
+        <li><strong>Extreme Event Modeling</strong>: Analyze the impact of extreme environmental events on failure probabilities</li>
+        <li><strong>Ensemble Prediction Integration</strong>: Combine outputs from multiple models to generate more robust predictions</li>
+    </ol>
+    
+    <div class="diagram-container">
+        <div class="mermaid">
+%%{init: {'theme': 'default', 'themeVariables': { 'fontSize': '16px'}}}%%
+flowchart LR
+    subgraph NP["Neural Predictor"]
+        NP1["Feature Engineering"] --> NP2["Model Training"]
+        NP2 --> NP3["Failure Probability Prediction"]
+    end
+    
+    subgraph TSF["Time Series Forecaster"]
+        TSF1["Sequence Creation"] --> TSF2["LSTM/Prophet Training"]
+        TSF2 --> TSF3["Future Failure Forecasting"]
+    end
+    
+    subgraph CM["Correlation Modeler"]
+        CM1["Factor Analysis"] --> CM2["Correlation Calculation"]
+        CM2 --> CM3["Key Factor Identification"]
+    end
+    
+    subgraph EEM["Extreme Event Modeler"]
+        EEM1["Event Threshold Definition"] --> EEM2["Event Impact Analysis"]
+        EEM2 --> EEM3["High-Risk Period Identification"]
+    end
+    
+    classDef npStyle fill:#bbdefb,stroke:#1976d2;
+    classDef tsfStyle fill:#c8e6c9,stroke:#388e3c;
+    classDef cmStyle fill:#fff9c4,stroke:#fbc02d;
+    classDef eemStyle fill:#ffccbc,stroke:#e64a19;
+    
+    class NP npStyle;
+    class TSF tsfStyle;
+    class CM cmStyle;
+    class EEM eemStyle;
+        </div>
+    </div>
+
+    <h2 id="components">3. Module Components</h2>
+    <p>The Failure Prediction Module consists of the following major components:</p>
+    
+    <h3>3.1. Neural Predictor</h3>
+    <p>
+        The <code>NeuralPredictor</code> is responsible for predicting component failures using deep 
+        neural networks. It takes component properties, environmental conditions, and vulnerability 
+        scores as input and predicts the probability of component failure.
+    </p>
+    
+    <h4>8.1.1. Workflow</h4>
+    <div class="diagram-container">
+        <div class="mermaid">
+%%{init: {'theme': 'default', 'themeVariables': { 'fontSize': '16px'}}}%%
+flowchart LR
+    A["Load Component & Environmental Data"] --> B["Feature Engineering"]
+    B --> C["Data Preprocessing"]
+    C --> D["Build Neural Network Model"]
+    D --> E["Train Model"]
+    E --> F["Evaluate Performance"]
+    F --> G["Generate Failure Probabilities"]
+    G --> H["Save Model & Results"]
+        </div>
+    </div>
+    
+    <h4>8.1.2. Key Steps in Neural Prediction</h4>
+    <ol>
+        <li><strong>Feature Engineering</strong>: Transform raw data into features suitable for neural networks including:
+            <ul>
+                <li>Numerical feature scaling and normalization</li>
+                <li>Categorical feature encoding using one-hot encoding</li>
+                <li>Feature interaction creation (e.g., temperature × humidity)</li>
+                <li>Temporal feature extraction (e.g., seasonality, time since last failure)</li>
+            </ul>
+        </li>
+        <li><strong>Data Preprocessing</strong>: Prepare data for model training:
+            <ul>
+                <li>Train/test splitting with stratification for balanced classes</li>
+                <li>Handling missing values through imputation or exclusion</li>
+                <li>Outlier detection and treatment</li>
+                <li>Feature scaling using StandardScaler</li>
+            </ul>
+        </li>
+        <li><strong>Model Architecture</strong>: Deep neural network with:
+            <ul>
+                <li>Multiple hidden layers with decreasing neuron counts</li>
+                <li>ReLU activation functions for hidden layers</li>
+                <li>Dropout layers for regularization</li>
+                <li>Batch normalization for improved training stability</li>
+                <li>Sigmoid output activation for binary classification</li>
+            </ul>
+        </li>
+        <li><strong>Training Process</strong>: Optimized training procedure:
+            <ul>
+                <li>Adam optimizer with configurable learning rate</li>
+                <li>Binary cross-entropy loss function</li>
+                <li>Early stopping to prevent overfitting</li>
+                <li>Learning rate scheduling for improved convergence</li>
+                <li>Class weighting for imbalanced datasets</li>
+            </ul>
+        </li>
+        <li><strong>Evaluation</strong>: Comprehensive model assessment:
+            <ul>
+                <li>Accuracy, precision, recall, and F1 score</li>
+                <li>ROC curve and AUC score</li>
+                <li>Precision-recall curve</li>
+                <li>Confusion matrix analysis</li>
+            </ul>
+        </li>
+    </ol>
+    
+    <h4>8.1.3. Model Architecture</h4>
+    <p>
+        The neural predictor uses a deep neural network with the following architecture:
+    </p>
+    <pre><code>def build_model(self, input_dim: int) -> keras.Model:
+    """
+    Build the neural network model.
+    
+    Args:
+        input_dim: Input feature dimension
+        
+    Returns:
+        Compiled Keras model
+    """
+    # Get model configuration
+    hidden_layers = self.config['neural_predictor'].get('hidden_layers', [128, 64, 32])
+    dropout_rate = self.config['neural_predictor'].get('dropout_rate', 0.2)
+    learning_rate = self.config['neural_predictor'].get('learning_rate', 0.001)
+    
+    # Build model
+    model = keras.Sequential()
+    
+    # Input layer
+    model.add(layers.Input(shape=(input_dim,)))
+    
+    # Hidden layers
+    for i, units in enumerate(hidden_layers):
+        model.add(layers.Dense(
+            units=units,
+            activation='relu',
+            kernel_regularizer=regularizers.l2(0.001)
+        ))
+        model.add(layers.BatchNormalization())
+        model.add(layers.Dropout(dropout_rate))
+    
+    # Output layer
+    model.add(layers.Dense(1, activation='sigmoid'))
+    
+    # Compile model
+    model.compile(
+        optimizer=keras.optimizers.Adam(learning_rate=learning_rate),
+        loss='binary_crossentropy',
+        metrics=['accuracy', 
+                keras.metrics.Precision(), 
+                keras.metrics.Recall(),
+                keras.metrics.AUC()]
+    )
+    
+    return model</code></pre>
+    
+    <h4>8.1.4. Example: Neural Predictor Usage</h4>
+    <pre><code>from gfmf.failure_prediction.neural_predictor import NeuralPredictor
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Initialize neural predictor
+predictor = NeuralPredictor()
+
+# Load data
+component_data = pd.read_csv('data/processed/component_data.csv')
+vulnerability_data = pd.read_csv('data/vulnerability_analysis/vulnerability_scores.csv')
+env_data = pd.read_csv('data/processed/environmental_data.csv')
+failure_data = pd.read_csv('data/processed/failure_data.csv')
+
+# Prepare data for training
+X, y = predictor.load_data(
+    module1_data_path='data/processed/',
+    module2_data_path='data/vulnerability_analysis/',
+    component_data_file='component_data.csv',
+    vulnerability_data_file='vulnerability_scores.csv',
+    environmental_data_file='environmental_data.csv',
+    failure_data_file='failure_data.csv'
+)
+
+# Train the model
+training_results = predictor.train(X, y, validation_split=0.2, early_stopping=True)
+
+# Plot training history
+plt.figure(figsize=(12, 5))
+plt.subplot(1, 2, 1)
+plt.plot(training_results['loss'], label='Training Loss')
+plt.plot(training_results['val_loss'], label='Validation Loss')
+plt.title('Loss During Training')
+plt.xlabel('Epoch')
+plt.ylabel('Loss')
+plt.legend()
+
+plt.subplot(1, 2, 2)
+plt.plot(training_results['accuracy'], label='Training Accuracy')
+plt.plot(training_results['val_accuracy'], label='Validation Accuracy')
+plt.title('Accuracy During Training')
+plt.xlabel('Epoch')
+plt.ylabel('Accuracy')
+plt.legend()
+plt.tight_layout()
+plt.show()
+
+# Generate predictions
+predictions = predictor.predict(X)
+
+# Evaluate the model
+metrics = predictor.evaluate(X, y, threshold=0.5, save_plots=True, plots_dir='results/plots')
+print("Model Evaluation Metrics:")
+for metric, value in metrics.items():
+    print(f"{metric}: {value:.4f}")
+
+# Save the model
+model_path = predictor.save('models/neural', model_name='neural_predictor_v1')</code></pre>
+    
+    <h3>3.2. Time Series Forecaster</h3>
+    <p>
+        The <code>TimeSeriesForecaster</code> analyzes historical failure data to predict future
+        failure patterns using time series techniques. It can use either LSTM neural networks or
+        Prophet forecasting models depending on the data characteristics and configuration.
+    </p>
+    
+    <h4>8.2.1. Workflow</h4>
+    <div class="diagram-container">
+        <div class="mermaid">
+%%{init: {'theme': 'default', 'themeVariables': { 'fontSize': '16px'}}}%%
+flowchart LR
+    A["Load Time Series Data"] --> B["Data Preprocessing"]
+    B --> C["Time Series Decomposition"]
+    C --> D["Create Sequences (LSTM)"]
+    D --> E["Build Time Series Model"]
+    E --> F["Train Model"]
+    F --> G["Generate Forecasts"]
+    G --> H["Calculate Confidence Intervals"]
+    H --> I["Visualize Results"]
+        </div>
+    </div>
+    
+    <h4>8.2.2. Key Steps in Time Series Forecasting</h4>
+    <ol>
+        <li><strong>Data Preprocessing</strong>: Prepare time series data for modeling:
+            <ul>
+                <li>Conversion to datetime format and sorting</li>
+                <li>Resampling to regular time intervals (daily, weekly, etc.)</li>
+                <li>Handling missing values through interpolation</li>
+                <li>Scaling/normalization for LSTM models</li>
+            </ul>
+        </li>
+        <li><strong>Time Series Decomposition</strong>: Analyze time series components:
+            <ul>
+                <li>Trend component extraction</li>
+                <li>Seasonal pattern identification</li>
+                <li>Residual noise analysis</li>
+                <li>Stationarity testing and transformation</li>
+            </ul>
+        </li>
+        <li><strong>Sequence Creation for LSTM</strong>: Convert time series data to sequences:
+            <ul>
+                <li>Sliding window approach for sequence generation</li>
+                <li>Configurable sequence length (lookback period)</li>
+                <li>Feature engineering for multivariate time series</li>
+                <li>Sequence normalization</li>
+            </ul>
+        </li>
+        <li><strong>Model Selection</strong>: Choose appropriate time series model:
+            <ul>
+                <li>LSTM networks for complex sequential patterns</li>
+                <li>Prophet for data with strong seasonality and trends</li>
+                <li>Model selection based on data characteristics</li>
+            </ul>
+        </li>
+        <li><strong>Forecast Generation</strong>: Create predictions for future periods:
+            <ul>
+                <li>Multi-step forecasting</li>
+                <li>Confidence interval calculation</li>
+                <li>Forecast visualization</li>
+                <li>Uncertainty quantification</li>
+            </ul>
+        </li>
+    </ol>
+    
+    <h4>8.2.3. LSTM Architecture</h4>
+    <p>
+        The LSTM model architecture for time series forecasting:
+    </p>
+    <pre><code>def _build_lstm_model(self, input_shape: Tuple[int, int]) -> keras.Model:
+    """
+    Build an LSTM model for time series forecasting.
+    
+    Args:
+        input_shape: Shape of input data (sequence_length, features)
+        
+    Returns:
+        Compiled Keras model
+    """
+    # Get LSTM configuration
+    lstm_units = self.config['time_series'].get('lstm_units', [64, 32])
+    learning_rate = self.config['time_series'].get('learning_rate', 0.001)
+    
+    # Build model
+    model = keras.Sequential()
+    
+    # Input layer and first LSTM layer
+    model.add(layers.LSTM(
+        units=lstm_units[0],
+        return_sequences=len(lstm_units) > 1,
+        input_shape=input_shape
+    ))
+    
+    # Additional LSTM layers
+    for i, units in enumerate(lstm_units[1:]):
+        return_sequences = i < len(lstm_units) - 2
+        model.add(layers.LSTM(units=units, return_sequences=return_sequences))
+    
+    # Dense layers
+    model.add(layers.Dense(units=32, activation='relu'))
+    model.add(layers.Dense(units=1))  # Output layer
+    
+    # Compile model
+    model.compile(
+        optimizer=keras.optimizers.Adam(learning_rate=learning_rate),
+        loss='mean_squared_error',
+        metrics=['mae']
+    )
+    
+    return model</code></pre>
+    
+    <h4>8.2.4. Prophet Model Configuration</h4>
+    <p>
+        The Prophet model configuration for time series forecasting:
+    </p>
+    <pre><code>def _build_prophet_model(self) -> Any:
+    """
+    Build a Prophet model for time series forecasting.
+    
+    Returns:
+        Prophet model instance
+    """
+    if not PROPHET_AVAILABLE:
+        raise ImportError(
+            "Prophet is not installed. Please install it with: "
+            "pip install prophet"
+        )
+    
+    # Create model with default parameters
+    model = Prophet(
+        yearly_seasonality=True,
+        weekly_seasonality=True,
+        daily_seasonality=False,
+        changepoint_prior_scale=0.05,
+        seasonality_prior_scale=10.0,
+        holidays_prior_scale=10.0,
+        mcmc_samples=0  # Use MAP fitting
+    )
+    
+    return model</code></pre>
+    
+    <h4>8.2.5. Example: Time Series Forecasting</h4>
+    <pre><code>from gfmf.failure_prediction.time_series_forecaster import TimeSeriesForecaster
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Initialize time series forecaster
+forecaster = TimeSeriesForecaster()
+
+# Load time series data
+failure_data = pd.read_csv('data/processed/failure_history.csv')
+failure_data['date'] = pd.to_datetime(failure_data['date'])
+failure_data = failure_data.sort_values('date')
+
+# Prepare time series data
+ts_data = forecaster.load_data(
+    'data/processed/failure_history.csv',
+    date_column='date',
+    target_column='failure_count',
+    group_by='component_type'
+)
+
+# Train the model
+model = forecaster.train(ts_data, validation_split=0.2)
+
+# Generate forecasts for the next 30 days
+forecast_df = forecaster.forecast(
+    ts_data,
+    periods=30,
+    return_confidence_intervals=True
+)
+
+# Visualize the forecasts
+plt.figure(figsize=(14, 8))
+plt.plot(ts_data['date'], ts_data['failure_count'], 'b-', label='Historical Data')
+plt.plot(forecast_df['date'], forecast_df['prediction'], 'r-', label='Forecast')
+plt.fill_between(
+    forecast_df['date'],
+    forecast_df['lower_bound'],
+    forecast_df['upper_bound'],
+    color='r',
+    alpha=0.2,
+    label='95% Confidence Interval'
+)
+plt.title('Failure Count Forecast')
+plt.xlabel('Date')
+plt.ylabel('Failure Count')
+plt.legend()
+plt.grid(True, alpha=0.3)
+plt.tight_layout()
+plt.show()
+
+# Evaluate model performance
+evaluation_metrics = forecaster.evaluate(
+    ts_data.iloc[-30:],  # Use last 30 days as test set
+    plot=True,
+    save_plot=True,
+    plot_path='results/time_series_evaluation.png'
+)
+print("Time Series Model Evaluation Metrics:")
+for metric, value in evaluation_metrics.items():
+    print(f"{metric}: {value:.4f}")
+
+# Save the model
+model_path = forecaster.save('models/time_series', model_name='lstm_forecaster_v1')</code></pre>
+
+    <h3>3.4. Extreme Event Modeler</h3>
+    <p>
+        The Extreme Event Modeler focuses on rare but impactful environmental events
+        (extreme temperatures, high winds, heavy precipitation) and analyzes their effect on grid
+        component failures. It identifies threshold values for environmental variables beyond which
+        failure risks significantly increase.
+    </p>
+    
+    <h4>8.4.1. Workflow</h4>
+    <div class="diagram-container">
+        <div class="mermaid">
+%%{init: {'theme': 'default', 'themeVariables': { 'fontSize': '16px'}}}%%
+flowchart LR
+    A["Load Environmental & Failure Data"] --> B["Determine Extreme Event Thresholds"]
+    B --> C["Identify Extreme Events"]
+    C --> D["Calculate Event Duration & Severity"]
+    D --> E["Analyze Impact on Failure Rates"]
+    E --> F["Identify High-Risk Periods"]
+    F --> G["Calculate Compound Event Effects"]
+    G --> H["Predict Event-Based Failure Probabilities"]
+        </div>
+    </div>
+    
+    <h4>8.4.2. Key Steps in Extreme Event Modeling</h4>
+    <ol>
+        <li><strong>Threshold Determination</strong>: Establish thresholds for extreme conditions:
+            <ul>
+                <li>Percentile-based thresholds (e.g., 95th percentile for high temperature)</li>
+                <li>Historical impact-based thresholds</li>
+                <li>Statistical extreme value analysis</li>
+                <li>Location-specific threshold calibration</li>
+            </ul>
+        </li>
+        <li><strong>Event Identification</strong>: Detect extreme events in time series data:
+            <ul>
+                <li>Continuous period detection above/below thresholds</li>
+                <li>Event duration calculation</li>
+                <li>Event severity quantification</li>
+                <li>Event classification by type and intensity</li>
+            </ul>
+        </li>
+        <li><strong>Impact Analysis</strong>: Quantify event impact on failures:
+            <ul>
+                <li>Failure rate comparison during extreme vs. normal conditions</li>
+                <li>Time-lagged effect analysis</li>
+                <li>Statistical significance testing</li>
+                <li>Component vulnerability during extreme events</li>
+            </ul>
+        </li>
+        <li><strong>Compound Event Analysis</strong>: Analyze combined effects of multiple extreme conditions:
+            <ul>
+                <li>Simultaneous event detection</li>
+                <li>Interaction effect quantification</li>
+                <li>Synergistic impact modeling</li>
+                <li>Risk multiplication factor calculation</li>
+            </ul>
+        </li>
+        <li><strong>Failure Probability Prediction</strong>: Generate event-based failure predictions:
+            <ul>
+                <li>Component-specific risk calculation</li>
+                <li>Conditional probability estimation</li>
+                <li>Time-to-failure distribution modeling</li>
+                <li>Forecast-based extreme event risk prediction</li>
+            </ul>
+        </li>
+    </ol>
+    
+    <h4>8.4.3. Event Identification Method</h4>
+    <p>
+        The extreme event modeler identifies events using the following algorithm:
+    </p>
+    <pre><code>def identify_extreme_events(
+    self,
+    env_df: pd.DataFrame,
+    custom_thresholds: Optional[Dict[str, float]] = None,
+    window_size: int = 1,
+    min_duration: int = 1
+) -> Dict[str, pd.DataFrame]:
+    """
+    Identify extreme environmental events from the data.
+    
+    Args:
+        env_df: Environmental data
+        custom_thresholds: Custom thresholds for different variables
+        window_size: Window size for smoothing
+        min_duration: Minimum duration to be considered an event
+        
+    Returns:
+        Dictionary of identified extreme events
+    """
+    logger.info(f"Identifying extreme events using window_size={window_size}, min_duration={min_duration}")
+    
+    # Ensure we have a datetime index
+    if self.date_column in env_df.columns:
+        env_df = env_df.set_index(self.date_column)
+    
+    # Get numeric columns for analysis
+    numeric_cols = env_df.select_dtypes(include=[np.number]).columns
+    
+    # Event dictionary to store results
+    extreme_events = {}
+    thresholds = {}
+    
+    # Process each numeric column
+    for col in numeric_cols:
+        # Map column to event type if possible
+        event_type = self._map_var_to_event_type(col)
+        
+        # Skip if not a relevant environmental variable
+        if event_type not in [e.lower() for e in self.event_types] and col not in self.event_types:
+            continue
+        
+        # Apply smoothing if window_size > 1
+        if window_size > 1:
+            series = env_df[col].rolling(window=window_size, center=True).mean()
+        else:
+            series = env_df[col]
+        
+        # Determine threshold
+        if custom_thresholds and col in custom_thresholds:
+            threshold = custom_thresholds[col]
+        elif event_type in self.threshold_percentiles:
+            # Using percentile from config
+            percentile = self.threshold_percentiles[event_type]
+            if 'high' in event_type.lower():
+                threshold = np.nanpercentile(series, percentile)
+            elif 'low' in event_type.lower():
+                threshold = np.nanpercentile(series, percentile)
+            else:
+                # Default to high threshold (e.g., for precipitation, wind)
+                threshold = np.nanpercentile(series, 95)
+        else:
+            # Default threshold - 95th percentile for most, 5th for low_*
+            if 'low' in col.lower():
+                threshold = np.nanpercentile(series, 5)
+            else:
+                threshold = np.nanpercentile(series, 95)
+        
+        # Store threshold for later reference
+        thresholds[col] = threshold
+        
+        # Create binary indicator for extreme events
+        if 'low' in event_type.lower() or 'low' in col.lower():
+            # For low temperatures, etc. (below threshold)
+            event_indicator = (series < threshold).astype(int)
+        else:
+            # For high temperatures, precipitation, wind (above threshold)
+            event_indicator = (series > threshold).astype(int)
+        
+        # Identify continuous periods - Label each event with a unique ID
+        event_ids = (event_indicator.diff() != 0).cumsum()
+        event_periods = pd.DataFrame({
+            'value': series,
+            'is_event': event_indicator,
+            'event_id': event_ids * event_indicator  # Will be 0 for non-events
+        })
+        
+        # Filter events by minimum duration
+        if min_duration > 1:
+            # Count consecutive days for each event
+            event_counts = event_periods[event_periods['is_event'] == 1].groupby('event_id').size()
+            valid_events = event_counts[event_counts >= min_duration].index
+            
+            # Filter out events that don't meet minimum duration
+            event_periods['is_valid_event'] = (
+                event_periods['event_id'].isin(valid_events) & 
+                (event_periods['is_event'] == 1)
+            ).astype(int)
+        else:
+            event_periods['is_valid_event'] = event_periods['is_event']
+        
+        # Calculate event properties
+        if event_periods['is_valid_event'].sum() > 0:
+            event_properties = (
+                event_periods[event_periods['is_valid_event'] == 1]
+                .groupby('event_id')
+                .agg({
+                    'value': ['mean', 'max', 'min', 'count'],
+                    'is_valid_event': 'first'  # Just to have a column
+                })
+            )
+            
+            # Flatten column multi-index
+            event_properties.columns = [f"{col[0]}_{col[1]}" for col in event_properties.columns]
+            
+            # Add start and end dates
+            event_dates = (
+                event_periods[event_periods['is_valid_event'] == 1]
+                .groupby('event_id')
+                .agg({
+                    'is_valid_event': ['first', 'last']  # Just to get first/last index
+                })
+            )
+            
+            event_properties['start_date'] = event_dates.index.map(
+                lambda x: event_periods[event_periods['event_id'] == x].index[0]
+            )
+            event_properties['end_date'] = event_dates.index.map(
+                lambda x: event_periods[event_periods['event_id'] == x].index[-1]
+            )
+            
+            # Calculate severity (how far from threshold)
+            if 'low' in event_type.lower() or 'low' in col.lower():
+                # For low values, severity is how much below threshold
+                event_properties['severity'] = (threshold - event_properties['value_mean']) / threshold
+            else:
+                # For high values, severity is how much above threshold
+                event_properties['severity'] = (event_properties['value_mean'] - threshold) / threshold
+            
+            # Store results
+            extreme_events[col] = {
+                'threshold': threshold,
+                'event_series': event_periods,
+                'events': event_properties,
+                'event_type': event_type
+            }
+        else:
+            logger.info(f"No valid extreme events found for {col}")
+            extreme_events[col] = {
+                'threshold': threshold,
+                'event_series': event_periods,
+                'events': pd.DataFrame(),
+                'event_type': event_type
+            }
+    
+    # Store thresholds in the object
+    self.event_thresholds = thresholds
+    
+    # Store the events dictionary in the object
+    self.extreme_events = extreme_events
+    
+    logger.info(f"Identified extreme events for {len(extreme_events)} variables")
+    
+    return extreme_events</code></pre>
+    
+    <h4>8.4.4. Example: Extreme Event Analysis</h4>
+    <pre><code>from gfmf.failure_prediction.extreme_event_modeler import ExtremeEventModeler
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Initialize extreme event modeler
+event_modeler = ExtremeEventModeler()
+
+# Load environmental and failure data
+env_data = pd.read_csv('data/processed/weather_data.csv')
+failure_data = pd.read_csv('data/processed/failure_data.csv')
+
+# Ensure date columns are in datetime format
+env_data['date'] = pd.to_datetime(env_data['date'])
+failure_data['date'] = pd.to_datetime(failure_data['date'])
+
+# Identify extreme events
+extreme_events = event_modeler.identify_extreme_events(
+    env_df=env_data,
+    custom_thresholds={
+        'temperature_max': 95,  # Fahrenheit or Celsius depending on data
+        'wind_speed': 40        # MPH or km/h depending on data
+    },
+    window_size=3,              # 3-day rolling average
+    min_duration=2              # Minimum 2-day event duration
+)
+
+# Analyze event impact on failures
+impact_stats = event_modeler.analyze_event_impact(
+    extreme_events=extreme_events,
+    failure_df=failure_data,
+    event_window=3,             # Look at failures up to 3 days after event
+    baseline_window=30,         # Compare to 30-day baseline
+    min_events=5                # Require at least 5 events for reliable statistics
+)
+
+# Calculate compound event impact
+compound_impact = event_modeler.calculate_compound_event_impact(
+    extreme_events=extreme_events,
+    failure_df=failure_data,
+    event_window=3
+)
+
+# Plot event impact results
+plt.figure(figsize=(12, 8))
+impact_data = pd.DataFrame({
+    'Event Type': [],
+    'Failure Rate Increase': [],
+    'p-value': []
+})
+
+for event_type, stats in impact_stats.items():
+    impact_data = impact_data.append({
+        'Event Type': event_type,
+        'Failure Rate Increase': stats['failure_rate_increase'],
+        'p-value': stats['p_value']
+    }, ignore_index=True)
+
+# Sort by impact
+impact_data = impact_data.sort_values('Failure Rate Increase', ascending=False)
+
+# Create bar chart
+ax = sns.barplot(
+    x='Failure Rate Increase',
+    y='Event Type',
+    data=impact_data,
+    palette='YlOrRd'
+)
+
+# Add p-value annotations
+for i, row in impact_data.iterrows():
+    p_value = row['p-value']
+    stars = ''
+    if p_value < 0.001:
+        stars = '***'
+    elif p_value < 0.01:
+        stars = '**'
+    elif p_value < 0.05:
+        stars = '*'
+    
+    if stars:
+        ax.text(
+            row['Failure Rate Increase'] + 0.1,
+            i,
+            stars,
+            va='center'
+        )
+
+plt.title('Impact of Extreme Events on Failure Rates')
+plt.xlabel('Failure Rate Increase (ratio)')
+plt.tight_layout()
+plt.savefig('results/extreme_events/event_impact.png', dpi=300)
+plt.show()
+
+# Create component-specific failure probabilities during extreme events
+component_data = pd.read_csv('data/processed/component_data.csv')
+failure_probs = event_modeler.predict_event_failure_probability(
+    component_df=component_data,
+    event_type='high_temperature',
+    severity=0.8  # 80% above threshold
+)
+
+print("Component Failure Probabilities During Extreme High Temperature Events:")
+print(failure_probs.sort_values('failure_probability', ascending=False).head(10))</code></pre>
+
+    <h2 id="files">4. File Descriptions</h2>
+    
+    <h3>4.1. failure_prediction_module.py</h3>
+    <p>
+        This is the main file that integrates all components of the Failure Prediction Module. It provides 
+        a unified interface for loading data, running analyses, and generating predictions. The 
+        <code>FailurePredictionModule</code> class coordinates the workflow between all subcomponents.
+    </p>
+    
+    <h3>4.2. neural_predictor.py</h3>
+    <p>
+        This file contains the <code>NeuralPredictor</code> class, which implements deep neural network 
+        models for predicting component failures. It handles data preprocessing, model training, evaluation,
+        and prediction generation using TensorFlow/Keras.
+    </p>
+    
+    <h3>4.3. time_series_forecaster.py</h3>
+    <p>
+        This file contains the <code>TimeSeriesForecaster</code> class for time-based failure prediction.
+        It implements LSTM (Long Short-Term Memory) neural networks and Prophet forecasting models to
+        predict failure trends over time and identify seasonal or cyclical patterns.
+    </p>
+    
+    <h3>4.4. correlation_modeler.py</h3>
+    <p>
+        This file contains the <code>CorrelationModeler</code> class, which analyzes statistical 
+        relationships between environmental factors and component failures. It calculates correlation
+        coefficients, identifies key environmental factors, and provides visualization utilities.
+    </p>
+    
+    <h3>4.5. extreme_event_modeler.py</h3>
+    <p>
+        This file contains the <code>ExtremeEventModeler</code> class for analyzing the impact of 
+        extreme environmental conditions on failures. It identifies threshold values, quantifies
+        event impacts, and predicts high-risk periods during extreme conditions.
+    </p>
+    
+    <h3>4.6. config/default_config.yaml</h3>
+    <p>
+        This file contains the default configuration parameters for all components of the Failure
+        Prediction Module, including model architectures, hyperparameters, evaluation settings,
+        and visualization preferences.
+    </p>
+    
+    <h3>4.7. utils/model_utils.py</h3>
+    <p>
+        This file provides utility functions for loading, saving, and managing machine learning models.
+        It includes functions for loading configurations, saving prediction results, and maintaining
+        a model registry for version tracking.
+    </p>
+    
+    <h3>4.8. utils/evaluation_utils.py</h3>
+    <p>
+        This file contains utilities for evaluating model performance, including metrics calculation
+        for classification, regression, and time series models. It also provides functions for
+        generating evaluation plots such as confusion matrices and ROC curves.
+    </p>
+    
+    <h3>4.9. utils/visualization.py</h3>
+    <p>
+        This file provides utilities for visualizing prediction results and model outputs. It includes
+        functions for plotting failure probability heatmaps, time series forecasts, correlation matrices,
+        and feature importance charts.
+    </p>
+
+    <h2 id="classes">5. Key Classes and Functions</h2>
+    
+    <h3>5.1. FailurePredictionModule</h3>
+    <p class="function-signature">class FailurePredictionModule(config_path: Optional[str] = None)</p>
+    <p>Main class that integrates all components of the Failure Prediction Module.</p>
+    <p>Key methods:</p>
+    
+    <div class="function-signature">load_data(data_path: str) -> Dict[str, pd.DataFrame]</div>
+    <p>Loads processed data from previous modules (Data Management and Vulnerability Analysis).</p>
+    <p class="parameter"><strong>data_path</strong>: Path to the processed data directory</p>
+    <p class="returns">Returns: Dictionary containing loaded dataframes</p>
+    
+    <div class="function-signature">analyze_correlations(data: pd.DataFrame) -> Dict[str, Any]</div>
+    <p>Analyzes correlations between environmental factors and failures.</p>
+    <p class="parameter"><strong>data</strong>: DataFrame with environmental and failure data</p>
+    <p class="returns">Returns: Dictionary with correlation analysis results</p>
+    
+    <div class="function-signature">train_neural_predictor(data: pd.DataFrame, target_col: str = 'outage_flag') -> Dict[str, Any]</div>
+    <p>Trains the neural predictor model on the provided data.</p>
+    <p class="parameter"><strong>data</strong>: Training data</p>
+    <p class="parameter"><strong>target_col</strong>: Target column name</p>
+    <p class="returns">Returns: Dictionary with training results and metrics</p>
+    
+    <div class="function-signature">train_time_series_model(data: pd.DataFrame, target_col: str = 'outage_count') -> Any</div>
+    <p>Trains the time series forecasting model on the provided data.</p>
+    <p class="parameter"><strong>data</strong>: Time series training data</p>
+    <p class="parameter"><strong>target_col</strong>: Target column to forecast</p>
+    <p class="returns">Returns: Trained model object</p>
+    
+    <div class="function-signature">generate_failure_predictions(data: pd.DataFrame, vulnerability_scores: pd.DataFrame, periods: int = 30) -> pd.DataFrame</div>
+    <p>Generates comprehensive failure predictions by integrating all prediction components.</p>
+    <p class="parameter"><strong>data</strong>: Historical data</p>
+    <p class="parameter"><strong>vulnerability_scores</strong>: Component vulnerability scores</p>
+    <p class="parameter"><strong>periods</strong>: Number of future periods to predict</p>
+    <p class="returns">Returns: DataFrame with failure predictions for each component</p>
+    
+    <div class="function-signature">identify_high_risk_periods(predictions: pd.DataFrame, threshold: float = 0.7) -> pd.DataFrame</div>
+    <p>Identifies high-risk periods from the predictions.</p>
+    <p class="parameter"><strong>predictions</strong>: Prediction results</p>
+    <p class="parameter"><strong>threshold</strong>: Probability threshold for high-risk classification</p>
+    <p class="returns">Returns: DataFrame with high-risk periods</p>
+    
+    <div class="function-signature">run_analysis(data: Dict[str, pd.DataFrame], output_dir: Optional[str] = None) -> Dict[str, Any]</div>
+    <p>Runs the complete failure prediction workflow.</p>
+    <p class="parameter"><strong>data</strong>: Dictionary containing input data</p>
+    <p class="parameter"><strong>output_dir</strong>: Directory to save output files</p>
+    <p class="returns">Returns: Dictionary with analysis results</p>
+    
+    <h3>5.2. NeuralPredictor</h3>
+    <p class="function-signature">class NeuralPredictor(config_path: Optional[str] = None)</p>
+    <p>Neural network-based component failure predictor.</p>
+    <p>Key methods:</p>
+    
+    <div class="function-signature">load_data(module1_data_path: Optional[str] = None, module2_data_path: Optional[str] = None, ...) -> Tuple[pd.DataFrame, pd.DataFrame]</div>
+    <p>Loads and prepares data for neural prediction.</p>
+    <p class="returns">Returns: Features and target data frames</p>
+    
+    <div class="function-signature">build_model(input_dim: int) -> keras.Model</div>
+    <p>Builds the neural network model architecture.</p>
+    <p class="parameter"><strong>input_dim</strong>: Input feature dimension</p>
+    <p class="returns">Returns: Compiled Keras model</p>
+    
+    <div class="function-signature">train(X: pd.DataFrame, y: pd.Series, validation_split: float = None, early_stopping: bool = True) -> Dict[str, List[float]]</div>
+    <p>Trains the neural network model on provided data.</p>
+    <p class="parameter"><strong>X</strong>: Feature data</p>
+    <p class="parameter"><strong>y</strong>: Target data</p>
+    <p class="returns">Returns: Dictionary with training history</p>
+    
+    <div class="function-signature">predict(X: pd.DataFrame, return_proba: bool = True) -> np.ndarray</div>
+    <p>Generates predictions using the trained model.</p>
+    <p class="parameter"><strong>X</strong>: Feature data</p>
+    <p class="parameter"><strong>return_proba</strong>: Whether to return probabilities</p>
+    <p class="returns">Returns: Predictions array</p>
+    
+    <div class="function-signature">evaluate(X: pd.DataFrame, y: pd.Series, threshold: float = 0.5, save_plots: bool = False, plots_dir: Optional[str] = None) -> Dict[str, float]</div>
+    <p>Evaluates model performance on test data.</p>
+    <p class="parameter"><strong>X</strong>: Test feature data</p>
+    <p class="parameter"><strong>y</strong>: Test target data</p>
+    <p class="returns">Returns: Dictionary with evaluation metrics</p>
+    
+    <h3>5.3. TimeSeriesForecaster</h3>
+    <p class="function-signature">class TimeSeriesForecaster(config_path: Optional[str] = None)</p>
+    <p>Time series forecaster for predicting future component failures.</p>
+    <p>Key methods:</p>
+    
+    <div class="function-signature">load_data(data_path: str, date_column: str = 'date', target_column: str = 'failure_count', ...) -> pd.DataFrame</div>
+    <p>Loads and prepares time series data.</p>
+    <p class="parameter"><strong>data_path</strong>: Path to the data file</p>
+    <p class="returns">Returns: Processed time series DataFrame</p>
+    
+    <div class="function-signature">train(df: pd.DataFrame, validation_split: float = 0.2) -> Any</div>
+    <p>Trains a time series model on the provided data.</p>
+    <p class="parameter"><strong>df</strong>: Time series DataFrame</p>
+    <p class="returns">Returns: Trained model</p>
+    
+    <div class="function-signature">forecast(df: pd.DataFrame = None, periods: int = None, future_dates: Optional[pd.DatetimeIndex] = None, return_confidence_intervals: bool = True) -> pd.DataFrame</div>
+    <p>Generates time series forecasts for future periods.</p>
+    <p class="parameter"><strong>df</strong>: Historical data</p>
+    <p class="parameter"><strong>periods</strong>: Number of periods to forecast</p>
+    <p class="returns">Returns: DataFrame with forecasts</p>
+    
+    <div class="function-signature">evaluate(test_df: pd.DataFrame, plot: bool = True, save_plot: bool = False, plot_path: Optional[str] = None) -> Dict[str, float]</div>
+    <p>Evaluates the time series model on test data.</p>
+    <p class="parameter"><strong>test_df</strong>: Test DataFrame</p>
+    <p class="returns">Returns: Dictionary with evaluation metrics</p>
+    
+    <h3>5.4. CorrelationModeler</h3>
+    <p class="function-signature">class CorrelationModeler(config_path: Optional[str] = None)</p>
+    <p>Correlation modeler for analyzing relationships between environmental factors and failures.</p>
+    <p>Key methods:</p>
+    
+    <div class="function-signature">prepare_data(environmental_df: pd.DataFrame, failure_df: pd.DataFrame, ...) -> pd.DataFrame</div>
+    <p>Prepares and merges data for correlation analysis.</p>
+    <p class="returns">Returns: Merged DataFrame for analysis</p>
+    
+    <div class="function-signature">analyze_correlations(data: pd.DataFrame, target_column: str = 'failure_count', correlation_types: List[str] = ['pearson', 'spearman'], visualization_path: Optional[str] = None) -> Dict[str, pd.DataFrame]</div>
+    <p>Analyzes correlations between variables in the data.</p>
+    <p class="parameter"><strong>data</strong>: Input DataFrame</p>
+    <p class="parameter"><strong>target_column</strong>: Target variable name</p>
+    <p class="returns">Returns: Dictionary with correlation matrices</p>
+    
+    <div class="function-signature">train_models(data: pd.DataFrame, target_column: str = 'failure_count', test_size: float = 0.2, model_types: Optional[List[str]] = None) -> Dict[str, Dict[str, Any]]</div>
+    <p>Trains correlation models on the provided data.</p>
+    <p class="parameter"><strong>data</strong>: Training data</p>
+    <p class="returns">Returns: Dictionary with trained models and metrics</p>
+    
+    <div class="function-signature">get_key_environmental_factors(top_n: int = 10, model_type: Optional[str] = None) -> pd.DataFrame</div>
+    <p>Identifies the most significant environmental factors.</p>
+    <p class="parameter"><strong>top_n</strong>: Number of top factors to return</p>
+    <p class="returns">Returns: DataFrame with key factors and importance scores</p>
+    
+    <h3>5.5. ExtremeEventModeler</h3>
+    <p class="function-signature">class ExtremeEventModeler(config_path: Optional[str] = None)</p>
+    <p>Extreme event modeler for analyzing the impact of extreme environmental conditions.</p>
+    <p>Key methods:</p>
+    
+    <div class="function-signature">load_data(environmental_data_path: str, failure_data_path: str, ...) -> Tuple[pd.DataFrame, pd.DataFrame]</div>
+    <p>Loads environmental and failure data.</p>
+    <p class="returns">Returns: Tuple of (environmental_df, failure_df)</p>
+    
+    <div class="function-signature">identify_extreme_events(env_df: pd.DataFrame, custom_thresholds: Optional[Dict[str, float]] = None, window_size: int = 1, min_duration: int = 1) -> Dict[str, pd.DataFrame]</div>
+    <p>Identifies extreme environmental events from the data.</p>
+    <p class="parameter"><strong>env_df</strong>: Environmental data</p>
+    <p class="returns">Returns: Dictionary of identified extreme events</p>
+    
+    <div class="function-signature">analyze_event_impact(extreme_events: Dict[str, pd.DataFrame], failure_df: pd.DataFrame, event_window: int = 3, baseline_window: int = 30, min_events: int = 5) -> Dict[str, Dict[str, Any]]</div>
+    <p>Analyzes the impact of extreme events on failure rates.</p>
+    <p class="parameter"><strong>extreme_events</strong>: Dictionary of identified events</p>
+    <p class="parameter"><strong>failure_df</strong>: Failure data</p>
+    <p class="returns">Returns: Dictionary with impact statistics</p>
+    
+    <div class="function-signature">predict_event_failure_probability(component_df: pd.DataFrame, event_type: str, severity: Optional[float] = None) -> pd.DataFrame</div>
+    <p>Predicts failure probabilities during specific extreme events.</p>
+    <p class="parameter"><strong>component_df</strong>: Component data</p>
+    <p class="parameter"><strong>event_type</strong>: Type of extreme event</p>
+    <p class="returns">Returns: DataFrame with failure probabilities</p>
+
+    <h2 id="execution">6. Execution Commands</h2>
+    <p>Here are some examples of how to use the Failure Prediction Module in Python code:</p>
+    
+    <h3>6.1. Basic Usage</h3>
+    <pre><code>from gfmf.failure_prediction import FailurePredictionModule
+
+# Initialize the module
+failure_module = FailurePredictionModule()
+
+# Load data from previous modules
+data = failure_module.load_data('data/processed/')
+
+# Run the complete analysis
+results = failure_module.run_analysis(data, output_dir='results/failure_prediction')
+
+# Access prediction results
+predictions = results['predictions']
+high_risk_periods = results['high_risk_periods']
+feature_importance = results['correlations']['feature_importance']</code></pre>
+    
+    <h3>6.2. Using Custom Configuration</h3>
+    <pre><code>from gfmf.failure_prediction import FailurePredictionModule
+
+# Initialize with custom configuration
+failure_module = FailurePredictionModule(config_path='path/to/custom_config.yaml')
+
+# Load data and run analysis
+data = failure_module.load_data('data/processed/')
+results = failure_module.run_analysis(data)</code></pre>
+    
+    <h3>6.3. Using Individual Components</h3>
+    <pre><code>from gfmf.failure_prediction import FailurePredictionModule
+from gfmf.failure_prediction.neural_predictor import NeuralPredictor
+from gfmf.failure_prediction.time_series_forecaster import TimeSeriesForecaster
+from gfmf.failure_prediction.correlation_modeler import CorrelationModeler
+from gfmf.failure_prediction.extreme_event_modeler import ExtremeEventModeler
+
+# Initialize the module
+failure_module = FailurePredictionModule()
+
+# Load data
+data = failure_module.load_data('data/processed/')
+aligned_data = data['aligned_data']
+vulnerability_scores = data['vulnerability_scores']
+
+# Use the neural predictor directly
+neural_predictor = NeuralPredictor()
+X, y = neural_predictor.load_data(
+    module1_data_path='data/processed/',
+    module2_data_path='data/vulnerability_analysis/'
+)
+neural_results = neural_predictor.train(X, y)
+failure_probabilities = neural_predictor.predict(X)
+
+# Use the time series forecaster directly
+ts_forecaster = TimeSeriesForecaster()
+ts_data = ts_forecaster.load_data(
+    'data/processed/time_series_data.csv',
+    date_column='timestamp',
+    target_column='failure_count'
+)
+ts_forecaster.train(ts_data)
+forecast = ts_forecaster.forecast(periods=30)
+
+# Use the correlation modeler directly
+corr_modeler = CorrelationModeler()
+env_data = pd.read_csv('data/processed/environmental_data.csv')
+fail_data = pd.read_csv('data/processed/failure_data.csv')
+merged_data = corr_modeler.prepare_data(env_data, fail_data)
+correlations = corr_modeler.analyze_correlations(merged_data)
+key_factors = corr_modeler.get_key_environmental_factors(top_n=5)
+
+# Use the extreme event modeler directly
+event_modeler = ExtremeEventModeler()
+env_data, fail_data = event_modeler.load_data(
+    'data/processed/environmental_data.csv',
+    'data/processed/failure_data.csv'
+)
+extreme_events = event_modeler.identify_extreme_events(env_data)
+event_impact = event_modeler.analyze_event_impact(extreme_events, fail_data)</code></pre>
+    
+    <h3>6.4. Command Line Execution</h3>
+    <p>To run the failure prediction module from the command line:</p>
+    <div class="command">python -m gfmf.failure_prediction --config config/custom_config.yaml --input data/processed/ --output results/failure_prediction</div>
+    
+    <h3>6.5. Training Neural Models</h3>
+    <div class="command">python -m gfmf.failure_prediction.neural_predictor --data data/processed/ --output models/neural --epochs 300 --batch-size 64</div>
+    
+    <h3>6.6. Generating Time Series Forecasts</h3>
+    <div class="command">python -m gfmf.failure_prediction.time_series_forecaster --data data/processed/time_series.csv --forecast-periods 60 --output forecasts/ --plot</div>
+    
+    <h3>6.7. Analyzing Extreme Events</h3>
+    <div class="command">python -m gfmf.failure_prediction.extreme_event_modeler --env-data data/processed/weather.csv --failure-data data/processed/failures.csv --output extreme_events/</div>
+
+    <h2 id="configuration">7. Configuration</h2>
+    <p>
+        The Failure Prediction Module can be configured using a YAML configuration file. Here's the default
+        configuration structure:
+    </p>
+    <pre><code># Default Configuration for Failure Prediction Module
+
+# Path configurations
+paths:
+  module1_data: "data/processed/"
+  module2_data: "data/vulnerability_analysis/"
+  output_data: "data/failure_prediction/"
+  logs: "logs/failure_prediction/"
+
+# Neural network predictor configuration
+neural_predictor:
+  model_type: "deep_neural_network"  # Options: deep_neural_network, random_forest, xgboost
+  hidden_layers: [128, 64, 32]
+  learning_rate: 0.001
+  epochs: 200
+  batch_size: 32
+  test_size: 0.2
+  early_stopping_patience: 10
+  dropout_rate: 0.2
+
+# Time series forecaster configuration
+time_series:
+  model_type: "lstm"  # Options: lstm, prophet
+  sequence_length: 14
+  lstm_units: [64, 32]
+  learning_rate: 0.001
+  epochs: 100
+  batch_size: 32
+  forecast_horizon: 30
+
+# Extreme event modeler configuration
+extreme_events:
+  event_types: ["high_temperature", "low_temperature", "high_wind", "precipitation"]
+  threshold_percentiles:
+    high_temperature: 95
+    low_temperature: 5
+    high_wind: 95
+    precipitation: 95
+
+# Correlation modeler configuration
+correlation_models:
+  model_types: ["linear", "nonlinear"]
+  environmental_factors: ["temperature", "wind_speed", "precipitation"]
+
+# Visualization settings
+visualization:
+  dpi: 300
+  figsize:
+    default: [10, 6]
+    heatmap: [12, 10]
+    timeseries: [14, 8]
+  color_maps:
+    correlation: "RdBu_r"
+    risk: "YlOrRd"
+    temperature: "coolwarm"
+    precipitation: "Blues"
+    wind: "Greens"
+
+# Logging configuration
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "failure_prediction.log"</code></pre>
+    
+    <h3>7.1. Configuration Sections</h3>
+    
+    <h4>7.1.1. Paths</h4>
+    <ul>
+        <li><strong>module1_data</strong>: Path to the processed data from Module 1 (Data Management)</li>
+        <li><strong>module2_data</strong>: Path to the output data from Module 2 (Vulnerability Analysis)</li>
+        <li><strong>output_data</strong>: Path to save the prediction results</li>
+        <li><strong>logs</strong>: Path to save log files</li>
+    </ul>
+    
+    <h4>7.1.2. Neural Predictor</h4>
+    <ul>
+        <li><strong>model_type</strong>: Type of model to use for neural prediction</li>
+        <li><strong>hidden_layers</strong>: List of neurons in each hidden layer</li>
+        <li><strong>learning_rate</strong>: Learning rate for the optimizer</li>
+        <li><strong>epochs</strong>: Number of training epochs</li>
+        <li><strong>batch_size</strong>: Batch size for training</li>
+        <li><strong>test_size</strong>: Fraction of data to use for testing</li>
+        <li><strong>early_stopping_patience</strong>: Patience for early stopping</li>
+        <li><strong>dropout_rate</strong>: Dropout rate for regularization</li>
+    </ul>
+    
+    <h4>7.1.3. Time Series</h4>
+    <ul>
+        <li><strong>model_type</strong>: Type of time series model to use</li>
+        <li><strong>sequence_length</strong>: Length of input sequences for LSTM</li>
+        <li><strong>lstm_units</strong>: List of LSTM units in each layer</li>
+        <li><strong>learning_rate</strong>: Learning rate for the optimizer</li>
+        <li><strong>epochs</strong>: Number of training epochs</li>
+        <li><strong>batch_size</strong>: Batch size for training</li>
+        <li><strong>forecast_horizon</strong>: Number of periods to forecast</li>
+    </ul>
+    
+    <h4>7.1.4. Extreme Events</h4>
+    <ul>
+        <li><strong>event_types</strong>: List of extreme event types to analyze</li>
+        <li><strong>threshold_percentiles</strong>: Percentile thresholds for classifying events as extreme</li>
+    </ul>
+    
+    <h4>7.1.5. Correlation Models</h4>
+    <ul>
+        <li><strong>model_types</strong>: Types of correlation models to use</li>
+        <li><strong>environmental_factors</strong>: Environmental factors to include in the analysis</li>
+    </ul>
+    
+    <h4>7.1.6. Visualization</h4>
+    <ul>
+        <li><strong>dpi</strong>: DPI for saved figures</li>
+        <li><strong>figsize</strong>: Default figure sizes for different plot types</li>
+        <li><strong>color_maps</strong>: Color maps to use for different visualization types</li>
+    </ul>
+    
+    <h4>7.1.7. Logging</h4>
+    <ul>
+        <li><strong>level</strong>: Logging level (INFO, DEBUG, WARNING, ERROR)</li>
+        <li><strong>format</strong>: Format string for log messages</li>
+        <li><strong>file</strong>: Log file name</li>
+    </ul>
+
+    <h2 id="detailed-components">8. Detailed Component Documentation</h2>
+    
+    <h3 id="neural-predictor">8.1. Neural Predictor</h3>
+    <p>
+        The <code>NeuralPredictor</code> is responsible for predicting component failures using deep 
+        neural networks. It takes component properties, environmental conditions, and vulnerability 
+        scores as input and predicts the probability of component failure.
+    </p>
+    
+    <h4>8.1.1. Workflow</h4>
+    <div class="diagram-container">
+        <div class="mermaid">
+%%{init: {'theme': 'default', 'themeVariables': { 'fontSize': '16px'}}}%%
+flowchart LR
+    A["Load Component & Environmental Data"] --> B["Feature Engineering"]
+    B --> C["Data Preprocessing"]
+    C --> D["Build Neural Network Model"]
+    D --> E["Train Model"]
+    E --> F["Evaluate Performance"]
+    F --> G["Generate Failure Probabilities"]
+    G --> H["Save Model & Results"]
+        </div>
+    </div>
+    
+    <h4>8.1.2. Key Steps in Neural Prediction</h4>
+    <ol>
+        <li><strong>Feature Engineering</strong>: Transform raw data into features suitable for neural networks including:
+            <ul>
+                <li>Numerical feature scaling and normalization</li>
+                <li>Categorical feature encoding using one-hot encoding</li>
+                <li>Feature interaction creation (e.g., temperature × humidity)</li>
+                <li>Temporal feature extraction (e.g., seasonality, time since last failure)</li>
+            </ul>
+        </li>
+        <li><strong>Data Preprocessing</strong>: Prepare data for model training:
+            <ul>
+                <li>Train/test splitting with stratification for balanced classes</li>
+                <li>Handling missing values through imputation or exclusion</li>
+                <li>Outlier detection and treatment</li>
+                <li>Feature scaling using StandardScaler</li>
+            </ul>
+        </li>
+        <li><strong>Model Architecture</strong>: Deep neural network with:
+            <ul>
+                <li>Multiple hidden layers with decreasing neuron counts</li>
+                <li>ReLU activation functions for hidden layers</li>
+                <li>Dropout layers for regularization</li>
+                <li>Batch normalization for improved training stability</li>
+                <li>Sigmoid output activation for binary classification</li>
+            </ul>
+        </li>
+        <li><strong>Training Process</strong>: Optimized training procedure:
+            <ul>
+                <li>Adam optimizer with configurable learning rate</li>
+                <li>Binary cross-entropy loss function</li>
+                <li>Early stopping to prevent overfitting</li>
+                <li>Learning rate scheduling for improved convergence</li>
+                <li>Class weighting for imbalanced datasets</li>
+            </ul>
+        </li>
+        <li><strong>Evaluation</strong>: Comprehensive model assessment:
+            <ul>
+                <li>Accuracy, precision, recall, and F1 score</li>
+                <li>ROC curve and AUC score</li>
+                <li>Precision-recall curve</li>
+                <li>Confusion matrix analysis</li>
+            </ul>
+        </li>
+    </ol>
+    
+    <h4>8.1.3. Model Architecture</h4>
+    <p>
+        The neural predictor uses a deep neural network with the following architecture:
+    </p>
+    <pre><code>def build_model(self, input_dim: int) -> keras.Model:
+    """
+    Build the neural network model.
+    
+    Args:
+        input_dim: Input feature dimension
+        
+    Returns:
+        Compiled Keras model
+    """
+    # Get model configuration
+    hidden_layers = self.config['neural_predictor'].get('hidden_layers', [128, 64, 32])
+    dropout_rate = self.config['neural_predictor'].get('dropout_rate', 0.2)
+    learning_rate = self.config['neural_predictor'].get('learning_rate', 0.001)
+    
+    # Build model
+    model = keras.Sequential()
+    
+    # Input layer
+    model.add(layers.Input(shape=(input_dim,)))
+    
+    # Hidden layers
+    for i, units in enumerate(hidden_layers):
+        model.add(layers.Dense(
+            units=units,
+            activation='relu',
+            kernel_regularizer=regularizers.l2(0.001)
+        ))
+        model.add(layers.BatchNormalization())
+        model.add(layers.Dropout(dropout_rate))
+    
+    # Output layer
+    model.add(layers.Dense(1, activation='sigmoid'))
+    
+    # Compile model
+    model.compile(
+        optimizer=keras.optimizers.Adam(learning_rate=learning_rate),
+        loss='binary_crossentropy',
+        metrics=['accuracy', 
+                keras.metrics.Precision(), 
+                keras.metrics.Recall(),
+                keras.metrics.AUC()]
+    )
+    
+    return model</code></pre>
+    
+    <h4>8.1.4. Example: Neural Predictor Usage</h4>
+    <pre><code>from gfmf.failure_prediction.neural_predictor import NeuralPredictor
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Initialize neural predictor
+predictor = NeuralPredictor()
+
+# Load data
+component_data = pd.read_csv('data/processed/component_data.csv')
+vulnerability_data = pd.read_csv('data/vulnerability_analysis/vulnerability_scores.csv')
+env_data = pd.read_csv('data/processed/environmental_data.csv')
+failure_data = pd.read_csv('data/processed/failure_data.csv')
+
+# Prepare data for training
+X, y = predictor.load_data(
+    module1_data_path='data/processed/',
+    module2_data_path='data/vulnerability_analysis/',
+    component_data_file='component_data.csv',
+    vulnerability_data_file='vulnerability_scores.csv',
+    environmental_data_file='environmental_data.csv',
+    failure_data_file='failure_data.csv'
+)
+
+# Train the model
+training_results = predictor.train(X, y, validation_split=0.2, early_stopping=True)
+
+# Plot training history
+plt.figure(figsize=(12, 5))
+plt.subplot(1, 2, 1)
+plt.plot(training_results['loss'], label='Training Loss')
+plt.plot(training_results['val_loss'], label='Validation Loss')
+plt.title('Loss During Training')
+plt.xlabel('Epoch')
+plt.ylabel('Loss')
+plt.legend()
+
+plt.subplot(1, 2, 2)
+plt.plot(training_results['accuracy'], label='Training Accuracy')
+plt.plot(training_results['val_accuracy'], label='Validation Accuracy')
+plt.title('Accuracy During Training')
+plt.xlabel('Epoch')
+plt.ylabel('Accuracy')
+plt.legend()
+plt.tight_layout()
+plt.show()
+
+# Generate predictions
+predictions = predictor.predict(X)
+
+# Evaluate the model
+metrics = predictor.evaluate(X, y, threshold=0.5, save_plots=True, plots_dir='results/plots')
+print("Model Evaluation Metrics:")
+for metric, value in metrics.items():
+    print(f"{metric}: {value:.4f}")
+
+# Save the model
+model_path = predictor.save('models/neural', model_name='neural_predictor_v1')</code></pre>
+    
+    <h3 id="time-series-forecaster">8.2. Time Series Forecaster</h3>
+    <p>
+        The <code>TimeSeriesForecaster</code> analyzes historical failure data to predict future
+        failure patterns using time series techniques. It can use either LSTM neural networks or
+        Prophet forecasting models depending on the data characteristics and configuration.
+    </p>
+    
+    <h4>8.2.1. Workflow</h4>
+    <div class="diagram-container">
+        <div class="mermaid">
+%%{init: {'theme': 'default', 'themeVariables': { 'fontSize': '16px'}}}%%
+flowchart LR
+    A["Load Time Series Data"] --> B["Data Preprocessing"]
+    B --> C["Time Series Decomposition"]
+    C --> D["Create Sequences (LSTM)"]
+    D --> E["Build Time Series Model"]
+    E --> F["Train Model"]
+    F --> G["Generate Forecasts"]
+    G --> H["Calculate Confidence Intervals"]
+    H --> I["Visualize Results"]
+        </div>
+    </div>
+    
+    <h4>8.2.2. Key Steps in Time Series Forecasting</h4>
+    <ol>
+        <li><strong>Data Preprocessing</strong>: Prepare time series data for modeling:
+            <ul>
+                <li>Conversion to datetime format and sorting</li>
+                <li>Resampling to regular time intervals (daily, weekly, etc.)</li>
+                <li>Handling missing values through interpolation</li>
+                <li>Scaling/normalization for LSTM models</li>
+            </ul>
+        </li>
+        <li><strong>Time Series Decomposition</strong>: Analyze time series components:
+            <ul>
+                <li>Trend component extraction</li>
+                <li>Seasonal pattern identification</li>
+                <li>Residual noise analysis</li>
+                <li>Stationarity testing and transformation</li>
+            </ul>
+        </li>
+        <li><strong>Sequence Creation for LSTM</strong>: Convert time series data to sequences:
+            <ul>
+                <li>Sliding window approach for sequence generation</li>
+                <li>Configurable sequence length (lookback period)</li>
+                <li>Feature engineering for multivariate time series</li>
+                <li>Sequence normalization</li>
+            </ul>
+        </li>
+        <li><strong>Model Selection</strong>: Choose appropriate time series model:
+            <ul>
+                <li>LSTM networks for complex sequential patterns</li>
+                <li>Prophet for data with strong seasonality and trends</li>
+                <li>Model selection based on data characteristics</li>
+            </ul>
+        </li>
+        <li><strong>Forecast Generation</strong>: Create predictions for future periods:
+            <ul>
+                <li>Multi-step forecasting</li>
+                <li>Confidence interval calculation</li>
+                <li>Forecast visualization</li>
+                <li>Uncertainty quantification</li>
+            </ul>
+        </li>
+    </ol>
+    
+    <h4>8.2.3. LSTM Architecture</h4>
+    <p>
+        The LSTM model architecture for time series forecasting:
+    </p>
+    <pre><code>def _build_lstm_model(self, input_shape: Tuple[int, int]) -> keras.Model:
+    """
+    Build an LSTM model for time series forecasting.
+    
+    Args:
+        input_shape: Shape of input data (sequence_length, features)
+        
+    Returns:
+        Compiled Keras model
+    """
+    # Get LSTM configuration
+    lstm_units = self.config['time_series'].get('lstm_units', [64, 32])
+    learning_rate = self.config['time_series'].get('learning_rate', 0.001)
+    
+    # Build model
+    model = keras.Sequential()
+    
+    # Input layer and first LSTM layer
+    model.add(layers.LSTM(
+        units=lstm_units[0],
+        return_sequences=len(lstm_units) > 1,
+        input_shape=input_shape
+    ))
+    
+    # Additional LSTM layers
+    for i, units in enumerate(lstm_units[1:]):
+        return_sequences = i < len(lstm_units) - 2
+        model.add(layers.LSTM(units=units, return_sequences=return_sequences))
+    
+    # Dense layers
+    model.add(layers.Dense(units=32, activation='relu'))
+    model.add(layers.Dense(units=1))  # Output layer
+    
+    # Compile model
+    model.compile(
+        optimizer=keras.optimizers.Adam(learning_rate=learning_rate),
+        loss='mean_squared_error',
+        metrics=['mae']
+    )
+    
+    return model</code></pre>
+    
+    <h4>8.2.4. Prophet Model Configuration</h4>
+    <p>
+        The Prophet model configuration for time series forecasting:
+    </p>
+    <pre><code>def _build_prophet_model(self) -> Any:
+    """
+    Build a Prophet model for time series forecasting.
+    
+    Returns:
+        Prophet model instance
+    """
+    if not PROPHET_AVAILABLE:
+        raise ImportError(
+            "Prophet is not installed. Please install it with: "
+            "pip install prophet"
+        )
+    
+    # Create model with default parameters
+    model = Prophet(
+        yearly_seasonality=True,
+        weekly_seasonality=True,
+        daily_seasonality=False,
+        changepoint_prior_scale=0.05,
+        seasonality_prior_scale=10.0,
+        holidays_prior_scale=10.0,
+        mcmc_samples=0  # Use MAP fitting
+    )
+    
+    return model</code></pre>
+    
+    <h4>8.2.5. Example: Time Series Forecasting</h4>
+    <pre><code>from gfmf.failure_prediction.time_series_forecaster import TimeSeriesForecaster
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Initialize time series forecaster
+forecaster = TimeSeriesForecaster()
+
+# Load time series data
+failure_data = pd.read_csv('data/processed/failure_history.csv')
+failure_data['date'] = pd.to_datetime(failure_data['date'])
+failure_data = failure_data.sort_values('date')
+
+# Prepare time series data
+ts_data = forecaster.load_data(
+    'data/processed/failure_history.csv',
+    date_column='date',
+    target_column='failure_count',
+    group_by='component_type'
+)
+
+# Train the model
+model = forecaster.train(ts_data, validation_split=0.2)
+
+# Generate forecasts for the next 30 days
+forecast_df = forecaster.forecast(
+    ts_data,
+    periods=30,
+    return_confidence_intervals=True
+)
+
+# Visualize the forecasts
+plt.figure(figsize=(14, 8))
+plt.plot(ts_data['date'], ts_data['failure_count'], 'b-', label='Historical Data')
+plt.plot(forecast_df['date'], forecast_df['prediction'], 'r-', label='Forecast')
+plt.fill_between(
+    forecast_df['date'],
+    forecast_df['lower_bound'],
+    forecast_df['upper_bound'],
+    color='r',
+    alpha=0.2,
+    label='95% Confidence Interval'
+)
+plt.title('Failure Count Forecast')
+plt.xlabel('Date')
+plt.ylabel('Failure Count')
+plt.legend()
+plt.grid(True, alpha=0.3)
+plt.tight_layout()
+plt.show()
+
+# Evaluate model performance
+evaluation_metrics = forecaster.evaluate(
+    ts_data.iloc[-30:],  # Use last 30 days as test set
+    plot=True,
+    save_plot=True,
+    plot_path='results/time_series_evaluation.png'
+)
+print("Time Series Model Evaluation Metrics:")
+for metric, value in evaluation_metrics.items():
+    print(f"{metric}: {value:.4f}")
+
+# Save the model
+model_path = forecaster.save('models/time_series', model_name='lstm_forecaster_v1')</code></pre>
+
+    <h3 id="correlation-modeler">8.3. Correlation Modeler</h3>
+    <p>
+        The Correlation Modeler analyzes relationships between environmental factors
+        and component failures to identify the key environmental conditions that contribute to
+        failures. It uses statistical correlation techniques and machine learning models to
+        quantify these relationships.
+    </p>
+    
+    <h4>8.3.1. Workflow</h4>
+    <div class="diagram-container">
+        <div class="mermaid">
+%%{init: {'theme': 'default', 'themeVariables': { 'fontSize': '16px'}}}%%
+flowchart LR
+    A["Load Environmental & Failure Data"] --> B["Data Preprocessing"]
+    B --> C["Create Lagged Features"]
+    C --> D["Calculate Correlation Matrices"]
+    D --> E["Identify Key Factors"]
+    E --> F["Train Regression Models"]
+    F --> G["Feature Importance Analysis"]
+    G --> H["Visualize Correlations"]
+        </div>
+    </div>
+    
+    <h4>8.3.2. Key Steps in Correlation Analysis</h4>
+    <ol>
+        <li><strong>Data Preprocessing</strong>: Prepare data for correlation analysis:
+            <ul>
+                <li>Aligning time series data on a common time scale</li>
+                <li>Aggregating data to appropriate time periods (daily, weekly)</li>
+                <li>Handling missing values and outliers</li>
+                <li>Normalizing variables for comparison</li>
+            </ul>
+        </li>
+        <li><strong>Lagged Feature Creation</strong>: Create time-shifted versions of variables:
+            <ul>
+                <li>Adding time lags for environmental variables</li>
+                <li>Capturing delayed effects of environmental conditions</li>
+                <li>Generating rolling averages for smoothing</li>
+                <li>Creating cumulative effect variables</li>
+            </ul>
+        </li>
+        <li><strong>Correlation Analysis</strong>: Calculate various correlation metrics:
+            <ul>
+                <li>Pearson correlation for linear relationships</li>
+                <li>Spearman correlation for monotonic relationships</li>
+                <li>Kendall's tau for rank correlation</li>
+                <li>Point-biserial correlation for binary outcomes</li>
+            </ul>
+        </li>
+        <li><strong>Modeling Techniques</strong>: Apply regression models for deeper insights:
+            <ul>
+                <li>Linear regression for direct relationships</li>
+                <li>Random forest regression for complex interactions</li>
+                <li>Feature importance extraction</li>
+                <li>Model-based correlation analysis</li>
+            </ul>
+        </li>
+        <li><strong>Visualization</strong>: Create visual representations of relationships:
+            <ul>
+                <li>Correlation heatmaps</li>
+                <li>Feature importance charts</li>
+                <li>Scatter plots with regression lines</li>
+                <li>Partial dependence plots</li>
+            </ul>
+        </li>
+    </ol>
+    
+    <h4>8.3.3. Correlation Methods</h4>
+    <p>
+        The correlation modeler implements several correlation methods:
+    </p>
+    <pre><code>def analyze_correlations(
+    self,
+    data: pd.DataFrame,
+    target_column: str = 'failure_count',
+    correlation_types: List[str] = ['pearson', 'spearman'],
+    visualization_path: Optional[str] = None
+) -> Dict[str, pd.DataFrame]:
+    """
+    Analyze correlations between variables in the data.
+    
+    Args:
+        data: Input DataFrame
+        target_column: Target variable name
+        correlation_types: List of correlation types to calculate
+        visualization_path: Path to save visualization
+        
+    Returns:
+        Dictionary with correlation matrices
+    """
+    logger.info(f"Analyzing correlations with target: {target_column}")
+    
+    if target_column not in data.columns:
+        logger.error(f"Target column '{target_column}' not found in data")
+        raise ValueError(f"Target column '{target_column}' not found in data")
+    
+    # Select numeric columns only
+    numeric_data = data.select_dtypes(include=[np.number])
+    
+    # Calculate correlations
+    correlation_matrices = {}
+    
+    for corr_type in correlation_types:
+        try:
+            if corr_type.lower() == 'pearson':
+                # Pearson correlation (linear relationships)
+                corr_matrix = numeric_data.corr(method='pearson')
+                correlation_matrices['pearson'] = corr_matrix
+                
+            elif corr_type.lower() == 'spearman':
+                # Spearman correlation (monotonic relationships)
+                corr_matrix = numeric_data.corr(method='spearman')
+                correlation_matrices['spearman'] = corr_matrix
+                
+            elif corr_type.lower() == 'kendall':
+                # Kendall's tau (rank correlation)
+                corr_matrix = numeric_data.corr(method='kendall')
+                correlation_matrices['kendall'] = corr_matrix
+                
+            elif corr_type.lower() == 'mutual_info':
+                # Mutual information (non-linear relationships)
+                mi_matrix = pd.DataFrame(np.zeros((len(numeric_data.columns), len(numeric_data.columns))),
+                                        index=numeric_data.columns,
+                                        columns=numeric_data.columns)
+                
+                for i, col_i in enumerate(numeric_data.columns):
+                    for j, col_j in enumerate(numeric_data.columns):
+                        if i != j:  # Skip diagonal
+                            # Calculate mutual information
+                            mi = mutual_info_regression(
+                                numeric_data[col_i].values.reshape(-1, 1),
+                                numeric_data[col_j].values
+                            )[0]
+                            mi_matrix.loc[col_i, col_j] = mi
+                
+                correlation_matrices['mutual_info'] = mi_matrix
+        
+        except Exception as e:
+            logger.warning(f"Failed to calculate {corr_type} correlation: {e}")
+    
+    # Target variable correlations (focus on relationships with the target)
+    target_correlations = {}
+    
+    for corr_type, matrix in correlation_matrices.items():
+        if '_p_values' not in corr_type:  # Skip p-value matrices
+            # Extract correlations with target
+            target_corr = matrix[target_column].drop(target_column).sort_values(ascending=False)
+            target_correlations[corr_type] = target_corr
+    
+    correlation_matrices['target_correlations'] = target_correlations
+    
+    # Store in object for later use
+    self.correlation_results = correlation_matrices
+    
+    return correlation_matrices</code></pre>
+    
+    <h4>8.3.4. Example: Correlation Analysis</h4>
+    <pre><code># Example code for using the Correlation Modeler
+from gfmf.failure_prediction.correlation_modeler import CorrelationModeler
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import numpy as np
+
+# Initialize correlation modeler
+correlation_modeler = CorrelationModeler(config={
+    'correlation_methods': ['pearson', 'spearman', 'mutual_info'],
+    'significance_level': 0.05,
+    'min_correlation': 0.3
+})
+
+# Load data
+env_data = pd.read_csv('data/processed/environmental_data.csv')
+failure_data = pd.read_csv('data/processed/component_failure_data.csv')
+component_data = pd.read_csv('data/processed/component_data.csv')
+
+# Prepare data for correlation analysis
+prepared_data = correlation_modeler.prepare_data(
+    environmental_data=env_data,
+    failure_data=failure_data,
+    component_data=component_data,
+    date_column='date',
+    location_column='location_id',
+    component_column='component_id',
+    aggregation_period='D',
+    lag_periods=[0, 1, 2, 3, 7]
+)
+
+# Analyze correlations
+correlation_results = correlation_modeler.analyze_correlations(
+    target_column='failure_count',
+    correlation_types=['pearson', 'spearman', 'mutual_info'],
+    visualization_path='results/correlations/'
+)
+
+# Plot Pearson correlation heatmap
+plt.figure(figsize=(12, 10))
+pearson_corr = correlation_results['pearson']
+mask = np.triu(np.ones_like(pearson_corr, dtype=bool))
+sns.heatmap(pearson_corr, mask=mask, annot=True, cmap='coolwarm', 
+            vmin=-1, vmax=1, center=0, square=True, linewidths=.5)
+plt.title('Pearson Correlation Between Environmental Factors and Failures')
+plt.tight_layout()
+plt.savefig('results/correlations/pearson_heatmap.png')
+plt.show()
+
+# Train models to analyze relationships
+model_results = correlation_modeler.train_models(
+    target_column='failure_count',
+    test_size=0.2,
+    model_types=['linear', 'random_forest']
+)
+
+# Extract key environmental factors
+key_factors = correlation_modeler.get_key_environmental_factors(
+    importance_threshold=0.05,
+    visualize=True
+)
+
+# Save correlation results
+correlation_modeler.save_results(
+    save_dir='results/correlations/',
+    prefix='environmental_correlations'
+)
+</code></pre>
+    
+    <h3 id="extreme-event-modeler">8.4. Extreme Event Modeler</h3>
+    <p>
+        The Extreme Event Modeler focuses on rare but impactful environmental events
+        (extreme temperatures, high winds, heavy precipitation) and analyzes their effect on grid
+        component failures. It identifies threshold values for environmental variables beyond which
+        failure risks significantly increase.
+    </p>
+    
+    <h4>8.4.1. Workflow</h4>
+    <div class="diagram-container">
+        <div class="mermaid">
+%%{init: {'theme': 'default', 'themeVariables': { 'fontSize': '16px'}}}%%
+flowchart LR
+    A["Load Environmental & Failure Data"] --> B["Determine Extreme Event Thresholds"]
+    B --> C["Identify Extreme Events"]
+    C --> D["Calculate Event Duration & Severity"]
+    D --> E["Analyze Impact on Failure Rates"]
+    E --> F["Identify High-Risk Periods"]
+    F --> G["Calculate Compound Event Effects"]
+    G --> H["Predict Event-Based Failure Probabilities"]
+        </div>
+    </div>
+    
+    <h4>8.4.2. Key Steps in Extreme Event Modeling</h4>
+    <ol>
+        <li><strong>Threshold Determination</strong>: Establish thresholds for extreme conditions:
+            <ul>
+                <li>Percentile-based thresholds (e.g., 95th percentile for high temperature)</li>
+                <li>Historical impact-based thresholds</li>
+                <li>Statistical extreme value analysis</li>
+                <li>Location-specific threshold calibration</li>
+            </ul>
+        </li>
+        <li><strong>Event Identification</strong>: Detect extreme events in time series data:
+            <ul>
+                <li>Continuous period detection above/below thresholds</li>
+                <li>Event duration calculation</li>
+                <li>Event severity quantification</li>
+                <li>Event classification by type and intensity</li>
+            </ul>
+        </li>
+        <li><strong>Impact Analysis</strong>: Quantify event impact on failures:
+            <ul>
+                <li>Failure rate comparison during extreme vs. normal conditions</li>
+                <li>Time-lagged effect analysis</li>
+                <li>Statistical significance testing</li>
+                <li>Component vulnerability during extreme events</li>
+            </ul>
+        </li>
+        <li><strong>Compound Event Analysis</strong>: Analyze combined effects of multiple extreme conditions:
+            <ul>
+                <li>Simultaneous event detection</li>
+                <li>Interaction effect quantification</li>
+                <li>Synergistic impact modeling</li>
+                <li>Risk multiplication factor calculation</li>
+            </ul>
+        </li>
+        <li><strong>Failure Probability Prediction</strong>: Generate event-based failure predictions:
+            <ul>
+                <li>Component-specific risk calculation</li>
+                <li>Conditional probability estimation</li>
+                <li>Time-to-failure distribution modeling</li>
+                <li>Forecast-based extreme event risk prediction</li>
+            </ul>
+        </li>
+    </ol>
+    
+    <h4>8.4.3. Event Identification Method</h4>
+    <p>
+        The extreme event modeler identifies events using the following algorithm:
+    </p>
+    <pre><code>def identify_extreme_events(
+    self,
+    env_df: pd.DataFrame,
+    custom_thresholds: Optional[Dict[str, float]] = None,
+    window_size: int = 1,
+    min_duration: int = 1
+) -> Dict[str, pd.DataFrame]:
+    """
+    Identify extreme environmental events from the data.
+    
+    Args:
+        env_df: Environmental data
+        custom_thresholds: Custom thresholds for different variables
+        window_size: Window size for smoothing
+        min_duration: Minimum duration to be considered an event
+        
+    Returns:
+        Dictionary of identified extreme events
+    """
+    logger.info(f"Identifying extreme events using window_size={window_size}, min_duration={min_duration}")
+    
+    # Ensure we have a datetime index
+    if self.date_column in env_df.columns:
+        env_df = env_df.set_index(self.date_column)
+    
+    # Get numeric columns for analysis
+    numeric_cols = env_df.select_dtypes(include=[np.number]).columns
+    
+    # Event dictionary to store results
+    extreme_events = {}
+    thresholds = {}
+    
+    # Process each numeric column
+    for col in numeric_cols:
+        # Map column to event type if possible
+        event_type = self._map_var_to_event_type(col)
+        
+        # Skip if not a relevant environmental variable
+        if event_type not in [e.lower() for e in self.event_types] and col not in self.event_types:
+            continue
+        
+        # Apply smoothing if window_size > 1
+        if window_size > 1:
+            series = env_df[col].rolling(window=window_size, center=True).mean()
+        else:
+            series = env_df[col]
+        
+        # Determine threshold
+        if custom_thresholds and col in custom_thresholds:
+            threshold = custom_thresholds[col]
+        elif event_type in self.threshold_percentiles:
+            # Using percentile from config
+            percentile = self.threshold_percentiles[event_type]
+            if 'high' in event_type.lower():
+                threshold = np.nanpercentile(series, percentile)
+            elif 'low' in event_type.lower():
+                threshold = np.nanpercentile(series, percentile)
+            else:
+                # Default to high threshold (e.g., for precipitation, wind)
+                threshold = np.nanpercentile(series, 95)
+        else:
+            # Default threshold - 95th percentile for most, 5th for low_*
+            if 'low' in col.lower():
+                threshold = np.nanpercentile(series, 5)
+            else:
+                threshold = np.nanpercentile(series, 95)
+        
+        # Store threshold for later reference
+        thresholds[col] = threshold
+        
+        # Create binary indicator for extreme events
+        if 'low' in event_type.lower() or 'low' in col.lower():
+            # For low temperatures, etc. (below threshold)
+            event_indicator = (series < threshold).astype(int)
+        else:
+            # For high temperatures, precipitation, wind (above threshold)
+            event_indicator = (series > threshold).astype(int)
+        
+        # Identify continuous periods - Label each event with a unique ID
+        event_ids = (event_indicator.diff() != 0).cumsum()
+        event_periods = pd.DataFrame({
+            'value': series,
+            'is_event': event_indicator,
+            'event_id': event_ids * event_indicator  # Will be 0 for non-events
+        })
+        
+        # Filter events by minimum duration
+        if min_duration > 1:
+            # Count consecutive days for each event
+            event_counts = event_periods[event_periods['is_event'] == 1].groupby('event_id').size()
+            valid_events = event_counts[event_counts >= min_duration].index
+            
+            # Filter out events that don't meet minimum duration
+            event_periods['is_valid_event'] = (
+                event_periods['event_id'].isin(valid_events) & 
+                (event_periods['is_event'] == 1)
+            ).astype(int)
+        else:
+            event_periods['is_valid_event'] = event_periods['is_event']
+        
+        # Calculate event properties
+        if event_periods['is_valid_event'].sum() > 0:
+            event_properties = (
+                event_periods[event_periods['is_valid_event'] == 1]
+                .groupby('event_id')
+                .agg({
+                    'value': ['mean', 'max', 'min', 'count'],
+                    'is_valid_event': 'first'  # Just to have a column
+                })
+            )
+            
+            # Flatten column multi-index
+            event_properties.columns = [f"{col[0]}_{col[1]}" for col in event_properties.columns]
+            
+            # Add start and end dates
+            event_dates = (
+                event_periods[event_periods['is_valid_event'] == 1]
+                .groupby('event_id')
+                .agg({
+                    'is_valid_event': ['first', 'last']  # Just to get first/last index
+                })
+            )
+            
+            event_properties['start_date'] = event_dates.index.map(
+                lambda x: event_periods[event_periods['event_id'] == x].index[0]
+            )
+            event_properties['end_date'] = event_dates.index.map(
+                lambda x: event_periods[event_periods['event_id'] == x].index[-1]
+            )
+            
+            # Calculate severity (how far from threshold)
+            if 'low' in event_type.lower() or 'low' in col.lower():
+                # For low values, severity is how much below threshold
+                event_properties['severity'] = (threshold - event_properties['value_mean']) / threshold
+            else:
+                # For high values, severity is how much above threshold
+                event_properties['severity'] = (event_properties['value_mean'] - threshold) / threshold
+            
+            # Store results
+            extreme_events[col] = {
+                'threshold': threshold,
+                'event_series': event_periods,
+                'events': event_properties,
+                'event_type': event_type
+            }
+        else:
+            logger.info(f"No valid extreme events found for {col}")
+            extreme_events[col] = {
+                'threshold': threshold,
+                'event_series': event_periods,
+                'events': pd.DataFrame(),
+                'event_type': event_type
+            }
+    
+    # Store thresholds in the object
+    self.event_thresholds = thresholds
+    
+    # Store the events dictionary in the object
+    self.extreme_events = extreme_events
+    
+    logger.info(f"Identified extreme events for {len(extreme_events)} variables")
+    
+    return extreme_events</code></pre>
+    
+    <h4>8.4.4. Example: Extreme Event Analysis</h4>
+    <pre><code>from gfmf.failure_prediction.extreme_event_modeler import ExtremeEventModeler
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Initialize extreme event modeler
+event_modeler = ExtremeEventModeler()
+
+# Load environmental and failure data
+env_data = pd.read_csv('data/processed/weather_data.csv')
+failure_data = pd.read_csv('data/processed/failure_data.csv')
+
+# Ensure date columns are in datetime format
+env_data['date'] = pd.to_datetime(env_data['date'])
+failure_data['date'] = pd.to_datetime(failure_data['date'])
+
+# Identify extreme events
+extreme_events = event_modeler.identify_extreme_events(
+    env_df=env_data,
+    custom_thresholds={
+        'temperature_max': 95,  # Fahrenheit or Celsius depending on data
+        'wind_speed': 40        # MPH or km/h depending on data
+    },
+    window_size=3,              # 3-day rolling average
+    min_duration=2              # Minimum 2-day event duration
+)
+
+# Analyze event impact on failures
+impact_stats = event_modeler.analyze_event_impact(
+    extreme_events=extreme_events,
+    failure_df=failure_data,
+    event_window=3,             # Look at failures up to 3 days after event
+    baseline_window=30,         # Compare to 30-day baseline
+    min_events=5                # Require at least 5 events for reliable statistics
+)
+
+# Calculate compound event impact
+compound_impact = event_modeler.calculate_compound_event_impact(
+    extreme_events=extreme_events,
+    failure_df=failure_data,
+    event_window=3
+)
+
+# Plot event impact results
+plt.figure(figsize=(12, 8))
+impact_data = pd.DataFrame({
+    'Event Type': [],
+    'Failure Rate Increase': [],
+    'p-value': []
+})
+
+for event_type, stats in impact_stats.items():
+    impact_data = impact_data.append({
+        'Event Type': event_type,
+        'Failure Rate Increase': stats['failure_rate_increase'],
+        'p-value': stats['p_value']
+    }, ignore_index=True)
+
+# Sort by impact
+impact_data = impact_data.sort_values('Failure Rate Increase', ascending=False)
+
+# Create bar chart
+ax = sns.barplot(
+    x='Failure Rate Increase',
+    y='Event Type',
+    data=impact_data,
+    palette='YlOrRd'
+)
+
+# Add p-value annotations
+for i, row in impact_data.iterrows():
+    p_value = row['p-value']
+    stars = ''
+    if p_value < 0.001:
+        stars = '***'
+    elif p_value < 0.01:
+        stars = '**'
+    elif p_value < 0.05:
+        stars = '*'
+    
+    if stars:
+        ax.text(
+            row['Failure Rate Increase'] + 0.1,
+            i,
+            stars,
+            va='center'
+        )
+
+plt.title('Impact of Extreme Events on Failure Rates')
+plt.xlabel('Failure Rate Increase (ratio)')
+plt.tight_layout()
+plt.savefig('results/extreme_events/event_impact.png', dpi=300)
+plt.show()
+
+# Create component-specific failure probabilities during extreme events
+component_data = pd.read_csv('data/processed/component_data.csv')
+failure_probs = event_modeler.predict_event_failure_probability(
+    component_df=component_data,
+    event_type='high_temperature',
+    severity=0.8  # 80% above threshold
+)
+
+print("Component Failure Probabilities During Extreme High Temperature Events:")
+print(failure_probs.sort_values('failure_probability', ascending=False).head(10))</code></pre>
+
+    <h2 id="algorithms">9. Algorithm Selection Rationale</h2>
+    <p>
+        The Failure Prediction Module employs multiple algorithms for different aspects of the prediction
+        problem. This section explains the rationale behind these algorithm choices.
+    </p>
+    
+    <h3>9.1. Deep Neural Networks for Failure Prediction</h3>
+    <p>
+        The Neural Predictor component uses deep neural networks (DNNs) as its primary algorithm for several reasons:
+    </p>
+    <ul>
+        <li><strong>Complex Feature Interactions</strong>: Grid component failures involve complex interactions 
+            between component characteristics, age, environmental conditions, and other factors. DNNs excel at 
+            capturing these non-linear interactions without requiring explicit feature engineering.</li>
+        <li><strong>Automatic Feature Learning</strong>: The multiple hidden layers in DNNs can automatically 
+            learn hierarchical representations from the data, discovering patterns that might not be obvious 
+            to human analysts.</li>
+        <li><strong>Handling High-Dimensional Data</strong>: Power grid data often involves many features. 
+            DNNs are effective at modeling high-dimensional data and can identify relevant patterns even 
+            with many input variables.</li>
+        <li><strong>Robustness to Noise</strong>: With appropriate regularization techniques 
+            (dropout, L2 regularization), DNNs can be made robust to noise in the input data, which is 
+            common in sensor-based measurements from grid components.</li>
+        <li><strong>Alternative Approaches Considered</strong>: We evaluated other approaches including:
+            <ul>
+                <li><em>Random Forests</em>: While effective for tabular data, they didn't capture the 
+                    complex temporal and spatial interactions in our data as well as DNNs.</li>
+                <li><em>Support Vector Machines</em>: These struggled with the scale of the data and 
+                    required extensive feature engineering.</li>
+                <li><em>Gradient Boosting</em>: These performed well but required more hyperparameter 
+                    tuning and didn't scale as well to larger datasets.</li>
+            </ul>
+        </li>
+    </ul>
+    
+    <h3>9.2. LSTM Networks for Time Series Forecasting</h3>
+    <p>
+        The Time Series Forecaster component primarily uses Long Short-Term Memory (LSTM) networks:
+    </p>
+    <ul>
+        <li><strong>Memory of Long-Term Dependencies</strong>: LSTMs are specifically designed to capture 
+            long-term dependencies in sequential data. This is crucial for failure prediction, where events 
+            in the distant past (e.g., prior stress events) might influence current failure probabilities.</li>
+        <li><strong>Handling Variable Sequence Lengths</strong>: LSTMs can naturally handle variable-length 
+            sequences, which is important when dealing with irregular maintenance records or outage histories.</li>
+        <li><strong>Ability to Capture Seasonal Patterns</strong>: Many grid failures exhibit seasonal patterns 
+            (e.g., related to weather). LSTMs can learn these patterns without explicit seasonal decomposition.</li>
+        <li><strong>Alternative Approaches Considered</strong>: We evaluated these alternatives:
+            <ul>
+                <li><em>Prophet</em>: While excellent for strong seasonal patterns, Prophet didn't 
+                    perform as well on complex multivariate time series with irregular patterns. We include 
+                    it as an optional alternative for cases with strong seasonality.</li>
+                <li><em>ARIMA/SARIMA</em>: These traditional time series models struggled with the 
+                    non-linear nature of our data and required extensive manual preprocessing.</li>
+                <li><em>Transformer Networks</em>: While promising, they required significantly more 
+                    data to train effectively than was available in many of our deployment scenarios.</li>
+            </ul>
+        </li>
+    </ul>
+    
+    <h3>9.3. Correlation Analysis Approaches</h3>
+    <p>
+        The Correlation Modeler component uses a combination of statistical and machine learning approaches:
+    </p>
+    <ul>
+        <li><strong>Multiple Correlation Metrics</strong>: We use multiple correlation metrics 
+            (Pearson, Spearman, Mutual Information) to capture both linear and non-linear relationships 
+            between variables. This provides a more comprehensive view of dependencies.</li>
+        <li><strong>Random Forest Feature Importance</strong>: We use random forests to determine 
+            feature importance due to their ability to capture non-linear relationships and their 
+            robustness to outliers.</li>
+        <li><strong>Linear Models for Interpretability</strong>: While we use complex models for 
+            prediction, we also maintain linear models for their interpretability, allowing grid 
+            operators to understand the key factors driving failures.</li>
+        <li><strong>Alternative Approaches Considered</strong>:
+            <ul>
+                <li><em>Principal Component Analysis (PCA)</em>: While useful for dimensionality 
+                    reduction, PCA made the results less interpretable for domain experts.</li>
+                <li><em>Neural Network-based Approaches</em>: These improved predictive accuracy 
+                    but reduced interpretability significantly.</li>
+            </ul>
+        </li>
+    </ul>
+    
+    <h3>9.4. Extreme Event Detection Algorithms</h3>
+    <p>
+        The Extreme Event Modeler uses statistical approaches for event detection:
+    </p>
+    <ul>
+        <li><strong>Percentile-Based Thresholding</strong>: We use percentile-based thresholds 
+            (e.g., 95th percentile for high temperatures) because they are robust to the specific 
+            distribution of the data and can be easily explained to domain experts.</li>
+        <li><strong>Continuous Period Detection</strong>: Our algorithm identifies continuous periods 
+            above thresholds, rather than just individual threshold exceedances, which better captures 
+            the sustained impact of extreme conditions.</li>
+        <li><strong>Impact Analysis via Statistical Testing</strong>: We use statistical hypothesis 
+            testing to quantify the significance of increased failure rates during extreme events, 
+            providing confidence intervals for our findings.</li>
+        <li><strong>Alternative Approaches Considered</strong>:
+            <ul>
+                <li><em>Anomaly Detection Algorithms</em>: Methods like Isolation Forest detected 
+                    too many spurious events in our noisy environmental data.</li>
+                <li><em>Clustering Approaches</em>: K-means and other clustering algorithms required 
+                    more parameter tuning and were less interpretable to domain experts.</li>
+                <li><em>Change Point Detection</em>: These methods were sensitive to noise and often 
+                    missed gradual onset of extreme conditions.</li>
+            </ul>
+        </li>
+    </ul>
+    
+    <h3>9.5. Ensemble Approach Benefits</h3>
+    <p>
+        The module's overall design combines multiple prediction approaches into an ensemble:
+    </p>
+    <ul>
+        <li><strong>Improved Robustness</strong>: By combining multiple models with different strengths, 
+            the system is more robust to noise and outliers in the data.</li>
+        <li><strong>Complementary Information</strong>: Each component captures different aspects of 
+            the failure prediction problem:
+            <ul>
+                <li>Neural Predictor: Component-specific risk factors</li>
+                <li>Time Series Forecaster: Temporal patterns and trends</li>
+                <li>Correlation Modeler: Relationships between environmental factors and failures</li>
+                <li>Extreme Event Modeler: Impact of rare but high-impact events</li>
+            </ul>
+        </li>
+        <li><strong>Uncertainty Quantification</strong>: The ensemble approach allows for better 
+            quantification of prediction uncertainty, which is crucial for risk-based decision-making 
+            in grid operations.</li>
+    </ul>
+    
+    <div class="note">
+        <strong>Note:</strong> This documentation provides an overview of the Failure Prediction Module.
+        For more detailed information on specific components, refer to the inline documentation in the
+        source code files.
+    </div>
+
+    <script>
+        // Initialize Mermaid diagrams
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                // Use timeout to ensure diagrams have chance to render
+                try {
+                    mermaid.init(undefined, document.querySelectorAll('.mermaid'));
+                    console.log("Mermaid diagrams initialized");
+                } catch (e) {
+                    console.error("Error initializing Mermaid diagrams:", e);
+                }
+            }, 500);
+        });
+    </script>
+</body>
+</html> 
