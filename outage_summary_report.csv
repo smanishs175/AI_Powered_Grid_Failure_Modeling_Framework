@@ -1,25 +1,23 @@
 file_name,used_columns,unused_columns,loaded_successfully
-eaglei_outages_2014_agg.csv,set(),"{'year', 'state', 'max_outage_duration', 'month', 'customer_weighted_hours', 'outage_count'}",False
-eaglei_outages_2014_agg.csv,set(),"{'year', 'state', 'max_outage_duration', 'month', 'customer_weighted_hours', 'outage_count'}",False
-eaglei_outages_2014_agg.csv,set(),"{'year', 'state', 'max_outage_duration', 'month', 'customer_weighted_hours', 'outage_count'}",False
+eaglei_outages_2014_agg.csv,"{'customer_weighted_hours', 'outage_count', 'year', 'state', 'max_outage_duration', 'month'}",set(),True
 eaglei_outages_2014_merged.csv,"{'start_time', 'county', 'max_customers', 'mean_customers', 'min_customers', 'duration'}","{'state', 'fips'}",True
-eaglei_outages_2015_agg.csv,set(),"{'year', 'state', 'max_outage_duration', 'month', 'customer_weighted_hours', 'outage_count'}",False
+eaglei_outages_2015_agg.csv,"{'customer_weighted_hours', 'outage_count', 'year', 'state', 'max_outage_duration', 'month'}",set(),True
 eaglei_outages_2015_merged.csv,"{'start_time', 'county', 'max_customers', 'mean_customers', 'min_customers', 'duration'}","{'state', 'fips'}",True
-eaglei_outages_2016_agg.csv,set(),"{'year', 'state', 'max_outage_duration', 'month', 'customer_weighted_hours', 'outage_count'}",False
+eaglei_outages_2016_agg.csv,"{'customer_weighted_hours', 'outage_count', 'year', 'state', 'max_outage_duration', 'month'}",set(),True
 eaglei_outages_2016_merged.csv,"{'start_time', 'county', 'max_customers', 'mean_customers', 'min_customers', 'duration'}","{'state', 'fips'}",True
-eaglei_outages_2017_agg.csv,set(),"{'year', 'state', 'max_outage_duration', 'month', 'customer_weighted_hours', 'outage_count'}",False
+eaglei_outages_2017_agg.csv,"{'customer_weighted_hours', 'outage_count', 'year', 'state', 'max_outage_duration', 'month'}",set(),True
 eaglei_outages_2017_merged.csv,"{'start_time', 'county', 'max_customers', 'mean_customers', 'min_customers', 'duration'}","{'state', 'fips'}",True
-eaglei_outages_2018_agg.csv,set(),"{'year', 'state', 'max_outage_duration', 'month', 'customer_weighted_hours', 'outage_count'}",False
+eaglei_outages_2018_agg.csv,"{'customer_weighted_hours', 'outage_count', 'year', 'state', 'max_outage_duration', 'month'}",set(),True
 eaglei_outages_2018_merged.csv,"{'start_time', 'county', 'max_customers', 'mean_customers', 'min_customers', 'duration'}","{'state', 'fips'}",True
-eaglei_outages_2019_agg.csv,set(),"{'year', 'state', 'max_outage_duration', 'month', 'customer_weighted_hours', 'outage_count'}",False
+eaglei_outages_2019_agg.csv,"{'customer_weighted_hours', 'outage_count', 'year', 'state', 'max_outage_duration', 'month'}",set(),True
 eaglei_outages_2019_merged.csv,"{'start_time', 'county', 'max_customers', 'mean_customers', 'min_customers', 'duration'}","{'state', 'fips'}",True
-eaglei_outages_2020_agg.csv,set(),"{'year', 'state', 'max_outage_duration', 'month', 'customer_weighted_hours', 'outage_count'}",False
+eaglei_outages_2020_agg.csv,"{'customer_weighted_hours', 'outage_count', 'year', 'state', 'max_outage_duration', 'month'}",set(),True
 eaglei_outages_2020_merged.csv,"{'start_time', 'county', 'max_customers', 'mean_customers', 'min_customers', 'duration'}","{'state', 'fips'}",True
-eaglei_outages_2021_agg.csv,set(),"{'year', 'state', 'max_outage_duration', 'month', 'customer_weighted_hours', 'outage_count'}",False
+eaglei_outages_2021_agg.csv,"{'customer_weighted_hours', 'outage_count', 'year', 'state', 'max_outage_duration', 'month'}",set(),True
 eaglei_outages_2021_merged.csv,"{'start_time', 'county', 'max_customers', 'mean_customers', 'min_customers', 'duration'}","{'state', 'fips'}",True
-eaglei_outages_2022_agg.csv,set(),"{'year', 'state', 'max_outage_duration', 'month', 'customer_weighted_hours', 'outage_count'}",False
+eaglei_outages_2022_agg.csv,"{'customer_weighted_hours', 'outage_count', 'year', 'state', 'max_outage_duration', 'month'}",set(),True
 eaglei_outages_2022_merged.csv,"{'start_time', 'county', 'max_customers', 'mean_customers', 'min_customers', 'duration'}","{'state', 'fips'}",True
-eaglei_outages_2023_agg.csv,set(),"{'year', 'state', 'max_outage_duration', 'month', 'customer_weighted_hours', 'outage_count'}",False
+eaglei_outages_2023_agg.csv,"{'customer_weighted_hours', 'outage_count', 'year', 'state', 'max_outage_duration', 'month'}",set(),True
 eaglei_outages_2023_merged.csv,"{'start_time', 'county', 'max_customers', 'mean_customers', 'min_customers', 'duration'}","{'state', 'fips'}",True
 eaglei_outages_with_events_2014.csv,"{'end_time', 'start_time', 'county', 'max_customers', 'min_customers', 'mean_customers', 'duration', 'event_type'}","{'datetime_event_began', 'state_event', 'datetime_restoration', 'state', 'fips', 'event_id'}",True
 eaglei_outages_with_events_2015.csv,"{'end_time', 'start_time', 'county', 'max_customers', 'min_customers', 'mean_customers', 'duration', 'event_type'}","{'datetime_event_began', 'state_event', 'datetime_restoration', 'state', 'fips', 'event_id'}",True
@@ -31,55 +29,25 @@ eaglei_outages_with_events_2020.csv,"{'end_time', 'start_time', 'county', 'max_c
 eaglei_outages_with_events_2021.csv,"{'end_time', 'start_time', 'county', 'max_customers', 'min_customers', 'mean_customers', 'duration', 'event_type'}","{'datetime_event_began', 'state_event', 'datetime_restoration', 'state', 'fips', 'event_id'}",True
 eaglei_outages_with_events_2022.csv,"{'end_time', 'start_time', 'county', 'max_customers', 'min_customers', 'mean_customers', 'duration', 'event_type'}","{'datetime_event_began', 'state_event', 'datetime_restoration', 'state', 'fips', 'event_id'}",True
 eaglei_outages_with_events_2023.csv,"{'end_time', 'start_time', 'county', 'max_customers', 'min_customers', 'mean_customers', 'duration', 'event_type'}","{'datetime_event_began', 'state_event', 'datetime_restoration', 'state', 'fips', 'event_id'}",True
-eaglei_outages_2014_agg.csv,set(),"{'year', 'state', 'max_outage_duration', 'month', 'customer_weighted_hours', 'outage_count'}",False
+eaglei_outages_2014_agg.csv,"{'customer_weighted_hours', 'outage_count', 'year', 'state', 'max_outage_duration', 'month'}",set(),True
 eaglei_outages_2014_merged.csv,"{'start_time', 'county', 'max_customers', 'mean_customers', 'min_customers', 'duration'}","{'state', 'fips'}",True
-eaglei_outages_2015_agg.csv,set(),"{'year', 'state', 'max_outage_duration', 'month', 'customer_weighted_hours', 'outage_count'}",False
+eaglei_outages_2015_agg.csv,"{'customer_weighted_hours', 'outage_count', 'year', 'state', 'max_outage_duration', 'month'}",set(),True
 eaglei_outages_2015_merged.csv,"{'start_time', 'county', 'max_customers', 'mean_customers', 'min_customers', 'duration'}","{'state', 'fips'}",True
-eaglei_outages_2016_agg.csv,set(),"{'year', 'state', 'max_outage_duration', 'month', 'customer_weighted_hours', 'outage_count'}",False
+eaglei_outages_2016_agg.csv,"{'customer_weighted_hours', 'outage_count', 'year', 'state', 'max_outage_duration', 'month'}",set(),True
 eaglei_outages_2016_merged.csv,"{'start_time', 'county', 'max_customers', 'mean_customers', 'min_customers', 'duration'}","{'state', 'fips'}",True
-eaglei_outages_2017_agg.csv,set(),"{'year', 'state', 'max_outage_duration', 'month', 'customer_weighted_hours', 'outage_count'}",False
+eaglei_outages_2017_agg.csv,"{'customer_weighted_hours', 'outage_count', 'year', 'state', 'max_outage_duration', 'month'}",set(),True
 eaglei_outages_2017_merged.csv,"{'start_time', 'county', 'max_customers', 'mean_customers', 'min_customers', 'duration'}","{'state', 'fips'}",True
-eaglei_outages_2018_agg.csv,set(),"{'year', 'state', 'max_outage_duration', 'month', 'customer_weighted_hours', 'outage_count'}",False
+eaglei_outages_2018_agg.csv,"{'customer_weighted_hours', 'outage_count', 'year', 'state', 'max_outage_duration', 'month'}",set(),True
 eaglei_outages_2018_merged.csv,"{'start_time', 'county', 'max_customers', 'mean_customers', 'min_customers', 'duration'}","{'state', 'fips'}",True
-eaglei_outages_2019_agg.csv,set(),"{'year', 'state', 'max_outage_duration', 'month', 'customer_weighted_hours', 'outage_count'}",False
+eaglei_outages_2019_agg.csv,"{'customer_weighted_hours', 'outage_count', 'year', 'state', 'max_outage_duration', 'month'}",set(),True
 eaglei_outages_2019_merged.csv,"{'start_time', 'county', 'max_customers', 'mean_customers', 'min_customers', 'duration'}","{'state', 'fips'}",True
-eaglei_outages_2020_agg.csv,set(),"{'year', 'state', 'max_outage_duration', 'month', 'customer_weighted_hours', 'outage_count'}",False
+eaglei_outages_2020_agg.csv,"{'customer_weighted_hours', 'outage_count', 'year', 'state', 'max_outage_duration', 'month'}",set(),True
 eaglei_outages_2020_merged.csv,"{'start_time', 'county', 'max_customers', 'mean_customers', 'min_customers', 'duration'}","{'state', 'fips'}",True
-eaglei_outages_2021_agg.csv,set(),"{'year', 'state', 'max_outage_duration', 'month', 'customer_weighted_hours', 'outage_count'}",False
+eaglei_outages_2021_agg.csv,"{'customer_weighted_hours', 'outage_count', 'year', 'state', 'max_outage_duration', 'month'}",set(),True
 eaglei_outages_2021_merged.csv,"{'start_time', 'county', 'max_customers', 'mean_customers', 'min_customers', 'duration'}","{'state', 'fips'}",True
-eaglei_outages_2022_agg.csv,set(),"{'year', 'state', 'max_outage_duration', 'month', 'customer_weighted_hours', 'outage_count'}",False
+eaglei_outages_2022_agg.csv,"{'customer_weighted_hours', 'outage_count', 'year', 'state', 'max_outage_duration', 'month'}",set(),True
 eaglei_outages_2022_merged.csv,"{'start_time', 'county', 'max_customers', 'mean_customers', 'min_customers', 'duration'}","{'state', 'fips'}",True
-eaglei_outages_2023_agg.csv,set(),"{'year', 'state', 'max_outage_duration', 'month', 'customer_weighted_hours', 'outage_count'}",False
-eaglei_outages_2023_merged.csv,"{'start_time', 'county', 'max_customers', 'mean_customers', 'min_customers', 'duration'}","{'state', 'fips'}",True
-eaglei_outages_with_events_2014.csv,"{'end_time', 'start_time', 'county', 'max_customers', 'min_customers', 'mean_customers', 'duration', 'event_type'}","{'datetime_event_began', 'state_event', 'datetime_restoration', 'state', 'fips', 'event_id'}",True
-eaglei_outages_with_events_2015.csv,"{'end_time', 'start_time', 'county', 'max_customers', 'min_customers', 'mean_customers', 'duration', 'event_type'}","{'datetime_event_began', 'state_event', 'datetime_restoration', 'state', 'fips', 'event_id'}",True
-eaglei_outages_with_events_2016.csv,"{'end_time', 'start_time', 'county', 'max_customers', 'min_customers', 'mean_customers', 'duration', 'event_type'}","{'datetime_event_began', 'state_event', 'datetime_restoration', 'state', 'fips', 'event_id'}",True
-eaglei_outages_with_events_2017.csv,"{'end_time', 'start_time', 'county', 'max_customers', 'min_customers', 'mean_customers', 'duration', 'event_type'}","{'datetime_event_began', 'state_event', 'datetime_restoration', 'state', 'fips', 'event_id'}",True
-eaglei_outages_with_events_2018.csv,"{'end_time', 'start_time', 'county', 'max_customers', 'min_customers', 'mean_customers', 'duration', 'event_type'}","{'datetime_event_began', 'state_event', 'datetime_restoration', 'state', 'fips', 'event_id'}",True
-eaglei_outages_with_events_2019.csv,"{'end_time', 'start_time', 'county', 'max_customers', 'min_customers', 'mean_customers', 'duration', 'event_type'}","{'datetime_event_began', 'state_event', 'datetime_restoration', 'state', 'fips', 'event_id'}",True
-eaglei_outages_with_events_2020.csv,"{'end_time', 'start_time', 'county', 'max_customers', 'min_customers', 'mean_customers', 'duration', 'event_type'}","{'datetime_event_began', 'state_event', 'datetime_restoration', 'state', 'fips', 'event_id'}",True
-eaglei_outages_with_events_2021.csv,"{'end_time', 'start_time', 'county', 'max_customers', 'min_customers', 'mean_customers', 'duration', 'event_type'}","{'datetime_event_began', 'state_event', 'datetime_restoration', 'state', 'fips', 'event_id'}",True
-eaglei_outages_with_events_2022.csv,"{'end_time', 'start_time', 'county', 'max_customers', 'min_customers', 'mean_customers', 'duration', 'event_type'}","{'datetime_event_began', 'state_event', 'datetime_restoration', 'state', 'fips', 'event_id'}",True
-eaglei_outages_with_events_2023.csv,"{'end_time', 'start_time', 'county', 'max_customers', 'min_customers', 'mean_customers', 'duration', 'event_type'}","{'datetime_event_began', 'state_event', 'datetime_restoration', 'state', 'fips', 'event_id'}",True
-eaglei_outages_2014_agg.csv,set(),"{'year', 'state', 'max_outage_duration', 'month', 'customer_weighted_hours', 'outage_count'}",False
-eaglei_outages_2014_merged.csv,"{'start_time', 'county', 'max_customers', 'mean_customers', 'min_customers', 'duration'}","{'state', 'fips'}",True
-eaglei_outages_2015_agg.csv,set(),"{'year', 'state', 'max_outage_duration', 'month', 'customer_weighted_hours', 'outage_count'}",False
-eaglei_outages_2015_merged.csv,"{'start_time', 'county', 'max_customers', 'mean_customers', 'min_customers', 'duration'}","{'state', 'fips'}",True
-eaglei_outages_2016_agg.csv,set(),"{'year', 'state', 'max_outage_duration', 'month', 'customer_weighted_hours', 'outage_count'}",False
-eaglei_outages_2016_merged.csv,"{'start_time', 'county', 'max_customers', 'mean_customers', 'min_customers', 'duration'}","{'state', 'fips'}",True
-eaglei_outages_2017_agg.csv,set(),"{'year', 'state', 'max_outage_duration', 'month', 'customer_weighted_hours', 'outage_count'}",False
-eaglei_outages_2017_merged.csv,"{'start_time', 'county', 'max_customers', 'mean_customers', 'min_customers', 'duration'}","{'state', 'fips'}",True
-eaglei_outages_2018_agg.csv,set(),"{'year', 'state', 'max_outage_duration', 'month', 'customer_weighted_hours', 'outage_count'}",False
-eaglei_outages_2018_merged.csv,"{'start_time', 'county', 'max_customers', 'mean_customers', 'min_customers', 'duration'}","{'state', 'fips'}",True
-eaglei_outages_2019_agg.csv,set(),"{'year', 'state', 'max_outage_duration', 'month', 'customer_weighted_hours', 'outage_count'}",False
-eaglei_outages_2019_merged.csv,"{'start_time', 'county', 'max_customers', 'mean_customers', 'min_customers', 'duration'}","{'state', 'fips'}",True
-eaglei_outages_2020_agg.csv,set(),"{'year', 'state', 'max_outage_duration', 'month', 'customer_weighted_hours', 'outage_count'}",False
-eaglei_outages_2020_merged.csv,"{'start_time', 'county', 'max_customers', 'mean_customers', 'min_customers', 'duration'}","{'state', 'fips'}",True
-eaglei_outages_2021_agg.csv,set(),"{'year', 'state', 'max_outage_duration', 'month', 'customer_weighted_hours', 'outage_count'}",False
-eaglei_outages_2021_merged.csv,"{'start_time', 'county', 'max_customers', 'mean_customers', 'min_customers', 'duration'}","{'state', 'fips'}",True
-eaglei_outages_2022_agg.csv,set(),"{'year', 'state', 'max_outage_duration', 'month', 'customer_weighted_hours', 'outage_count'}",False
-eaglei_outages_2022_merged.csv,"{'start_time', 'county', 'max_customers', 'mean_customers', 'min_customers', 'duration'}","{'state', 'fips'}",True
-eaglei_outages_2023_agg.csv,set(),"{'year', 'state', 'max_outage_duration', 'month', 'customer_weighted_hours', 'outage_count'}",False
+eaglei_outages_2023_agg.csv,"{'customer_weighted_hours', 'outage_count', 'year', 'state', 'max_outage_duration', 'month'}",set(),True
 eaglei_outages_2023_merged.csv,"{'start_time', 'county', 'max_customers', 'mean_customers', 'min_customers', 'duration'}","{'state', 'fips'}",True
 eaglei_outages_with_events_2014.csv,"{'end_time', 'start_time', 'county', 'max_customers', 'min_customers', 'mean_customers', 'duration', 'event_type'}","{'datetime_event_began', 'state_event', 'datetime_restoration', 'state', 'fips', 'event_id'}",True
 eaglei_outages_with_events_2015.csv,"{'end_time', 'start_time', 'county', 'max_customers', 'min_customers', 'mean_customers', 'duration', 'event_type'}","{'datetime_event_began', 'state_event', 'datetime_restoration', 'state', 'fips', 'event_id'}",True
